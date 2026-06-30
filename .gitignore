@@ -9,6 +9,12 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+
+.astro
+dist/*.map
+.DS_Store
+
+
 # Runtime data
 pids
 *.pid
@@ -80,8 +86,9 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+dist/*.map
 .output
+
 
 # Gatsby files
 .cache/
@@ -124,7 +131,7 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
-
+.vscode
 # pnpm
 .pnpm-store
 

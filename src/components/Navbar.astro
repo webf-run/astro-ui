@@ -1,0 +1,56 @@
+---
+import { ChevronDown } from 'lucide-astro';
+import Button from './Button.astro';
+
+interface NavItem {
+  label: string;
+  href: string;
+  hasDropdown?: boolean;
+}
+
+interface Props {
+  logo?: string;
+  navItems?: NavItem[];
+  class?: string;
+}
+
+const { logo, navItems = [], class: className = '' } = Astro.props;
+---
+
+<nav class='fixed top-0 left-0 w-full bg-white z-50 shadow-sm'>
+  <div class='max-w-screen-2xl mx-auto px-8'>
+    <div class='flex items-center justify-between h-20'>
+      <a href='/' class='flex items-center'>
+        {
+          logo && (
+            <img src={logo} alt='Logo' class='h-12 w-auto object-contain' />
+          )
+        }
+      </a>
+
+      <div class='hidden lg:flex items-center gap-8'>
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              class={`
+                flex items-center gap-1
+                text-[15px]
+                font-medium
+                transition-colors
+              ${className}`}
+            >
+              <span>{item.label}</span>
+
+              {item.hasDropdown && <ChevronDown size={16} strokeWidth={2} />}
+            </a>
+          ))
+        }
+      </div>
+
+      <div class='flex items-center gap-5'>
+        <Button variant='purple'> Apply Now </Button>
+      </div>
+    </div>
+  </div>
+</nav>
