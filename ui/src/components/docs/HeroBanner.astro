@@ -1,0 +1,80 @@
+---
+import { Sparkles, ArrowRight, Code2 } from 'lucide-astro';
+
+const installCode = `npm create astro-ui@latest`;
+
+const astroCode = `---
+import { Button } from "@astro-ui/astro";
+---
+
+<Button>Hello World</Button>`;
+---
+
+<section class='hero'>
+  <!-- BACKGROUND -->
+  <div class='bg-glow'></div>
+
+  <!-- LEFT -->
+  <div class='left'>
+    <a class='badge' href='/docs'>
+      <Sparkles class='icon' />
+      <span>Introducing Astro UI</span>
+      <ArrowRight class='icon arrow' />
+    </a>
+
+    <h1>
+      <span class='gradient'>Astro UI</span>
+      <span>component library</span>
+    </h1>
+
+    <p>
+      Build modern, accessible and themeable UI components for Astro with
+      production-ready patterns.
+    </p>
+
+    <div class='buttons'>
+      <a class='primary' href='/getting-started/installation'>Get Started</a>
+      <a class='secondary' href='/components/button'>Components</a>
+      <a class='ghost' href='https://github.com'>GitHub</a>
+    </div>
+  </div>
+
+  <!-- RIGHT (IMPROVED) -->
+  <div class='right'>
+    <!-- INSTALL CARD -->
+    <div class='card'>
+      <div class='card-head'>
+        <div class='iconbox'>
+          <Code2 />
+        </div>
+
+        <div>
+          <h3>Install</h3>
+          <p>Bootstrap your project instantly</p>
+        </div>
+      </div>
+
+      <div class='codebox'>
+        <pre>{installCode}</pre>
+      </div>
+    </div>
+
+    <!-- USE CARD -->
+    <div class='card'>
+      <div class='card-head'>
+        <div class='iconbox'>
+          <Code2 />
+        </div>
+
+        <div>
+          <h3>Use</h3>
+          <p>Drop-in components</p>
+        </div>
+      </div>
+
+      <div class='codebox'>
+        <pre>{astroCode}</pre>
+      </div>
+    </div>
+  </div>
+</section>

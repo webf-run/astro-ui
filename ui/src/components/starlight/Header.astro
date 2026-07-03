@@ -1,0 +1,68 @@
+---
+import Search from '@astrojs/starlight/components/Search.astro';
+import { Github, Sun, Moon } from 'lucide-astro';
+---
+
+<div class='header-wrapper'>
+  <div class='custom-header'>
+    <!-- Logo -->
+    <div class='header-logo'>
+      <a href='/' class='logo'>
+        <span class='logo-astro'>Astro</span>
+        <span class='logo-ui'>UI</span>
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class='header-nav'>
+      <a href='/' class='active'>Home</a>
+      <a href='/docs'>Docs</a>
+      <a href='/components'>Components</a>
+    </nav>
+
+    <!-- Right -->
+    <div class='header-actions'>
+      <Search />
+
+      <a
+        href='https://github.com/webf-run/astro-ui'
+        target='_blank'
+        class='icon-btn'
+        aria-label='GitHub'
+      >
+        <Github size={18} />
+      </a>
+
+      <button id='theme-toggle' class='icon-btn' aria-label='Toggle theme'>
+        <Sun class='sun' size={18} />
+        <Moon class='moon' size={18} />
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  const btn = document.getElementById('theme-toggle');
+
+  function updateIcon(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('starlight-theme', theme);
+
+    btn.classList.toggle('dark', theme === 'dark');
+  }
+
+  const saved =
+    localStorage.getItem('starlight-theme') ??
+    (window.matchMedia('(prefers-color-scheme:dark)').matches
+      ? 'dark'
+      : 'light');
+
+  updateIcon(saved);
+
+  btn.addEventListener('click', () => {
+    const next =
+      document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+
+    updateIcon(next);
+  });
+</script>

@@ -1,0 +1,95 @@
+---
+import { Button } from '@webf/astro-ui';
+---
+
+<!-- ================= Variants ================= -->
+<section class='doc-section'>
+  <h2>Variants</h2>
+
+  <p>Choose from multiple predefined button variants.</p>
+
+  <div class='preview'>
+    <div class='preview-header'>Preview</div>
+
+    <div class='preview-body'>
+      <Button variant='primary'>Primary</Button>
+      <Button variant='secondary'>Secondary</Button>
+      <Button variant='success'>Success</Button>
+      <Button variant='purple'>Purple</Button>
+      <Button variant='blackwhite'>Black & White</Button>
+    </div>
+  </div>
+
+  <div class='tabs'>
+    <button class='active'>Astro</button>
+  </div>
+
+  <pre><code>{`---
+import { Button } from "@webf/astro-ui";
+---
+
+<Button variant="primary">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="success">Success</Button>
+<Button variant="purple">Purple</Button>
+<Button variant="blackwhite">Black & White</Button>`}</code></pre>
+</section>
+
+<!-- ================= Sizes ================= -->
+
+<section class='doc-section'>
+  <h2>Sizes</h2>
+
+  <p>Buttons are available in three different sizes.</p>
+
+  <div class='preview'>
+    <div class='preview-header'>Preview</div>
+
+    <div class='preview-body'>
+      <Button size='sm'>Small</Button>
+      <Button size='md'>Medium</Button>
+      <Button size='lg'>Large</Button>
+    </div>
+  </div>
+
+  <div class='tabs'>
+    <button class='active'>Astro</button>
+  </div>
+
+  <pre><code>{`---
+import { Button } from "@webf/astro-ui";
+---
+
+<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>`}</code></pre>
+</section>
+
+<!-- ================= Types ================= -->
+
+<section class='doc-section'>
+  <h2>Types</h2>
+
+  <p>Different button styles for different use cases.</p>
+
+  <div class='preview'>
+    <div class='preview-header'>Preview</div>
+
+    <div class='preview-body'>
+      <Button variant='primary' size='sm' type='submit'>Submit</Button>
+      <Button variant='purple' size='lg' type='reset'>Reset</Button>
+    </div>
+  </div>
+
+  <div class='tabs'>
+    <button class='active'>Astro</button>
+  </div>
+
+  <pre><code>{`---
+import { Button } from "@webf/astro-ui";
+---
+
+<Button variant="primary" size="sm" type="submit">Submit</Button>
+<Button variant="secondary" size="lg" type="reset">Reset</Button>
+`}</code></pre>
+</section>

@@ -1,0 +1,228 @@
+/* Header */
+
+.custom-header {
+  display: grid;
+  grid-template-columns: 240px 1fr 320px;
+  align-items: center;
+  width: 100%;
+  max-width: 1800px;
+  height: 70px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: linear-gradient(
+    120deg,
+    rgba(99, 102, 241, 0.92),
+    rgba(139, 92, 246, 0.92),
+    rgba(59, 130, 246, 0.92)
+  );
+
+  background-size: 300% 300%;
+  animation: aurora 8s ease infinite;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 45px rgba(99, 102, 241, 0.35);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+}
+
+@keyframes aurora {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.header-nav a:hover,
+.icon-btn:hover {
+  background: #4338ca;
+  color: white;
+}
+.logo,
+.header-nav a,
+.icon-btn {
+  color: white;
+}
+/* Logo */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  transition: all 0.3s ease;
+}
+
+/* Astro */
+.logo-astro {
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* UI Badge */
+.logo-ui {
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+
+  /* border: 1px solid rgba(255, 255, 255, 0.25); */
+
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 4px 18px rgba(0, 0, 0, 0.15);
+
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+
+.logo:hover {
+  transform: translateY(-2px);
+}
+
+.logo:hover .logo-ui {
+  background: white;
+  color: #6366f1;
+  box-shadow: 0 10px 28px rgba(255, 255, 255, 0.35);
+}
+
+.logo:hover .logo-astro {
+  color: #f8fafc;
+}
+/* Navigation */
+
+.header-nav {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 14px;
+}
+.header-nav a {
+  position: relative;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+
+  transition: 0.25s;
+}
+
+.header-nav a:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: white;
+
+  transform: translateY(-2px);
+}
+/* active */
+
+.header-nav .active {
+  background: #111827;
+
+  color: white;
+}
+
+/* Righ */
+
+.header-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+/* Search */
+
+.header-actions site-search {
+  width: 260px;
+}
+
+.header-actions site-search button {
+  width: 100%;
+
+  min-width: 260px;
+
+  padding: 20px;
+
+  border-radius: 12px;
+
+  transition: 0.25s;
+}
+
+.header-actions site-search button:hover {
+  border-color: #6366f1;
+
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
+}
+
+/* Icons */
+
+.icon-btn {
+  width: 38px;
+
+  height: 38px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 10px;
+
+  color: inherit;
+
+  border: 1px solid transparent;
+
+  transition: 0.25s;
+
+  background: transparent;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Theme Icons */
+
+.sun {
+  display: block;
+}
+
+.moon {
+  display: none;
+}
+
+#theme-toggle.dark .sun {
+  display: none;
+}
+
+#theme-toggle.dark .moon {
+  display: block;
+}
