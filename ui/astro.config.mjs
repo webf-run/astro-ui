@@ -34,15 +34,16 @@ export default defineConfig({
               label: 'Button',
               slug: 'components/button',
             },
+            { label: 'Navbar', slug: 'components/navbar' },
           ],
         },
       ],
     }),
   ],
 
-vite: {
-  ssr: {
-    noExternal: ['lucide-astro'],
+  vite: {
+    ssr: {
+      noExternal: ['lucide-astro'],
+    },
   },
-},
 });

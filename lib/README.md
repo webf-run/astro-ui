@@ -12,7 +12,7 @@ npm install @webf/astro-ui
 
 ```astro
 ---
-import "@webf/astro-ui/style.css";
+import '@webf/astro-ui/style.css';
 import { Button, SectionBadge } from '@webf/astro-ui';
 ---
 
@@ -24,13 +24,12 @@ import { Button, SectionBadge } from '@webf/astro-ui';
 ## Components
 
 - Button
-- Navbar        
+- Navbar
 - FeatureCard
 - StatCard
 - CompanyLogoCard
 - PlacementStatCard
 - SectionBadge
-
 
 ## Development
 
@@ -46,19 +45,19 @@ Run the build:
 npm run build
 
 ## Project Structure
+
 dist/
 └── style.css
 |
 src/
 ├── components/
-│   ├── Button.astro
-│   ├── CompanyLogoCard.astro
-│   ├── FeatureCard.astro
-│   ├── Navbar.astro
-│   ├── PlacementStatCard.astro
-│   ├── SectionBadge.astro
-│   └── StatCard.astro
+│ ├── Button.astro
+│ ├── CompanyLogoCard.astro
+│ ├── FeatureCard.astro
+│ ├── Navbar.astro
+│ ├── PlacementStatCard.astro
+│ ├── SectionBadge.astro
+│ └── StatCard.astro
 ├── styles/
-│   └── index.css
+│ └── index.css
 └── index.ts
-

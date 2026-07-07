@@ -1,95 +1,132 @@
 ---
-import { Button } from '@webf/astro-ui';
----
+import CodePlayground from './CodePlayground.astro';
 
-<!-- ================= Variants ================= -->
-<section class='doc-section'>
-  <h2>Variants</h2>
-
-  <p>Choose from multiple predefined button variants.</p>
-
-  <div class='preview'>
-    <div class='preview-header'>Preview</div>
-
-    <div class='preview-body'>
-      <Button variant='primary'>Primary</Button>
-      <Button variant='secondary'>Secondary</Button>
-      <Button variant='success'>Success</Button>
-      <Button variant='purple'>Purple</Button>
-      <Button variant='blackwhite'>Black & White</Button>
-    </div>
-  </div>
-
-  <div class='tabs'>
-    <button class='active'>Astro</button>
-  </div>
-
-  <pre><code>{`---
+const variantsCode = `---
 import { Button } from "@webf/astro-ui";
 ---
 
 <Button variant="primary">Primary</Button>
 <Button variant="secondary">Secondary</Button>
-<Button variant="success">Success</Button>
+<Button variant="success" style="background:#1f2937;">Success</Button>
 <Button variant="purple">Purple</Button>
-<Button variant="blackwhite">Black & White</Button>`}</code></pre>
-</section>
+<Button variant="blackwhite">Black & White</Button>`;
 
-<!-- ================= Sizes ================= -->
-
-<section class='doc-section'>
-  <h2>Sizes</h2>
-
-  <p>Buttons are available in three different sizes.</p>
-
-  <div class='preview'>
-    <div class='preview-header'>Preview</div>
-
-    <div class='preview-body'>
-      <Button size='sm'>Small</Button>
-      <Button size='md'>Medium</Button>
-      <Button size='lg'>Large</Button>
-    </div>
-  </div>
-
-  <div class='tabs'>
-    <button class='active'>Astro</button>
-  </div>
-
-  <pre><code>{`---
+const sizesCode = `---
 import { Button } from "@webf/astro-ui";
 ---
 
 <Button size="sm">Small</Button>
 <Button size="md">Medium</Button>
-<Button size="lg">Large</Button>`}</code></pre>
-</section>
+<Button size="lg">Large</Button>`;
 
-<!-- ================= Types ================= -->
-
-<section class='doc-section'>
-  <h2>Types</h2>
-
-  <p>Different button styles for different use cases.</p>
-
-  <div class='preview'>
-    <div class='preview-header'>Preview</div>
-
-    <div class='preview-body'>
-      <Button variant='primary' size='sm' type='submit'>Submit</Button>
-      <Button variant='purple' size='lg' type='reset'>Reset</Button>
-    </div>
-  </div>
-
-  <div class='tabs'>
-    <button class='active'>Astro</button>
-  </div>
-
-  <pre><code>{`---
+const typesCode = `---
 import { Button } from "@webf/astro-ui";
 ---
 
 <Button variant="primary" size="sm" type="submit">Submit</Button>
-<Button variant="secondary" size="lg" type="reset">Reset</Button>
-`}</code></pre>
+<Button variant="purple" size="sm" type="reset">Reset</Button>
+`;
+
+const iconCode = `---
+import { Button } from "@webf/astro-ui";
+---
+
+<Button variant="primary" size="md" showIcon>Apply For Admission</Button>
+<Button variant="blackwhite" size="md" showIcon>Read More</Button>
+`;
+
+const disableCode = `---
+import { Button } from "@webf/astro-ui";
+---
+<Button disabled> Alert</Button>
+<Button variant="secondary" size="sm" disabled>Warning</Button>
+<Button variant="purple" type="button" disabled>Download</Button>
+`;
+
+const linkCode = `---
+import { Button } from "@webf/astro-ui";
+---
+<Button href="/docs"  target="_blank" rel="noopener noreferrer">Documentation</Button>
+<Button variant="secondary" href="/components"  target="_blank" rel="noopener noreferrer">Components</Button>
+<Button variant="purple" href="https://github.com"  target="_blank" rel="noopener noreferrer">GitHub</Button>
+`;
+
+const loadingCode = `---
+import { Button } from "@webf/astro-ui";
+---
+
+<Button loading>Save</Button>
+<Button variant="secondary" loading>Loading</Button>
+<Button variant="purple" loading>Processing</Button>`;
+---
+
+<section class='doc-section'>
+  <h2>Variants</h2>
+  <p>
+    Choose from a collection of predefined button variants that communicate
+    different visual priorities. Use the primary variant for the most important
+    action, secondary for less prominent actions, and semantic variants such as
+    success to indicate specific meanings.
+  </p>
+  <CodePlayground code={variantsCode} renderer='button' />
+</section>
+
+<section class='doc-section'>
+  <h2>Sizes</h2>
+  <p>
+    Select an appropriate button size based on your interface. Small buttons
+    work well in compact layouts, medium is the default choice for most
+    interfaces, and large buttons help emphasize important actions.
+  </p>
+  <CodePlayground code={sizesCode} renderer='button' />
+</section>
+
+<section class='doc-section'>
+  <h2>Types</h2>
+  <p>
+    The `type` attribute controls how a button behaves inside a form. Use <b
+      >`submit`</b
+    > to send form data, <b>`reset`</b> to restore default values, and <b
+      >`button`</b
+    > for custom JavaScript interactions.
+  </p>
+  <CodePlayground code={typesCode} renderer='button' />
+</section>
+
+<section class='doc-section'>
+  <h2>Icons</h2>
+  <p>
+    Buttons can include icons to improve recognition and provide additional
+    visual context. Icons may appear before or after the label depending on the
+    action they represent.
+  </p>
+  <CodePlayground code={iconCode} renderer='button' />
+</section>
+
+<section class='doc-section'>
+  <h2>Disabled</h2>
+  <p>
+    Buttons can be disabled to prevent interaction.Disabled buttons remain
+    visible but cannot be clicked.
+  </p>
+  <CodePlayground code={disableCode} renderer='button' />
+</section>
+
+<section class='doc-section'>
+  <h2>Links</h2>
+  <p>
+    Buttons can function as links to navigate to other pages or external
+    resources. Render a button as a link by providing the `href` prop.
+  </p>
+  <CodePlayground code={linkCode} renderer='button' />
+</section>
+
+<section class='doc-section'>
+  <h2>Loading</h2>
+  <p>
+    Buttons can display a loading state to indicate that an action is in
+    progress. This is useful for actions that take time to complete, such as
+    saving data or submitting a form.
+  </p>
+  <CodePlayground code={loadingCode} renderer='button' />
 </section>

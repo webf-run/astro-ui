@@ -1,0 +1,13 @@
+{
+  "name": "astro-playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build"
+  },
+  "dependencies": {
+    "astro": "^5.13.5",
+    "@webf/astro-ui": "latest"
+  }
+}

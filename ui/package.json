@@ -2,19 +2,30 @@
   "name": "astro-ui-component-docs",
   "type": "module",
   "version": "0.0.1",
- "scripts": {
+  "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.2",
     "@astrojs/starlight": "^0.41.2",
+    "@lucide/astro": "^1.23.0",
+    "@webcontainer/api": "^1.6.4",
     "@webf/astro-ui": "workspace:*",
     "astro": "^7.0.6",
     "lucide-astro": "^0.556.0",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "@codemirror/state": "^6.4.1",
+    "@codemirror/view": "^6.34.0",
+    "@codemirror/lang-html": "^6.4.9",
+    "@codemirror/theme-one-dark": "^6.1.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^6.0.3"
   }
-  
 }
