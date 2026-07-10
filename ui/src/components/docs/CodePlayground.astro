@@ -1,57 +1,50 @@
 ---
-import { Copy, Play, RotateCcw } from 'lucide-astro';
+import { Check, Copy, Play, RotateCcw } from 'lucide-astro';
 import '../../styles/playground.css';
+
 interface Props {
-  /** The initial code shown in the editor. */
+  /* The initial code shown in the editor. */
   code: string;
-  /** Key into the renderer registry (src/scripts/playground/renderers/index.ts), e.g. "button". */
-  renderer: string;
 }
 
-const { code, renderer } = Astro.props;
+const { code } = Astro.props;
 ---
 
-<div class='doc-playground' data-renderer={renderer}>
-  <div class='code-toolbar'>
-    <button class='copy-btn playground-btn'>
-      <span class='btn-text'>Copy</span>
+<div class='not-content'>
+  <div class='doc-playground'>
+    <div class='code-toolbar'>
+      <button class='copy-btn playground-btn'>
+        <span class='btn-text'>Copy</span>
+        <span class='btn-icon copy-icon'><Copy size={16} /></span>
+        <span class='btn-icon check-icon'><Check size={16} /></span>
+      </button>
+      <button class='run-btn playground-btn'>
+        <span class='btn-text'>Run</span>
+        <Play size={16} />
+      </button>
+      <button class='reset-btn playground-btn'>
+        <span class='btn-text'>Reset</span>
+        <RotateCcw size={16} />
+      </button>
+    </div>
 
-      <span class='btn-icon'>
-        <Copy size={16} />
-      </span>
-    </button>
-    <button class='run-btn playground-btn'>
-      <span class='btn-text'>Run</span>
-      <Play size={16} />
-    </button>
+    <div class='editor-mount' data-original={code}></div>
 
-    <button class='reset-btn playground-btn'>
-      <span class='btn-text'>Reset</span>
-      <RotateCcw size={16} />
-    </button>
-  </div>
-
-  <textarea class='editor' data-original={code}>{code}</textarea>
-
-  <div class='output'>
-    <div class='output-header'>Output</div>
-    <div class='output-body not-content'></div>
+    <div class='output'>
+      <div class='output-header'>Output</div>
+      <iframe
+        class='preview-frame'
+        sandbox='allow-scripts allow-same-origin'
+        title='Component preview'></iframe>
+    </div>
   </div>
 </div>
+<script type='module'>
+  import { initPlayground } from '../../playground/core';
 
-<script>
-  import { initPlayground } from '../../scripts/playground/core';
-  import { getRenderer } from '../../scripts/playground/registry';
-
-  document.querySelectorAll<HTMLElement>('.doc-playground').forEach((el) => {
-    // Skip elements already wired (relevant if Astro View Transitions re-runs this).
+  document.querySelectorAll('.doc-playground').forEach((el) => {
     if (el.dataset.playgroundReady === 'true') return;
-
-    const key = el.dataset.renderer ?? '';
-    const render = getRenderer(key);
-    if (!render) return;
-
-    initPlayground(el, render);
+    initPlayground(el);
     el.dataset.playgroundReady = 'true';
   });
 </script>

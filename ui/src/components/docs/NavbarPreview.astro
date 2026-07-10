@@ -4,6 +4,8 @@ import CodePlayground from './CodePlayground.astro';
 const basicNavbarCode = `---
 import { Navbar } from "@webf/astro-ui";
 
+console.log(Astro.props);
+
 const navItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
@@ -13,7 +15,7 @@ const navItems = [
 ---
 
 <Navbar
-  logo="Astro UI"
+  logoText="Astro UI"
   navItems={navItems}
 />`;
 
@@ -29,7 +31,7 @@ const navItems = [
 ---
 
 <Navbar
-  logo="Astro UI"
+  logoText="Astro UI"
   navItems={navItems}
 />`;
 
@@ -44,7 +46,7 @@ const navItems = [
 ---
 
 <Navbar
-  logo="Astro UI"
+  logoText="Astro UI"
   navItems={navItems}
   class="text-purple-700 hover:text-purple-900"
 />`;
@@ -55,7 +57,7 @@ import { Navbar } from "@webf/astro-ui";
 ---
 
 <Navbar
-  logo="Astro UI"
+   logoText="Astro UI"
 />`;
 ---
 
@@ -68,7 +70,7 @@ import { Navbar } from "@webf/astro-ui";
     and includes a call-to-action button.
   </p>
 
-  <CodePlayground code={basicNavbarCode} renderer='navbar' />
+  <CodePlayground code={basicNavbarCode} />
 </section>
 
 <section class='doc-section'>
@@ -80,7 +82,7 @@ import { Navbar } from "@webf/astro-ui";
     options.
   </p>
 
-  <CodePlayground code={dropdownNavbarCode} renderer='navbar' />
+  <CodePlayground code={dropdownNavbarCode} />
 </section>
 
 <section class='doc-section'>
@@ -92,7 +94,7 @@ import { Navbar } from "@webf/astro-ui";
     theme.
   </p>
 
-  <CodePlayground code={customClassCode} renderer='navbar' />
+  <CodePlayground code={customClassCode} />
 </section>
 
 <section class='doc-section'>
@@ -104,5 +106,5 @@ import { Navbar } from "@webf/astro-ui";
     layouts.
   </p>
 
-  <CodePlayground code={logoOnlyCode} renderer='navbar' />
+  <CodePlayground code={logoOnlyCode} />
 </section>

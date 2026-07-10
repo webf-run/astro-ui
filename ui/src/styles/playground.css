@@ -59,9 +59,26 @@
   background: var(--sl-color-gray-6);
   color: var(--sl-color-white);
 }
+
+/* Copy button "copied" state - swap the copy icon for a checkmark and
+   tint the button green, without changing its size/layout. */
+.copy-btn .check-icon {
+  display: none;
+}
+.copy-btn.is-copied .copy-icon {
+  display: none;
+}
+.copy-btn.is-copied .check-icon {
+  display: block;
+}
+.copy-btn.is-copied {
+  background: var(--sl-color-green, #16a34a) !important;
+  color: var(--sl-color-white) !important;
+}
+
 /* Editor */
 
-.editor {
+/* .editor {
   width: 100%;
   min-height: 240px;
   resize: vertical;
@@ -79,7 +96,7 @@
 
 .editor:focus {
   border-color: #6366f1;
-}
+} */
 
 /* Output */
 .output {
@@ -143,18 +160,18 @@
 ========================================================== */
 
 /* Chrome, Edge, Safari */
-.editor::-webkit-scrollbar {
+/* .editor::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 .editor::-webkit-scrollbar-track {
-  background: #0f172a; /* Matches editor background */
+  background: #0f172a; 
   border-radius: 8px;
 }
 
 .editor::-webkit-scrollbar-thumb {
-  background: #64748b; /* Slate 600 */
+  background: #64748b; 
   border-radius: 8px;
   border: 2px solid #0f172a;
   transition: background 0.2s ease;
@@ -162,7 +179,7 @@
 
 .editor::-webkit-scrollbar-corner {
   background: #64748b;
-}
+} */
 
 /* ==========================================================
    Responsive
@@ -178,10 +195,10 @@
     flex: 1;
     justify-content: center;
   }
-
+  /* 
   .editor {
     min-height: 180px;
-  }
+  } */
 
   .output-body {
     padding: 1.25rem;
@@ -193,4 +210,73 @@
   display: inline-flex;
   align-items: center;
   font-weight: 600;
+}
+
+.output {
+  width: 100%;
+}
+
+.preview-frame {
+  display: block;
+  width: 100%;
+  min-height: 220px;
+  border: none;
+  background: var(--sl-color-bg);
+}
+
+.editor-mount {
+  position: relative;
+  width: 100%;
+  min-height: 240px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+}
+
+.editor-mount .cm-editor {
+  height: 100%;
+  min-height: 240px;
+  font-family: 'Fira Code', Consolas, Monaco, monospace;
+  font-size: 14px;
+}
+
+.editor-mount .cm-scroller {
+  overflow: auto;
+}
+
+.editor-mount .cm-focused {
+  outline: none;
+}
+
+.run-btn.is-loading {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.playground-error {
+  margin: 0;
+  padding: 1rem;
+  color: #dc2626;
+  background: #fef2f2;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: pre-wrap;
+}
+
+.output.is-loading {
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+/* .editor-mount .cm-editor,
+.editor-mount .cm-scroller,
+.editor-mount .cm-content,
+.editor-mount .cm-line {
+  line-height: 1.4 !important;
+} */
+.editor-mount .cm-editor > * {
+  margin-top: 0 !important;
+}
+
+.editor-mount .cm-scroller {
+  margin-top: 0 !important;
 }

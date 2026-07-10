@@ -2,7 +2,7 @@
 dist/
 # generated types
 .astro/
-
+.playground-tmp/
 # dependencies
 node_modules/
 

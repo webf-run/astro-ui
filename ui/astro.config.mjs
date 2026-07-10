@@ -1,3 +1,5 @@
+import path from 'node:path';
+
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
 
@@ -44,6 +46,22 @@ export default defineConfig({
   vite: {
     ssr: {
       noExternal: ['lucide-astro'],
+    },
+    server: {
+      watch: {
+        ignored: ['**/.playground-tmp/**'],
+      },
+    },
+    resolve: {
+      alias: {
+        '@astrojs/compiler/browser': path.resolve(
+          './node_modules/@astrojs/compiler/dist/browser/index.js'
+        ),
+      },
+    },
+    optimizeDeps: {
+      exclude: ['@astrojs/compiler'],
+      include: ['esbuild-wasm'],
     },
   },
 });

@@ -8,11 +8,16 @@ interface Props {
   disabled?: boolean;
   loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
+
   class?: string;
+  style?: string;
+
+  target?: string;
+  rel?: string;
+
   showIcon?: boolean;
   icon?: any;
 }
-
 const {
   variant = 'primary',
   size = 'md',
@@ -20,9 +25,16 @@ const {
   disabled = false,
   loading = false,
   type = 'button',
+
   class: className = '',
+  style = '',
+
+  target,
+  rel,
+
   showIcon = false,
   icon: Icon,
+  ...rest
 } = Astro.props;
 
 const baseClasses = `
@@ -98,15 +110,29 @@ const buttonClasses = `
 
 {
   href ? (
-    <a href={href} class={buttonClasses} aria-disabled={disabled}>
+    <a
+      href={href}
+      target={target}
+      rel={rel}
+      style={style}
+      class={buttonClasses}
+      aria-disabled={disabled}
+      {...rest}
+    >
       <span>{loading ? 'Loading...' : <slot />}</span>
 
       {showIcon && !loading && <ArrowRight size={18} />}
     </a>
   ) : (
-    <button type={type} disabled={disabled || loading} class={buttonClasses}>
+    <button
+      type={type}
+      disabled={disabled || loading}
+      style={style}
+      class={buttonClasses}
+      {...rest}
+    >
+      {' '}
       <span>{loading ? 'Loading...' : <slot />}</span>
-
       {showIcon && !loading && <ArrowRight size={18} />}
       {Icon && <Icon size={16} strokeWidth={2} />}
     </button>
