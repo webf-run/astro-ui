@@ -1,4 +1,4 @@
-// src/playground/runtime/astro-runtime.js
+// site/playground/runtime/astro-runtime.js
 var HTMLString = class extends String {
   get [Symbol.toStringTag]() {
     return "HTMLString";

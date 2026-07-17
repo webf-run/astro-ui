@@ -1,4 +1,4 @@
-// ../lib/src/components/Navbar.astro
+// lib/components/Navbar.astro
 import {
   render as $$render5,
   createAstro as $$createAstro5,
@@ -9,7 +9,7 @@ import {
   spreadAttributes as $$spreadAttributes5
 } from "astro/runtime/server/index.js";
 
-// ../node_modules/.pnpm/lucide-astro@0.556.0_astro@_d4c7fda2328fe30c592d45f2dd106ae4/node_modules/lucide-astro/dist/.Layout.astro
+// node_modules/.pnpm/lucide-astro@0.556.0_astro@7.0.6_@astrojs+markdown-remark@7.2.1_@emnapi+core@1.11.1_@em_d4c7fda2328fe30c592d45f2dd106ae4/node_modules/lucide-astro/dist/.Layout.astro
 import {
   render as $$render,
   createAstro as $$createAstro,
@@ -46,7 +46,7 @@ var $$stdin = $$createComponent(($$result, $$props, $$slots) => {
 }, "<stdin>", void 0);
 var Layout_default = $$stdin;
 
-// ../node_modules/.pnpm/lucide-astro@0.556.0_astro@_d4c7fda2328fe30c592d45f2dd106ae4/node_modules/lucide-astro/dist/ArrowRight.astro
+// node_modules/.pnpm/lucide-astro@0.556.0_astro@7.0.6_@astrojs+markdown-remark@7.2.1_@emnapi+core@1.11.1_@em_d4c7fda2328fe30c592d45f2dd106ae4/node_modules/lucide-astro/dist/ArrowRight.astro
 import {
   render as $$render2,
   createAstro as $$createAstro2,
@@ -65,7 +65,7 @@ var $$stdin2 = $$createComponent2(($$result, $$props, $$slots) => {
 }, "<stdin>", void 0);
 var ArrowRight_default = $$stdin2;
 
-// ../node_modules/.pnpm/lucide-astro@0.556.0_astro@_d4c7fda2328fe30c592d45f2dd106ae4/node_modules/lucide-astro/dist/ChevronDown.astro
+// node_modules/.pnpm/lucide-astro@0.556.0_astro@7.0.6_@astrojs+markdown-remark@7.2.1_@emnapi+core@1.11.1_@em_d4c7fda2328fe30c592d45f2dd106ae4/node_modules/lucide-astro/dist/ChevronDown.astro
 import {
   render as $$render3,
   createAstro as $$createAstro3,
@@ -83,7 +83,7 @@ var $$stdin3 = $$createComponent3(($$result, $$props, $$slots) => {
 }, "<stdin>", void 0);
 var ChevronDown_default = $$stdin3;
 
-// ../lib/src/components/Button.astro
+// lib/components/Button.astro
 import {
   render as $$render4,
   createAstro as $$createAstro4,
@@ -185,7 +185,7 @@ var $$stdin4 = $$createComponent4(($$result, $$props, $$slots) => {
 }, "<stdin>", void 0);
 var Button_default = $$stdin4;
 
-// ../lib/src/components/Navbar.astro
+// lib/components/Navbar.astro
 var $$Astro5 = $$createAstro5();
 var $$stdin5 = $$createComponent5(($$result, $$props, $$slots) => {
   const Astro = $$result.createAstro($$props, $$slots);
@@ -229,7 +229,7 @@ var $$stdin5 = $$createComponent5(($$result, $$props, $$slots) => {
 }, "<stdin>", void 0);
 var Navbar_default = $$stdin5;
 
-// ../lib/src/components/SectionBadge.astro
+// lib/components/SectionBadge.astro
 import {
   render as $$render6,
   createAstro as $$createAstro6,
@@ -260,7 +260,7 @@ var $$stdin6 = $$createComponent6(($$result, $$props, $$slots) => {
 }, "<stdin>", void 0);
 var SectionBadge_default = $$stdin6;
 
-// ../lib/src/components/StatCard.astro
+// lib/components/StatCard.astro
 import {
   render as $$render7,
   createAstro as $$createAstro7,
@@ -295,7 +295,7 @@ var $$stdin7 = $$createComponent7(($$result, $$props, $$slots) => {
 }, "<stdin>", void 0);
 var StatCard_default = $$stdin7;
 
-// ../lib/src/components/FeatureCard.astro
+// lib/components/FeatureCard.astro
 import {
   render as $$render8,
   createAstro as $$createAstro8,
@@ -334,7 +334,7 @@ var $$stdin8 = $$createComponent8(($$result, $$props, $$slots) => {
 }, "<stdin>", void 0);
 var FeatureCard_default = $$stdin8;
 
-// ../lib/src/components/CompanyLogoCard.astro
+// lib/components/CompanyLogoCard.astro
 import {
   render as $$render9,
   createAstro as $$createAstro9,
@@ -361,7 +361,7 @@ var $$stdin9 = $$createComponent9(($$result, $$props, $$slots) => {
 }, "<stdin>", void 0);
 var CompanyLogoCard_default = $$stdin9;
 
-// ../lib/src/components/PlacementStatCard.astro
+// lib/components/PlacementStatCard.astro
 import {
   render as $$render10,
   createAstro as $$createAstro10,

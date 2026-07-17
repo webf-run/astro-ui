@@ -1,6 +1,3 @@
-packages:
-  - lib
-  - ui
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true

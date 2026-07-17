@@ -1,4 +1,4 @@
-@import '@webf/astro-ui/style.css';
+@import '../../lib/styles/index.css';
 @import './header.css';
 
 :root {
@@ -12,6 +12,7 @@
 
   --sl-border-radius: 16px;
 }
+
 .sidebar-pane {
   border-right: 1px solid var(--sl-color-gray-5);
   padding-top: 10px;

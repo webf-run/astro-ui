@@ -2,8 +2,13 @@ import path from 'node:path';
 
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
+  srcDir: './site',
+  publicDir: './public',
+  outDir: './dist',
+
   integrations: [
     starlight({
       title: '@webf/astro-ui',
@@ -15,10 +20,10 @@ export default defineConfig({
         },
       ],
       components: {
-        Header: './src/components/starlight/Header.astro',
+        Header: './site/components/starlight/Header.astro',
       },
 
-      customCss: ['./src/styles/custom.css'],
+      customCss: ['./site/styles/custom.css'],
       sidebar: [
         {
           label: 'Getting Started',
@@ -44,6 +49,7 @@ export default defineConfig({
   ],
 
   vite: {
+    plugins: [tailwindcss()],
     ssr: {
       noExternal: ['lucide-astro'],
     },

@@ -25,8 +25,10 @@ import { transform } from '@astrojs/compiler';
 import * as esbuild from 'esbuild-wasm';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const uiRoot = path.resolve(__dirname, '..');
-const libEntry = path.resolve(uiRoot, '../lib/src/index.ts');
+
+const libEntry = path.resolve(uiRoot, './lib/index.ts');
 const outDir = path.resolve(uiRoot, 'public/play');
 
 fs.mkdirSync(outDir, { recursive: true });
@@ -63,7 +65,8 @@ const astroCompilerPlugin = {
 };
 
 async function buildRuntime() {
-  const entry = path.resolve(uiRoot, 'src/playground/runtime/astro-runtime.js');
+  const entry = path.resolve(uiRoot, 'site/playground/runtime/astro-runtime.js');
+
   const result = await esbuild.build({
     entryPoints: [entry],
     bundle: true,
@@ -71,6 +74,7 @@ async function buildRuntime() {
     platform: 'browser',
     write: false,
   });
+
   fs.writeFileSync(
     path.join(outDir, 'astro-runtime.js'),
     result.outputFiles[0].text
