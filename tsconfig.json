@@ -5,6 +5,7 @@
     "site/**/*",
     "lib/**/*",
     "astro.config.mjs",
-    "public"
+    "public",
+    "scripts/**/*"
   ]
 }

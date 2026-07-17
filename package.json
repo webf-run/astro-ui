@@ -11,38 +11,27 @@
     "url": "https://github.com/webf-run/astro-ui/issues"
   },
   "packageManager": "pnpm@11.10.0",
+  "type": "module",
   "scripts": {
-    "predev": "node scripts/build-playground.mjs",
+    "predev": "pnpm run build:playground",
+    "prebuild": "pnpm run build:playground",
+    "build:css": "tailwindcss -i ./src/styles/index.css -o ./dist/style.css --minify",
+    "build:playground": "node scripts/build-playground.ts",
     "dev": "astro dev",
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
-  },
-  "scripts2lib": {
-    "dev": "astro dev",
-    "preview": "astro preview",
-    "build:css": "tailwindcss -i ./src/styles/index.css -o ./dist/style.css --minify",
-    "build": "pnpm run build:css",
-    "format": "prettier . --write",
-    "format:check": "prettier . --check"
-  },
-  "scripts3site": {
-    "start": "astro dev",
-    "prebuild": "node scripts/build-playground.mjs",
-    "build": "astro build",
-    "build:playground": "node scripts/build-playground.mjs",
-    "preview": "astro preview",
-    "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "preview": "astro preview"
   },
   "exports": {
-    ".": "./src/index.ts",
+    ".": "./lib/index.ts",
     "./style.css": "./dist/style.css"
   },
   "dependencies": {
     "@lucide/astro": "^1.23.0",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.13.2",
     "astro": "^7.0.6",
     "lucide-astro": "^0.556.0",
     "react": "^19.2.7",
