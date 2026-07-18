@@ -1,0 +1,29 @@
+---
+interface Props {
+  logo: string;
+  companyName: string;
+  class?: string;
+}
+
+const { logo, companyName, class: className = '' } = Astro.props;
+---
+
+<a
+  target='_blank'
+  rel='noopener noreferrer'
+  class={`
+    flex items-center justify-center
+    w-35 h-23
+    rounded-xl border bg-white
+    p-4
+    transition-transform duration-200
+    hover:scale-105
+    ${className}
+  `}
+>
+  <img
+    src={logo}
+    alt={`${companyName} Logo`}
+    class='h-12 w-auto object-contain'
+  />
+</a>

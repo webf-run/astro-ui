@@ -1,0 +1,16 @@
+---
+import { Playground } from './Playground';
+
+interface Props {
+  /* The initial code shown in the editor. */
+  code: string;
+  /* Optional filename shown in the editor header. */
+  filename?: string;
+}
+
+const { code, filename } = Astro.props;
+---
+
+<div class='not-content'>
+  <Playground code={code} filename={filename} client:only='solid-js' />
+</div>
