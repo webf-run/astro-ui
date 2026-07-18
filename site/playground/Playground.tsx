@@ -5,15 +5,39 @@ import {
 } from '@codemirror/language';
 import { Compartment, EditorState, type Extension } from '@codemirror/state';
 import { oneDark } from '@codemirror/theme-one-dark';
-import { EditorView, keymap } from '@codemirror/view';
-import { Check, Copy, Play, RotateCcw } from 'lucide-solid';
+import {
+  EditorView,
+  highlightActiveLine,
+  highlightActiveLineGutter,
+  keymap,
+  lineNumbers,
+} from '@codemirror/view';
 import { createSignal, onCleanup, onMount } from 'solid-js';
 
 import { astro } from './CodeMirrorAstroLang';
 import { runAstroSource } from './Compiler';
+import { Toolbar } from './Toolbar';
 
-// Light editor theme: default (light-oriented) highlight style plus chrome that
-// blends into the Starlight page background.
+// Layout/typography for the editor internals. CodeMirror renders its own DOM
+// (.cm-*) which Tailwind utilities can't reach, so this stays a CodeMirror
+// theme. Colors come from the light/dark theme swapped in the compartment.
+const baseEditorTheme: Extension = EditorView.theme({
+  '&': { fontSize: '13px', minHeight: '16rem' },
+  '&.cm-focused': { outline: 'none' },
+  '.cm-scroller': {
+    overflow: 'auto',
+    maxHeight: '28rem',
+    fontFamily:
+      "var(--sl-font-mono, 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace)",
+    lineHeight: '1.6',
+  },
+  '.cm-content': { padding: '8px 0', fontWeight: '500' },
+  '.cm-gutters': { border: 'none' },
+  '.cm-lineNumbers .cm-gutterElement': { padding: '0 8px 0 12px' },
+});
+
+// Light syntax theme + chrome that blends into the Starlight page background.
+// (The dark side uses oneDark, which brings its own theme and highlighting.)
 const lightEditorTheme: Extension = [
   syntaxHighlighting(defaultHighlightStyle),
   EditorView.theme(
@@ -25,7 +49,11 @@ const lightEditorTheme: Extension = [
       '.cm-gutters': {
         backgroundColor: 'var(--sl-color-bg)',
         color: 'var(--sl-color-gray-3)',
-        border: 'none',
+      },
+      '.cm-activeLine': { backgroundColor: 'var(--sl-color-gray-7, #f4f4f6)' },
+      '.cm-activeLineGutter': {
+        backgroundColor: 'transparent',
+        color: 'var(--sl-color-text)',
       },
     },
     { dark: false }
@@ -51,6 +79,8 @@ function escapeHtml(s: string) {
 }
 
 function paintIframe(iframe: HTMLIFrameElement, bodyHtml: string) {
+  // The iframe is a separate document, so its styles are inlined here rather
+  // than shared with the page (this is also why `.playground-error` lives here).
   iframe.srcdoc = `
     <!doctype html>
     <html>
@@ -71,6 +101,16 @@ function paintIframe(iframe: HTMLIFrameElement, bodyHtml: string) {
         body > * {
           margin: 20px;
         }
+
+        .playground-error {
+          margin: 0;
+          padding: 1rem;
+          color: #dc2626;
+          background: #fef2f2;
+          border-radius: 8px;
+          font-size: 13px;
+          white-space: pre-wrap;
+        }
       </style>
     </head>
     <body>
@@ -80,17 +120,21 @@ function paintIframe(iframe: HTMLIFrameElement, bodyHtml: string) {
   `;
 }
 
-interface Props {
+export interface PlaygroundProps {
   /** The initial code shown in the editor. */
   code: string;
+  /** Filename shown in the editor header. */
+  filename?: string;
 }
 
 /**
- * An editable Astro snippet with a live preview. CodeMirror and the compile
- * pipeline are browser-only, so this island is mounted with `client:only`
- * from CodePlayground.astro.
+ * An editable Astro snippet with a live preview, laid out as a two-pane IDE
+ * card (editor over output). CodeMirror and the compile pipeline are
+ * browser-only, so this island is mounted with `client:only` from
+ * CodePlayground.astro. Chrome is styled with Tailwind utilities keyed on
+ * Starlight `--sl-color-*` tokens, so it recolors with the site theme.
  */
-export default function Playground(props: Props) {
+export function Playground(props: PlaygroundProps) {
   let editorMount!: HTMLDivElement;
   let iframe!: HTMLIFrameElement;
 
@@ -155,9 +199,13 @@ export default function Playground(props: Props) {
       state: EditorState.create({
         doc: props.code,
         extensions: [
+          lineNumbers(),
+          highlightActiveLine(),
+          highlightActiveLineGutter(),
           history(),
           keymap.of([...defaultKeymap, ...historyKeymap]),
           astro(),
+          baseEditorTheme,
           themeCompartment.of(editorTheme(currentTheme())),
 
           EditorView.lineWrapping,
@@ -189,42 +237,29 @@ export default function Playground(props: Props) {
   });
 
   return (
-    <>
-      <div class='code-toolbar'>
-        <button
-          class='copy-btn playground-btn'
-          classList={{ 'is-copied': copied() }}
-          onClick={copy}
-        >
-          <span class='btn-text'>{copied() ? 'Copied ✓' : 'Copy'}</span>
-          <span class='btn-icon copy-icon'>
-            <Copy size={16} />
-          </span>
-          <span class='btn-icon check-icon'>
-            <Check size={16} />
-          </span>
-        </button>
-        <button class='run-btn playground-btn' onClick={run}>
-          <span class='btn-text'>Run</span>
-          <Play size={16} />
-        </button>
-        <button class='reset-btn playground-btn' onClick={reset}>
-          <span class='btn-text'>Reset</span>
-          <RotateCcw size={16} />
-        </button>
-      </div>
+    <div class='overflow-hidden rounded-xl border border-(--sl-color-hairline) bg-[var(--sl-color-bg)] shadow-sm'>
+      {/* Editor pane header */}
+      <Toolbar
+        filename={props.filename ?? 'example.astro'}
+        copied={copied()}
+        onCopy={copy}
+        onReset={reset}
+        onRun={run}
+      />
 
-      <div class='editor-mount' ref={editorMount} />
+      {/* Editor */}
+      <div ref={editorMount} />
 
-      <div class='output'>
-        <div class='output-header'>Output</div>
-        <iframe
-          class='preview-frame'
-          sandbox='allow-scripts allow-same-origin'
-          title='Component preview'
-          ref={iframe}
-        />
+      {/* Output pane */}
+      <div class='border-t border-(--sl-color-hairline) bg-(--sl-color-bg-nav) px-3 py-2 text-xs font-medium text-[var(--sl-color-gray-2)]'>
+        Output
       </div>
-    </>
+      <iframe
+        ref={iframe}
+        class='block min-h-48 w-full bg-(--sl-color-bg)'
+        sandbox='allow-scripts allow-same-origin'
+        title='Component preview'
+      />
+    </div>
   );
 }

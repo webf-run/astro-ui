@@ -1,17 +1,16 @@
 ---
-import './Playground.css';
-import Playground from './Playground.tsx';
+import { Playground } from './Playground';
 
 interface Props {
   /* The initial code shown in the editor. */
   code: string;
+  /* Optional filename shown in the editor header. */
+  filename?: string;
 }
 
-const { code } = Astro.props;
+const { code, filename } = Astro.props;
 ---
 
 <div class='not-content'>
-  <div class='doc-playground'>
-    <Playground code={code} client:only='solid-js' />
-  </div>
+  <Playground code={code} filename={filename} client:only='solid-js' />
 </div>
