@@ -1,6 +1,6 @@
 ---
 import { Check, Copy, Play, RotateCcw } from 'lucide-astro';
-import '../../styles/playground.css';
+import './Playground.css';
 
 interface Props {
   /* The initial code shown in the editor. */
@@ -40,7 +40,7 @@ const { code } = Astro.props;
   </div>
 </div>
 <script type='module'>
-  import { initPlayground } from '../../playground/core';
+  import { initPlayground } from './Core';
 
   document.querySelectorAll('.doc-playground').forEach((el) => {
     if (el.dataset.playgroundReady === 'true') return;

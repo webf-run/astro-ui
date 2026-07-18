@@ -1,11 +1,14 @@
 import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
-import { defaultHighlightStyle, syntaxHighlighting } from '@codemirror/language';
+import {
+  defaultHighlightStyle,
+  syntaxHighlighting,
+} from '@codemirror/language';
 import { Compartment, EditorState, type Extension } from '@codemirror/state';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorView, keymap } from '@codemirror/view';
 
+import { runAstroSource } from './Compile';
 import { astro } from './astro-lang';
-import { runAstroSource } from './compile';
 
 function currentTheme(): 'light' | 'dark' {
   return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
@@ -54,7 +57,7 @@ function paintIframe(iframe: HTMLIFrameElement, bodyHtml: string) {
     /* Space between preview components */
     body > * {
       margin: 20px;
-     
+
     }
   </style>
 </head>
