@@ -1,64 +1,13 @@
 ---
 import CodePlayground from './CodePlayground.astro';
 
-const basicNavbarCode = `---
-import { Navbar } from "@webf/astro-ui";
-
-console.log(Astro.props);
-
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Courses", href: "/courses" },
-  { label: "Contact", href: "/contact" },
-];
----
-
-<Navbar
-  logoText="Astro UI"
-  navItems={navItems}
-/>`;
-
-const dropdownNavbarCode = `---
-import { Navbar } from "@webf/astro-ui";
-
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Programs", href: "/programs", hasDropdown: true },
-  { label: "Admissions", href: "/admissions", hasDropdown: true },
-  { label: "Contact", href: "/contact" },
-];
----
-
-<Navbar
-  logoText="Astro UI"
-  navItems={navItems}
-/>`;
-
-const customClassCode = `---
-import { Navbar } from "@webf/astro-ui";
-
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Components", href: "/components" },
-  { label: "Docs", href: "/docs" },
-];
----
-
-<Navbar
-  logoText="Astro UI"
-  navItems={navItems}
-  class="text-purple-700 hover:text-purple-900"
-/>`;
-
-const logoOnlyCode = `---
-import { Navbar } from "@webf/astro-ui";
-
----
-
-<Navbar
-   logoText="Astro UI"
-/>`;
+// Interactive examples live as real `.eg.astro` files under `../../examples/`.
+// They get full Astro editor tooling + `astro check`, and are loaded here as
+// raw source strings via Vite's `?raw` query.
+import basicNavbarCode from '../../examples/navbar/basic.eg.astro?raw';
+import dropdownNavbarCode from '../../examples/navbar/dropdown.eg.astro?raw';
+import customClassCode from '../../examples/navbar/custom-class.eg.astro?raw';
+import logoOnlyCode from '../../examples/navbar/logo-only.eg.astro?raw';
 ---
 
 <section class='doc-section'>

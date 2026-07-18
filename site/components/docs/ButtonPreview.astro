@@ -1,63 +1,16 @@
 ---
 import CodePlayground from './CodePlayground.astro';
 
-const variantsCode = `---
-import { Button } from "@webf/astro-ui";
----
-
-<Button variant="primary">Primary</Button>
-<Button variant="secondary">Secondary</Button>
-<Button variant="success" style="background:#1f2937;">Success</Button>
-<Button variant="purple">Purple</Button>
-<Button variant="blackwhite">Black & White</Button>`;
-
-const sizesCode = `---
-import { Button } from "@webf/astro-ui";
----
-
-<Button size="sm">Small</Button>
-<Button size="md">Medium</Button>
-<Button size="lg">Large</Button>`;
-
-const typesCode = `---
-import { Button } from "@webf/astro-ui";
----
-
-<Button variant="primary" size="sm" type="submit">Submit</Button>
-<Button variant="purple" size="sm" type="reset">Reset</Button>
-`;
-
-const iconCode = `---
-import { Button } from "@webf/astro-ui";
----
-
-<Button variant="primary" size="md" showIcon>Apply For Admission</Button>
-<Button variant="blackwhite" size="md" showIcon>Read More</Button>
-`;
-
-const disableCode = `---
-import { Button } from "@webf/astro-ui";
----
-<Button disabled> Alert</Button>
-<Button variant="secondary" size="sm" disabled>Warning</Button>
-<Button variant="purple" type="button" disabled>Download</Button>
-`;
-
-const linkCode = `---
-import { Button } from "@webf/astro-ui";
----
-<Button href="/docs"  target="_blank" rel="noopener noreferrer">Documentation</Button>
-<Button variant="secondary" href="/components"  target="_blank" rel="noopener noreferrer">Components</Button>
-<Button variant="purple" href="https://github.com/webf-run/astro-ui"  target="_blank" rel="noopener noreferrer">GitHub</Button>
-`;
-
-const loadingCode = `---
-import { Button } from "@webf/astro-ui";
----
-
-<Button loading>Save</Button>
-<Button variant="secondary" loading>Loading</Button>
-<Button variant="purple" loading>Processing</Button>`;
+// Interactive examples live as real `.eg.astro` files under `../../examples/`.
+// They get full Astro editor tooling + `astro check`, and are loaded here as
+// raw source strings via Vite's `?raw` query.
+import variantsCode from '../../examples/button/variants.eg.astro?raw';
+import sizesCode from '../../examples/button/sizes.eg.astro?raw';
+import typesCode from '../../examples/button/types.eg.astro?raw';
+import iconCode from '../../examples/button/icons.eg.astro?raw';
+import disableCode from '../../examples/button/disabled.eg.astro?raw';
+import linkCode from '../../examples/button/links.eg.astro?raw';
+import loadingCode from '../../examples/button/loading.eg.astro?raw';
 ---
 
 <section class='doc-section'>

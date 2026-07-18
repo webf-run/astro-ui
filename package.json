@@ -13,6 +13,8 @@
   "packageManager": "pnpm@11.10.0",
   "type": "module",
   "scripts": {
+    "check": "astro check && pnpm run check:types",
+    "check:types": "tsc --noEmit",
     "predev": "pnpm run build:playground",
     "prebuild": "pnpm run build:playground",
     "build:css": "tailwindcss -i ./src/styles/index.css -o ./dist/style.css --minify",
