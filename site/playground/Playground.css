@@ -1,10 +1,5 @@
 /* Playground */
 
-/* Custom elements are inline by default; the playground lays out as a block. */
-code-playground {
-  display: block;
-}
-
 .doc-section {
   margin-bottom: 3rem;
 }
@@ -241,7 +236,13 @@ code-playground {
 .editor-mount .cm-editor {
   height: 100%;
   min-height: 240px;
-  font-family: var(--sl-font-mono, 'JetBrains Mono Variable', Consolas, Monaco, monospace);
+  font-family: var(
+    --sl-font-mono,
+    'JetBrains Mono Variable',
+    Consolas,
+    Monaco,
+    monospace
+  );
   font-size: 14px;
 }
 

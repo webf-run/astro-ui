@@ -1,6 +1,6 @@
 ---
-import { Check, Copy, Play, RotateCcw } from 'lucide-astro';
 import './Playground.css';
+import Playground from './Playground.tsx';
 
 interface Props {
   /* The initial code shown in the editor. */
@@ -11,36 +11,7 @@ const { code } = Astro.props;
 ---
 
 <div class='not-content'>
-  <code-playground class='doc-playground'>
-    <div class='code-toolbar'>
-      <button class='copy-btn playground-btn'>
-        <span class='btn-text'>Copy</span>
-        <span class='btn-icon copy-icon'><Copy size={16} /></span>
-        <span class='btn-icon check-icon'><Check size={16} /></span>
-      </button>
-      <button class='run-btn playground-btn'>
-        <span class='btn-text'>Run</span>
-        <Play size={16} />
-      </button>
-      <button class='reset-btn playground-btn'>
-        <span class='btn-text'>Reset</span>
-        <RotateCcw size={16} />
-      </button>
-    </div>
-
-    <div class='editor-mount' data-initial-code={code}></div>
-
-    <div class='output'>
-      <div class='output-header'>Output</div>
-      <iframe
-        class='preview-frame'
-        sandbox='allow-scripts allow-same-origin'
-        title='Component preview'></iframe>
-    </div>
-  </code-playground>
+  <div class='doc-playground'>
+    <Playground code={code} client:only='solid-js' />
+  </div>
 </div>
-<script>
-  import { registerPlayground } from './Core';
-
-  registerPlayground();
-</script>

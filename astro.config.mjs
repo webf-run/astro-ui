@@ -1,8 +1,9 @@
 import path from 'node:path';
 
+import solid from '@astrojs/solid-js';
 import starlight from '@astrojs/starlight';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
-import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   srcDir: './site',
@@ -10,6 +11,7 @@ export default defineConfig({
   outDir: './dist',
 
   integrations: [
+    solid(),
     starlight({
       title: '@webf/astro-ui',
       social: [
