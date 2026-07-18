@@ -1,5 +1,3 @@
-// site/playground/runtime/astro-runtime.js
-//
 // A minimal, browser-only stand-in for Astro's real server runtime
 // ("astro/runtime/server/index.js"). Compiled .astro output imports these
 // symbols; we provide just enough of them to render a component to a static
@@ -11,11 +9,11 @@
 //     addAttribute, spreadAttributes, createComponent, createResult, etc.
 //   - No-op shims (present only so imports resolve): maybeRenderHead,
 //     renderHead, renderScript, renderTransition, createTransitionScope.
-var HTMLString = class extends String {
+class HTMLString extends String {
   get [Symbol.toStringTag]() {
     return 'HTMLString';
   }
-};
+}
 
 function markHTMLString(value) {
   if (value instanceof HTMLString) return value;

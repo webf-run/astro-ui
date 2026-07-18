@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import solid from '@astrojs/solid-js';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
@@ -19,6 +17,21 @@ export default defineConfig({
           icon: 'github',
           label: 'GitHub',
           href: 'https://github.com/webf-run/astro-ui',
+        },
+      ],
+      head: [
+        {
+          tag: 'script',
+
+          attrs: {
+            type: 'importmap',
+          },
+          content: JSON.stringify({
+            imports: {
+              'astro/runtime/server/index.js': '/play/astro-runtime.js',
+              '@webf/astro-ui': '/play/astro-ui.lib.js',
+            },
+          }),
         },
       ],
       components: {
@@ -61,11 +74,7 @@ export default defineConfig({
       },
     },
     resolve: {
-      alias: {
-        '@astrojs/compiler/browser': path.resolve(
-          './node_modules/@astrojs/compiler/dist/browser/index.js'
-        ),
-      },
+      alias: {},
     },
     optimizeDeps: {
       exclude: ['@astrojs/compiler'],

@@ -7,7 +7,7 @@ import type { Plugin } from 'esbuild-wasm';
 
 // Builds the static browser assets the in-browser Astro playground needs:
 //
-// public/play/astro-runtime.js - Our minimal runtime (site/playground/runtime/astro-runtime.js).
+// public/play/astro-runtime.js - Our minimal runtime (site/playground/Runtime.mjs).
 // public/play/astro-ui.lib.js  - @webf/astro-ui, precompiled from .astro source with the REAL @astrojs/compiler and bundled with esbuild.
 // public/play/astro.wasm       - The official Astro compiler's WASM binary, served so the browser can run it directly.
 // public/play/esbuild.wasm     - Esbuild's WASM binary, used client-side to strip the TypeScript left in the compiler's output.
@@ -18,7 +18,7 @@ const libEntry = path.resolve(root, './lib/index.ts');
 const outDir = path.resolve(root, 'public/play');
 
 async function buildRuntime() {
-  const entry = path.resolve(root, 'site/playground/runtime/astro-runtime.js');
+  const entry = path.resolve(root, 'site/playground/Runtime.mjs');
 
   const result = await esbuild.build({
     entryPoints: [entry],
@@ -75,7 +75,7 @@ async function buildLibrary() {
     platform: 'browser',
     write: false,
     // This specifier is resolved at runtime by the import map that
-    // site/playground/Compile.ts (ensureImportMap) injects into the page.
+    // site/playground/Compiler.ts (ensureImportMap) injects into the page.
     // It MUST stay in sync with the key used there.
     external: ['astro/runtime/server/index.js'],
     plugins: [astroCompilerPlugin],
