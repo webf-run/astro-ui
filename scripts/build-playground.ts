@@ -7,7 +7,7 @@ import type { Plugin } from 'esbuild-wasm';
 
 // Builds the static browser assets the in-browser Astro playground needs:
 //
-// public/play/astro-runtime.js - Our minimal runtime (src/playground/runtime/astro-server-runtime.js).
+// public/play/astro-runtime.js - Our minimal runtime (site/playground/runtime/astro-runtime.js).
 // public/play/astro-ui.lib.js  - @webf/astro-ui, precompiled from .astro source with the REAL @astrojs/compiler and bundled with esbuild.
 // public/play/astro.wasm       - The official Astro compiler's WASM binary, served so the browser can run it directly.
 // public/play/esbuild.wasm     - Esbuild's WASM binary, used client-side to strip the TypeScript left in the compiler's output.
@@ -74,8 +74,9 @@ async function buildLibrary() {
     format: 'esm',
     platform: 'browser',
     write: false,
-    // Shared with every compiled playground snippet via the import map in
-    // the site's <head> - see the starlight().head config in astro.config.mjs
+    // This specifier is resolved at runtime by the import map that
+    // site/playground/Compile.ts (ensureImportMap) injects into the page.
+    // It MUST stay in sync with the key used there.
     external: ['astro/runtime/server/index.js'],
     plugins: [astroCompilerPlugin],
     loader: { '.ts': 'ts' },

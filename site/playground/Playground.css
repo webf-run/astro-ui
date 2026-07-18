@@ -1,5 +1,10 @@
 /* Playground */
 
+/* Custom elements are inline by default; the playground lays out as a block. */
+code-playground {
+  display: block;
+}
+
 .doc-section {
   margin-bottom: 3rem;
 }

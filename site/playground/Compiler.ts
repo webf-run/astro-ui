@@ -11,9 +11,10 @@
  *   3. The result is loaded as a real ES module via a Blob URL.
  *   4. Its bare imports ("astro/runtime/server/index.js" and
  *      "@webf/astro-ui") are resolved through a browser import map that
- *      we build and inject *at runtime*, pointing at Blob URLs for
- *      public/play/astro-runtime.js and public/play/astro-ui.lib.js
- *      (both produced by scripts/build-playground.mjs).
+ *      we build and inject *at runtime* (see ensureImportMap below),
+ *      pointing at Blob URLs for public/play/astro-runtime.js and
+ *      public/play/astro-ui.lib.js (both produced by
+ *      scripts/build-playground.ts).
  *
  * WHY BLOB URLS INSTEAD OF JUST POINTING THE IMPORT MAP AT /play/*.js
  * ---------------------------------------------------------------------
@@ -33,6 +34,13 @@
 
 const RUNTIME_URL = '/play/astro-runtime.js';
 const LIB_URL = '/play/astro-ui.lib.js';
+
+// Bare import specifiers emitted by the Astro compiler (RUNTIME) and written
+// by users in snippets (LIB). We remap both to Blob URLs via the import map.
+// RUNTIME_SPECIFIER must match the `external` entry in
+// scripts/build-playground.ts so the lib and user snippets share one runtime.
+const RUNTIME_SPECIFIER = 'astro/runtime/server/index.js';
+const LIB_SPECIFIER = '@webf/astro-ui';
 
 interface ImportMapUrls {
   runtimeBlobUrl: string;
@@ -101,8 +109,8 @@ async function ensureImportMap(): Promise<ImportMapUrls> {
       mapEl.type = 'importmap';
       mapEl.textContent = JSON.stringify({
         imports: {
-          'astro/runtime/server/index.js': runtimeBlobUrl,
-          '@webf/astro-ui': libBlobUrl,
+          [RUNTIME_SPECIFIER]: runtimeBlobUrl,
+          [LIB_SPECIFIER]: libBlobUrl,
         },
       });
       document.head.appendChild(mapEl);
@@ -166,9 +174,9 @@ export async function renderCompiledModule(
 ): Promise<RenderResult> {
   let objectUrl: string | undefined;
   try {
-    // Make sure the import map (and therefore the runtime) is ready
-    // before importing anything that might reference those specifiers.
-    await ensureImportMap();
+    // getRuntime() awaits ensureImportMap() internally, so once it resolves
+    // the import map is live and the compiled snippet's bare specifiers
+    // (RUNTIME_SPECIFIER / LIB_SPECIFIER) will resolve when we import it below.
     const runtime = await getRuntime();
 
     const blob = new Blob([code], { type: 'text/javascript' });

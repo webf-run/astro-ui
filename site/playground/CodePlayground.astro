@@ -11,7 +11,7 @@ const { code } = Astro.props;
 ---
 
 <div class='not-content'>
-  <div class='doc-playground'>
+  <code-playground class='doc-playground'>
     <div class='code-toolbar'>
       <button class='copy-btn playground-btn'>
         <span class='btn-text'>Copy</span>
@@ -28,7 +28,7 @@ const { code } = Astro.props;
       </button>
     </div>
 
-    <div class='editor-mount' data-original={code}></div>
+    <div class='editor-mount' data-initial-code={code}></div>
 
     <div class='output'>
       <div class='output-header'>Output</div>
@@ -37,14 +37,10 @@ const { code } = Astro.props;
         sandbox='allow-scripts allow-same-origin'
         title='Component preview'></iframe>
     </div>
-  </div>
+  </code-playground>
 </div>
-<script type='module'>
-  import { initPlayground } from './Core';
+<script>
+  import { registerPlayground } from './Core';
 
-  document.querySelectorAll('.doc-playground').forEach((el) => {
-    if (el.dataset.playgroundReady === 'true') return;
-    initPlayground(el);
-    el.dataset.playgroundReady = 'true';
-  });
+  registerPlayground();
 </script>

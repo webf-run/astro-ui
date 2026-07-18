@@ -1,5 +1,7 @@
 # build output
 dist/
+# generated playground assets (rebuilt by predev/prebuild via scripts/build-playground.ts)
+public/play/
 # generated types
 .astro/
 .playground-tmp/

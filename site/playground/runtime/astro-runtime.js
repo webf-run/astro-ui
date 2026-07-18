@@ -1,4 +1,16 @@
-// src/playground/runtime/astro-runtime.js
+// site/playground/runtime/astro-runtime.js
+//
+// A minimal, browser-only stand-in for Astro's real server runtime
+// ("astro/runtime/server/index.js"). Compiled .astro output imports these
+// symbols; we provide just enough of them to render a component to a static
+// HTML string in the playground iframe. Kept as plain .js (no types) so it
+// mirrors the shape of the module it substitutes for.
+//
+// Exports fall into two groups:
+//   - Real behavior: toHtml, render, renderComponent, renderSlot,
+//     addAttribute, spreadAttributes, createComponent, createResult, etc.
+//   - No-op shims (present only so imports resolve): maybeRenderHead,
+//     renderHead, renderScript, renderTransition, createTransitionScope.
 var HTMLString = class extends String {
   get [Symbol.toStringTag]() {
     return 'HTMLString';
