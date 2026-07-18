@@ -1,3 +1,5 @@
+@import '@fontsource-variable/ibm-plex-sans';
+@import '@fontsource-variable/jetbrains-mono';
 @import '../../lib/styles/index.css';
 @import './header.css';
 
@@ -11,11 +13,65 @@
   --sl-text-h2: 2.5rem;
 
   --sl-border-radius: 16px;
+
+  /* Typography: IBM Plex Sans for docs, JetBrains Mono for code. */
+  --sl-font:
+    'IBM Plex Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --sl-font-mono:
+    'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  /* Indigo/violet accent (used for links, active nav/sidebar, focus rings). */
+  --sl-color-accent-low: #1e1b4b;
+  --sl-color-accent: #6366f1;
+  --sl-color-accent-high: #c7d2fe;
+}
+
+/* Light-theme accent ramp. */
+:root[data-theme='light'] {
+  --sl-color-accent-low: #e0e7ff;
+  --sl-color-accent: #6366f1;
+  --sl-color-accent-high: #3730a3;
 }
 
 .sidebar-pane {
   border-right: 1px solid var(--sl-color-gray-5);
   padding-top: 10px;
+}
+
+/* Pinecone-style sidebar: small uppercase muted group headers, tight rows,
+   accent-tinted active item. customCss is unlayered so these win over
+   Starlight's @layer starlight.core defaults without specificity hacks. */
+.sidebar-pane .group-label .large {
+  font-size: var(--sl-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sl-color-gray-3);
+}
+
+.sidebar-pane a {
+  color: var(--sl-color-gray-3);
+  border-radius: 8px;
+  font-size: var(--sl-text-sm);
+  padding: 0.35em 0.6em;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.sidebar-pane a:hover {
+  color: var(--sl-color-white);
+  background: var(--sl-color-gray-6);
+}
+
+.sidebar-pane a[aria-current='page'],
+.sidebar-pane a[aria-current='page']:hover,
+.sidebar-pane a[aria-current='page']:focus {
+  font-weight: 600;
+  color: var(--sl-color-text-accent);
+  background: var(--sl-color-accent-low);
 }
 
 /* Theme */
@@ -344,7 +400,7 @@ body {
 .editor {
   width: 100%;
   min-height: 220px;
-  font-family: monospace;
+  font-family: var(--sl-font-mono);
   font-size: 14px;
   padding: 18px;
   border-radius: 10px;

@@ -31,6 +31,8 @@
     "./style.css": "./dist/style.css"
   },
   "dependencies": {
+    "@codemirror/language": "^6.12.4",
+    "@lezer/common": "^1.5.2",
     "@lucide/astro": "^1.23.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^24.13.2",
@@ -53,6 +55,8 @@
     "@codemirror/state": "^6.4.1",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "^6.34.0",
+    "@fontsource-variable/ibm-plex-sans": "^5.2.8",
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@tailwindcss/cli": "^4.3.2",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@webcontainer/api": "^1.6.4",

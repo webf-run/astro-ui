@@ -1,10 +1,39 @@
 import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
-import { html } from '@codemirror/lang-html';
-import { EditorState } from '@codemirror/state';
+import { defaultHighlightStyle, syntaxHighlighting } from '@codemirror/language';
+import { Compartment, EditorState, type Extension } from '@codemirror/state';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorView, keymap } from '@codemirror/view';
 
+import { astro } from './astro-lang';
 import { runAstroSource } from './compile';
+
+function currentTheme(): 'light' | 'dark' {
+  return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+}
+
+// Light editor theme: default (light-oriented) highlight style plus chrome that
+// blends into the Starlight page background.
+const lightEditorTheme: Extension = [
+  syntaxHighlighting(defaultHighlightStyle),
+  EditorView.theme(
+    {
+      '&': {
+        backgroundColor: 'var(--sl-color-bg)',
+        color: 'var(--sl-color-text)',
+      },
+      '.cm-gutters': {
+        backgroundColor: 'var(--sl-color-bg)',
+        color: 'var(--sl-color-gray-3)',
+        border: 'none',
+      },
+    },
+    { dark: false }
+  ),
+];
+
+function editorTheme(mode: 'light' | 'dark'): Extension {
+  return mode === 'dark' ? oneDark : lightEditorTheme;
+}
 
 function paintIframe(iframe: HTMLIFrameElement, bodyHtml: string) {
   iframe.srcdoc = `<!doctype html>
@@ -15,7 +44,11 @@ function paintIframe(iframe: HTMLIFrameElement, bodyHtml: string) {
     body {
       margin: 0;
       padding: 1rem;
-      font-family: system-ui, sans-serif;
+      font-family: 'IBM Plex Sans Variable', system-ui, sans-serif;
+    }
+
+    code, pre, kbd, samp {
+      font-family: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
     }
 
     /* Space between preview components */
@@ -88,6 +121,8 @@ export function initPlayground(root: HTMLElement) {
     }
   }
 
+  const themeCompartment = new Compartment();
+
   const view = new EditorView({
     parent: editorMount,
     state: EditorState.create({
@@ -95,14 +130,27 @@ export function initPlayground(root: HTMLElement) {
       extensions: [
         history(),
         keymap.of([...defaultKeymap, ...historyKeymap]),
-        html(),
-        oneDark,
+        astro(),
+        themeCompartment.of(editorTheme(currentTheme())),
 
         EditorView.lineWrapping,
         EditorView.editable.of(true),
       ],
     }),
   });
+
+  // Keep the editor's syntax theme in sync with the site light/dark toggle,
+  // which flips `data-theme` on <html> (see the Header component).
+  const themeObserver = new MutationObserver(() => {
+    view.dispatch({
+      effects: themeCompartment.reconfigure(editorTheme(currentTheme())),
+    });
+  });
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
+  });
+
   run(); // one render on initial mount, not on every keystroke
 
   // copyBtn.addEventListener('click', async () => {
