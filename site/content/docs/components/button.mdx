@@ -1,13 +1,57 @@
 ---
 title: Button
 description: Button component
-tableOfContents: false
 ---
 
-import ButtonPreview from '../../../components/docs/ButtonPreview.astro';
-
-# Button
+import CodePlayground from '../../../components/docs/CodePlayground.astro';
+import variantsCode from '../../../examples/button/variants.eg.astro?raw';
+import sizesCode from '../../../examples/button/sizes.eg.astro?raw';
+import typesCode from '../../../examples/button/types.eg.astro?raw';
+import iconCode from '../../../examples/button/icons.eg.astro?raw';
+import disableCode from '../../../examples/button/disabled.eg.astro?raw';
+import linkCode from '../../../examples/button/links.eg.astro?raw';
+import loadingCode from '../../../examples/button/loading.eg.astro?raw';
 
 `Buttons` allow users to trigger actions such as submitting forms, navigating between pages, opening dialogs, or executing commands. The `Button` component provides multiple variants, sizes, and states while maintaining a consistent design across your application.
 
-<ButtonPreview />
+## Variants
+
+Choose from a collection of predefined button variants that communicate different visual priorities. Use the primary variant for the most important action, secondary for less prominent actions, and semantic variants such as success to indicate specific meanings.
+
+<CodePlayground code={variantsCode} />
+
+## Sizes
+
+Select an appropriate button size based on your interface. Small buttons work well in compact layouts, medium is the default choice for most interfaces, and large buttons help emphasize important actions.
+
+<CodePlayground code={sizesCode} />
+
+## Types
+
+The `type` attribute controls how a button behaves inside a form. Use `submit` to send form data, `reset` to restore default values, and `button` for custom JavaScript interactions.
+
+<CodePlayground code={typesCode} />
+
+## Icons
+
+Buttons can include icons to improve recognition and provide additional visual context. Icons may appear before or after the label depending on the action they represent.
+
+<CodePlayground code={iconCode} />
+
+## Disabled
+
+Buttons can be disabled to prevent interaction. Disabled buttons remain visible but cannot be clicked.
+
+<CodePlayground code={disableCode} />
+
+## Links
+
+Buttons can function as links to navigate to other pages or external resources. Render a button as a link by providing the `href` prop.
+
+<CodePlayground code={linkCode} />
+
+## Loading
+
+Buttons can display a loading state to indicate that an action is in progress. This is useful for actions that take time to complete, such as saving data or submitting a form.
+
+<CodePlayground code={loadingCode} />

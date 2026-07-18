@@ -1,15 +1,38 @@
 ---
 title: Navbar
 description: Build responsive navigation bars with branding, navigation links, and flexible layouts.
-tableOfContents: false
 ---
 
-import NavbarPreview from '../../../components/docs/NavbarPreview.astro';
+import CodePlayground from '../../../components/docs/CodePlayground.astro';
+import basicNavbarCode from '../../../examples/navbar/basic.eg.astro?raw';
+import dropdownNavbarCode from '../../../examples/navbar/dropdown.eg.astro?raw';
+import customClassCode from '../../../examples/navbar/custom-class.eg.astro?raw';
+import logoOnlyCode from '../../../examples/navbar/logo-only.eg.astro?raw';
 
-# Navbar
+The `Navbar` component provides a responsive navigation bar for Astro applications. It supports branding through a logo, configurable navigation links, optional dropdown indicators, and customizable link styles. A built-in call-to-action button makes it ideal for marketing websites, documentation portals, and educational platforms.
 
-The `Navbar` omponent provides a responsive navigation bar for Astro applications. It supports branding through a logo, configurable navigation links, optional dropdown indicators, and customizable link styles. A built-in call-to-action button makes it ideal for marketing websites, documentation portals, and educational platforms.
+Use the interactive playgrounds below to experiment with different navbar configurations and see the output update in real time.
 
-Use the interactive playground below to experiment with different navbar configurations and see the output update in real time.
+## Basic Navbar
 
-<NavbarPreview />
+Create a responsive navigation bar by providing a logo and a list of navigation items. The component automatically renders the navigation links and includes a call-to-action button.
+
+<CodePlayground code={basicNavbarCode} />
+
+## Dropdown Navigation
+
+Set `hasDropdown` to `true` on any navigation item to display a dropdown indicator. This is useful for menu items that contain additional navigation options.
+
+<CodePlayground code={dropdownNavbarCode} />
+
+## Custom Navigation Styles
+
+Use the `class` prop to apply custom Tailwind or CSS utility classes to all navigation links, allowing the navbar to match your brand or application theme.
+
+<CodePlayground code={customClassCode} />
+
+## Logo Only
+
+The navbar can also be used with only a logo. Navigation links are optional, making it suitable for landing pages, authentication screens, or simple layouts.
+
+<CodePlayground code={logoOnlyCode} />
