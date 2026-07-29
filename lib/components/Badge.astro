@@ -1,0 +1,79 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'neutral';
+  size?: 'sm' | 'md' | 'lg';
+  rounded?: 'full' | 'lg' | 'md' | 'none';
+  class?: string;
+  style?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  rounded = 'full',
+  class: className = '',
+  style = '',
+  ...rest
+} = Astro.props;
+
+const baseClasses = `
+  inline-flex
+  items-center
+  justify-center
+  font-semibold
+  tracking-[0.12em]
+  whitespace-nowrap
+`;
+
+const variants = {
+  primary: `
+    bg-purple-100
+    text-purple-700
+  `,
+
+  secondary: `
+    bg-gray-100
+    text-gray-700
+  `,
+
+  success: `
+    bg-green-100
+    text-green-700
+  `,
+
+  warning: `
+    bg-orange-100
+    text-orange-700
+  `,
+
+  neutral: `
+    bg-slate-100
+    text-slate-700
+  `,
+};
+
+const sizes = {
+  sm: 'px-3 py-1 text-[10px]',
+  md: 'px-4 py-2 text-xs',
+  lg: 'px-5 py-3 text-sm',
+};
+
+const roundedStyles = {
+  full: 'rounded-full',
+  lg: 'rounded-lg',
+  md: 'rounded-md',
+  none: 'rounded-none',
+};
+
+const badgeClasses = `
+  ${baseClasses}
+  ${variants[variant]}
+  ${sizes[size]}
+  ${roundedStyles[rounded]}
+  ${className}
+`;
+---
+
+<span class={badgeClasses} style={style} {...rest}>
+  <slot />
+</span>

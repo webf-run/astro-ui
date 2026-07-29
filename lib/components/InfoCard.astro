@@ -1,0 +1,217 @@
+---
+import type { Users } from 'lucide-astro';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  icon: typeof Users;
+
+  variant?: 'purple' | 'blue' | 'green' | 'orange' | 'red' | 'neutral';
+  size?: 'sm' | 'md' | 'lg';
+  layout?: 'horizontal' | 'vertical';
+  effect?: 'none' | 'shadow' | 'lift' | 'glow' | 'gradient';
+  bordered?: boolean;
+
+  class?: string;
+}
+
+const {
+  title,
+  subtitle,
+  icon: Icon,
+
+  variant = 'purple',
+  size = 'md',
+  layout = 'horizontal',
+  effect = 'none',
+  bordered = true,
+
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+/* ----------------------------------
+ * Base Classes
+ * ---------------------------------- */
+
+const baseClasses = `
+  rounded-xl
+  flex
+  transition-all
+  duration-300
+`;
+
+/* ----------------------------------
+ * Layout
+ * ---------------------------------- */
+
+const layouts = {
+  horizontal: 'items-center',
+  vertical: 'flex-col items-center text-center',
+};
+
+/* ----------------------------------
+ * Card Variants
+ * ---------------------------------- */
+
+const cardVariants = {
+  purple: `
+    bg-white
+    border-purple-200
+  `,
+
+  blue: `
+    bg-white
+    border-blue-200
+  `,
+
+  green: `
+    bg-white
+    border-green-200
+  `,
+
+  orange: `
+    bg-white
+    border-orange-200
+  `,
+
+  red: `
+    bg-white
+    border-red-200
+  `,
+
+  neutral: `
+    bg-white
+    border-gray-200
+  `,
+};
+
+/* ----------------------------------
+ * Icon Variants
+ * ---------------------------------- */
+
+const iconVariants = {
+  purple: `
+    bg-purple-100
+    text-purple-600
+  `,
+
+  blue: `
+    bg-blue-100
+    text-blue-600
+  `,
+
+  green: `
+    bg-green-100
+    text-green-600
+  `,
+
+  orange: `
+    bg-orange-100
+    text-orange-600
+  `,
+
+  red: `
+    bg-red-100
+    text-red-600
+  `,
+
+  neutral: `
+    bg-gray-100
+    text-gray-600
+  `,
+};
+
+/* ----------------------------------
+ * Sizes
+ * ---------------------------------- */
+
+const sizes = {
+  sm: {
+    card: 'p-3 gap-3',
+    iconBox: 'w-8 h-8',
+    icon: 'w-4 h-4',
+    title: 'text-sm font-semibold',
+    subtitle: 'text-xs',
+  },
+
+  md: {
+    card: 'p-4 gap-4',
+    iconBox: 'w-10 h-10',
+    icon: 'w-5 h-5',
+    title: 'text-base font-semibold',
+    subtitle: 'text-sm',
+  },
+
+  lg: {
+    card: 'p-6 gap-5',
+    iconBox: 'w-14 h-14',
+    icon: 'w-7 h-7',
+    title: 'text-lg font-semibold',
+    subtitle: 'text-base',
+  },
+};
+
+/* ----------------------------------
+ * Effects
+ * ---------------------------------- */
+
+const effects = {
+  none: '',
+
+  shadow: `
+    shadow-md
+  `,
+
+  lift: `
+    hover:-translate-y-1
+    hover:shadow-lg
+  `,
+
+  glow: `
+    hover:shadow-xl
+  `,
+
+  gradient: `
+    bg-gradient-to-br
+    from-white
+    to-purple-50
+  `,
+};
+
+/* ----------------------------------
+ * Final Classes
+ * ---------------------------------- */
+
+const borderClasses = bordered ? 'border' : '';
+
+const cardClasses = `
+  ${baseClasses}
+  ${layouts[layout]}
+  ${bordered ? 'border' : ''}
+  ${cardVariants[variant]}
+  ${effects[effect]}
+  ${sizes[size].card}
+  ${className}
+`;
+
+const iconBoxClasses = `
+  flex items-center justify-center rounded-lg shrink-0
+  ${sizes[size].iconBox}
+  ${iconVariants[variant]}
+`;
+---
+
+<div class={cardClasses} {...rest}>
+  <div class={iconBoxClasses}>
+    <Icon class={`${sizes[size].icon} stroke-current shrink-0`} />
+  </div>
+
+  <div>
+    <h4 class={sizes[size].title}>
+      {title}
+    </h4>
+
+    <p class={`${sizes[size].subtitle} text-gray-700`}>{subtitle}</p>
+  </div>
+</div>

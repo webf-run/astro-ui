@@ -1,0 +1,134 @@
+---
+import {
+  StatCard,
+  DollarSign,
+  Users,
+  CreditCard,
+  Eye,
+  Percent,
+  GraduationCap,
+  Award,
+  Briefcase,
+  Stethoscope,
+  HeartPulse,
+  Wallet,
+  ShoppingCart,
+  Package,
+  Truck,
+  Heart,
+  MessageCircle,
+  Clock,
+} from '@webf/astro-ui';
+---
+
+<h3 class='mb-4 text-lg font-semibold'>SaaS / Analytics Dashboard</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <StatCard
+    icon={Users}
+    value='14,250'
+    label='Active Users'
+    variant='blue'
+    trend='up'
+    trendValue='+3.1%'
+  />
+  <StatCard
+    icon={DollarSign}
+    value='$85K'
+    label='Monthly Revenue'
+    variant='green'
+    trend='up'
+    trendValue='+12.4%'
+  />
+  <StatCard icon={Eye} value='2.4M' label='Page Views' effect='shadow' />
+  <StatCard
+    icon={Percent}
+    value='68%'
+    label='Conversion Rate'
+    variant='green'
+    effect='lift'
+    trend='up'
+    trendValue='+4%'
+  />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>School / University</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <StatCard
+    icon={GraduationCap}
+    value='12,500'
+    label='Students'
+    variant='purple'
+  />
+  <StatCard icon={Award} value='98%' label='Placement Rate' variant='green' />
+  <StatCard
+    icon={Briefcase}
+    value='850'
+    label='Faculty Members'
+    variant='neutral'
+  />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>Healthcare</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <StatCard icon={Stethoscope} value='120' label='Doctors' variant='blue' />
+  <StatCard
+    icon={HeartPulse}
+    value='24/7'
+    label='Emergency Care'
+    variant='red'
+  />
+  <StatCard
+    icon={Clock}
+    value='8 min'
+    label='Avg. Wait Time'
+    variant='orange'
+    trend='down'
+    trendValue='-2 min'
+  />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>E-commerce</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <StatCard
+    icon={ShoppingCart}
+    value='8,240'
+    label='Orders'
+    variant='orange'
+    trend='up'
+    trendValue='+9%'
+  />
+  <StatCard icon={Package} value='520' label='Products' variant='neutral' />
+  <StatCard icon={Truck} value='97%' label='On-Time Delivery' variant='green' />
+  <StatCard
+    icon={Wallet}
+    value='$62'
+    label='Avg. Order Value'
+    variant='purple'
+    trend='up'
+    trendValue='+6.2%'
+  />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>Marketing / Social</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <StatCard
+    icon={Heart}
+    value='24.8K'
+    label='Likes'
+    variant='red'
+    effect='gradient'
+  />
+  <StatCard
+    icon={MessageCircle}
+    value='1,320'
+    label='Comments'
+    variant='blue'
+    effect='gradient'
+  />
+  <StatCard icon={CreditCard} value='$14K' label='Ad Spend' variant='neutral' />
+</div>

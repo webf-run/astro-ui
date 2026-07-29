@@ -1,33 +1,156 @@
 ---
 import type { Users } from 'lucide-astro';
+import { TrendingDown, TrendingUp } from 'lucide-astro';
 
 interface Props {
   icon: typeof Users;
   value: string;
   label: string;
+
+  variant?: 'purple' | 'blue' | 'green' | 'orange' | 'red' | 'neutral';
+  size?: 'sm' | 'md' | 'lg';
+  effect?: 'none' | 'shadow' | 'lift' | 'glow' | 'gradient';
+  bordered?: boolean;
+
+  trend?: 'up' | 'down' | 'none';
+  trendValue?: string;
+
+  class?: string;
 }
 
-const { icon: Icon, value, label }: Props = Astro.props;
+const {
+  icon: Icon,
+  value,
+  label,
+
+  variant = 'purple',
+  size = 'md',
+  effect = 'none',
+  bordered = true,
+
+  trend = 'none',
+  trendValue,
+
+  class: className = '',
+}: Props = Astro.props;
+
+/* ----------------------------------
+ * Card Variants
+ * ---------------------------------- */
+
+const cardVariants = {
+  purple: 'bg-purple-100 border-violet-100',
+  blue: 'bg-blue-100 border-blue-200',
+  green: 'bg-green-100 border-green-200',
+  orange: 'bg-orange-100 border-orange-200',
+  red: 'bg-red-100 border-red-200',
+  neutral: 'bg-gray-100 border-gray-200',
+};
+
+/* ----------------------------------
+ * Icon Variants
+ * ---------------------------------- */
+
+const iconVariants = {
+  purple: 'text-violet-800',
+  blue: 'text-blue-600',
+  green: 'text-green-600',
+  orange: 'text-orange-600',
+  red: 'text-red-600',
+  neutral: 'text-gray-700',
+};
+
+/* ----------------------------------
+ * Sizes
+ * ---------------------------------- */
+
+const sizes = {
+  sm: {
+    card: 'px-2.5 py-3 gap-1',
+    icon: 'w-4 h-4 mb-1',
+    value: 'text-base',
+    label: 'text-[11px]',
+  },
+
+  md: {
+    card: 'px-3 py-4 gap-1',
+    icon: 'w-5 h-5 mb-2',
+    value: 'text-lg sm:text-xl',
+    label: 'text-xs',
+  },
+
+  lg: {
+    card: 'px-5 py-6 gap-2',
+    icon: 'w-7 h-7 mb-2',
+    value: 'text-2xl sm:text-3xl',
+    label: 'text-sm',
+  },
+};
+
+/* ----------------------------------
+ * Effects
+ * ---------------------------------- */
+
+const effects = {
+  none: '',
+  shadow: 'shadow-md',
+  lift: 'transition-all duration-300 hover:-translate-y-1 hover:shadow-lg',
+  glow: 'transition-all duration-300 hover:shadow-xl',
+  gradient: 'bg-gradient-to-br from-white to-purple-50',
+};
+
+/* ----------------------------------
+ * Trend
+ * ---------------------------------- */
+
+const trendColors = {
+  up: 'text-green-600',
+  down: 'text-red-600',
+  none: '',
+};
+
+/* ----------------------------------
+ * Final Classes
+ * ---------------------------------- */
+
+const cardClasses = `
+  flex flex-col items-center justify-center
+  rounded-xl text-center
+  w-full sm:w-[220px] lg:w-[240px]
+  h-[170px]
+  flex-shrink-0
+  ${bordered ? 'border' : ''}
+  ${cardVariants[variant]}
+  ${effects[effect]}
+  ${sizes[size].card}
+  ${className}
+`;
 ---
 
-<div
-  class='rounded-xl
-    px-3 py-4
-    text-center
-    w-full
-    sm:max-w-[220px]
-    lg:max-w-none
-    mx-auto
-    bg-purple-100
-    border border-violet-100'
->
-  <Icon class='w-5 h-5 mx-auto mb-2 text-violet-800' />
-
-  <h3 class='font-bold text-lg sm:text-xl whitespace-nowrap'>
+<div class={cardClasses}>
+  <div class='flex justify-center items-center'>
+    <Icon class={`${sizes[size].icon} ${iconVariants[variant]}`} />
+  </div>
+  <h3 class={`font-bold whitespace-nowrap ${sizes[size].value}`}>
     {value}
   </h3>
 
-  <p class='text-xs text-zinc-700'>
+  <p class={`text-zinc-700 ${sizes[size].label}`}>
     {label}
   </p>
+
+  {
+    trend !== 'none' && trendValue && (
+      <p
+        class={`mt-1 inline-flex items-center gap-1 text-xs font-semibold ${trendColors[trend]}`}
+      >
+        {trend === 'up' ? (
+          <TrendingUp class='h-3 w-3 stroke-current' />
+        ) : (
+          <TrendingDown class='h-3 w-3 stroke-current' />
+        )}
+        {trendValue}
+      </p>
+    )
+  }
 </div>

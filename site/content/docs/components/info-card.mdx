@@ -1,0 +1,100 @@
+---
+title: InfoCard
+description: A flexible information card component for displaying metrics, statistics, statuses, and key insights across dashboards, landing pages, and business applications.
+---
+
+---
+
+import basicCode from '../../../examples/info-card/basic.eg.astro?raw';
+import effectsCode from '../../../examples/info-card/effects.eg.astro?raw';
+import layoutsCode from '../../../examples/info-card/layouts.eg.astro?raw';
+import sizesCode from '../../../examples/info-card/sizes.eg.astro?raw';
+import useCasesCode from '../../../examples/info-card/use-cases.eg.astro?raw';
+import variantsCode from '../../../examples/info-card/variants.eg.astro?raw';
+
+import CodePlayground from '../../../playground/CodePlayground.astro';
+
+`InfoCard` is a reusable information display component designed for presenting statistics, metrics, summaries, and quick insights.
+
+It supports multiple color variants, predefined sizes, horizontal and vertical layouts, visual effects, and border customization. This makes it suitable for analytics dashboards, SaaS applications, education platforms, healthcare websites, e-commerce stores, and marketing landing pages.
+
+## Features
+
+<ul class='list-disc pl-5 space-y-1'>
+  <li>Multiple color themes with built-in variants</li>
+  <li>Flexible sizing options</li>
+  <li>Horizontal and vertical layouts</li>
+  <li>Interactive visual effects</li>
+  <li>Optional border styling</li>
+  <li>Icon-based visual representation</li>
+  <li>Designed for dashboards, cards, and metric sections</li>
+</ul>
+
+## Basic Usage
+
+Use the default configuration for simple metric and summary displays.
+
+<CodePlayground code={basicCode} />
+
+## Color Variants
+
+Use variants to match different brand identities, categories, or information types.
+
+Supported variants:
+
+- `purple` — General purpose, education, premium sections
+- `blue` — Technology, business, analytics
+- `green` — Growth, success, finance
+- `orange` — Products, warnings, highlights
+- `red` — Alerts, critical information
+- `neutral` — Minimal and clean interfaces
+
+<CodePlayground code={variantsCode} />
+
+## Sizes
+
+Choose the appropriate size based on the placement and importance of the information.
+
+- `sm` — Compact layouts, side panels, small widgets
+- `md` — Default size for dashboards and content sections
+- `lg` — Featured statistics and promotional sections
+
+<CodePlayground code={sizesCode} />
+
+## Layouts
+
+Change the card arrangement using horizontal or vertical layouts.
+
+### Horizontal Layout
+
+The default layout places the icon and content side by side, making it suitable for dashboards and data summaries.
+
+### Vertical Layout
+
+The vertical layout centers the icon and content, making it ideal for landing pages, feature sections, and highlight cards.
+
+<CodePlayground code={layoutsCode} />
+
+## Visual Effects
+
+Add depth and emphasis using built-in effects.
+
+Available effects:
+
+- `none` — Default flat appearance
+- `shadow` — Adds subtle elevation
+- `lift` — Adds hover movement and stronger elevation
+- `glow` — Creates a colored highlight effect
+- `gradient` — Applies a soft gradient background
+
+<CodePlayground code={effectsCode} />
+
+## Border Customization
+
+Set `bordered={false}` to drop the border for minimal designs or when placing a card on an already styled background — see the last card (`Downloads`) in the [Visual Effects](#visual-effects) example above.
+
+## Real-World Examples
+
+`InfoCard` adapts to any industry simply by swapping the icon, variant, and copy. The example below shows the same component used across a SaaS dashboard, a school, a healthcare site, an e-commerce store, a portfolio, a startup landing page, an NGO, and an analytics dashboard.
+
+<CodePlayground code={useCasesCode} />

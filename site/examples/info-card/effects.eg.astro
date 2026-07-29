@@ -1,0 +1,49 @@
+---
+import {
+  InfoCard,
+  Briefcase,
+  HeartHandshake,
+  Sparkles,
+  Headphones,
+  Download,
+} from '@webf/astro-ui';
+---
+
+<div class='flex flex-wrap gap-4'>
+  <InfoCard
+    title='120'
+    subtitle='Open Projects'
+    icon={Briefcase}
+    effect='shadow'
+  />
+
+  <InfoCard
+    title='98%'
+    subtitle='Customer Satisfaction'
+    icon={HeartHandshake}
+    effect='lift'
+  />
+
+  <InfoCard
+    title='Premium'
+    subtitle='Enterprise Plan'
+    icon={Sparkles}
+    effect='glow'
+    variant='blue'
+  />
+
+  <InfoCard
+    title='24/7'
+    subtitle='Customer Support'
+    icon={Headphones}
+    effect='gradient'
+    variant='green'
+  />
+
+  <InfoCard
+    title='120K'
+    subtitle='Downloads'
+    icon={Download}
+    bordered={false}
+  />
+</div>

@@ -1,0 +1,86 @@
+---
+title: StatCard
+description: A compact stat tile for headline numbers — user counts, revenue, ratings, and other single-metric callouts — with color variants, sizes, effects, and trend indicators.
+---
+
+import basicCode from '../../../examples/stat-card/basic.eg.astro?raw';
+import effectsCode from '../../../examples/stat-card/effects.eg.astro?raw';
+import sizesCode from '../../../examples/stat-card/sizes.eg.astro?raw';
+import trendCode from '../../../examples/stat-card/trend.eg.astro?raw';
+import useCasesCode from '../../../examples/stat-card/use-cases.eg.astro?raw';
+import variantsCode from '../../../examples/stat-card/variants.eg.astro?raw';
+
+import CodePlayground from '../../../playground/CodePlayground.astro';
+
+`StatCard` is a compact, centered tile built for a single headline number — a metric, a percentage, a rating, a count — paired with an icon and a short label. It's a lighter-weight alternative to `InfoCard` for grids where you want many stats side by side (e.g. a row of 4–6 tiles) rather than a few larger cards.
+
+It supports color variants, sizes, visual effects, optional borders, and an optional up/down trend indicator, so the same component works across dashboards, marketing pages, e-commerce, education, and healthcare sites.
+
+## Features
+
+<ul class='list-disc pl-5 space-y-1'>
+  <li>Multiple color themes with built-in variants</li>
+  <li>Three sizes for dense grids or featured callouts</li>
+  <li>Interactive visual effects</li>
+  <li>Optional border styling</li>
+  <li>Optional trend indicator with up/down arrows</li>
+  <li>Icon-based visual representation</li>
+  <li>Designed for stat grids, dashboards, and summary rows</li>
+</ul>
+
+## Basic Usage
+
+Use the default configuration for a simple metric tile.
+
+<CodePlayground code={basicCode} />
+
+## Color Variants
+
+Use the `variant` prop to match different brand identities, categories, or information types.
+
+Supported variants:
+
+- `purple` — General purpose, education, premium sections
+- `blue` — Technology, business, analytics
+- `green` — Growth, success, finance
+- `orange` — Products, warnings, highlights
+- `red` — Alerts, critical information
+- `neutral` — Minimal and clean interfaces
+
+<CodePlayground code={variantsCode} />
+
+## Sizes
+
+Choose the appropriate size based on how dense the grid is and how much emphasis the stat needs.
+
+- `sm` — Dense grids with many tiles side by side
+- `md` — Default size for dashboards and summary rows
+- `lg` — Featured statistics and hero sections
+
+<CodePlayground code={sizesCode} />
+
+## Visual Effects
+
+Use `effect` to add depth, and `bordered={false}` to drop the border on already-styled backgrounds.
+
+Available effects:
+
+- `none` — Default flat appearance
+- `shadow` — Adds subtle elevation
+- `lift` — Adds hover movement and stronger elevation
+- `glow` — Creates a colored highlight effect on hover
+- `gradient` — Applies a soft gradient background
+
+<CodePlayground code={effectsCode} />
+
+## Trend Indicator
+
+Set `trend='up'` or `trend='down'` with a `trendValue` (e.g. `'+12.4%'`) to show a small colored delta under the stat — useful for dashboards where you want to show change over time at a glance.
+
+<CodePlayground code={trendCode} />
+
+## Real-World Examples
+
+`StatCard` adapts to any site by swapping the icon, variant, and trend. The example below shows the same component used across a SaaS/analytics dashboard, a school, a healthcare site, an e-commerce store, and a marketing/social page.
+
+<CodePlayground code={useCasesCode} />

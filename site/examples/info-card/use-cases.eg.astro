@@ -1,0 +1,174 @@
+---
+import {
+  InfoCard,
+  Users,
+  DollarSign,
+  Server,
+  GraduationCap,
+  Briefcase,
+  Stethoscope,
+  HeartPulse,
+  ShoppingCart,
+  Package,
+  FolderKanban,
+  Award,
+  Smile,
+  Zap,
+  ShieldCheck,
+  PlugZap,
+  HeartHandshake,
+  MapPinned,
+  BarChart3,
+  TrendingUp,
+  Star,
+} from '@webf/astro-ui';
+---
+
+<h3 class='mb-4 text-lg font-semibold'>SaaS Dashboard</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <InfoCard
+    title='14,250'
+    subtitle='Active Users'
+    icon={Users}
+    variant='blue'
+  />
+
+  <InfoCard
+    title='$85K'
+    subtitle='Monthly Revenue'
+    icon={DollarSign}
+    variant='green'
+  />
+
+  <InfoCard title='99.98%' subtitle='Uptime' icon={Server} variant='purple' />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>School / University</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <InfoCard title='12,500' subtitle='Students' icon={GraduationCap} />
+
+  <InfoCard title='850' subtitle='Faculty Members' icon={Users} />
+
+  <InfoCard
+    title='98%'
+    subtitle='Placement Rate'
+    icon={Briefcase}
+    variant='green'
+  />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>Healthcare</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <InfoCard title='120' subtitle='Doctors' icon={Stethoscope} />
+
+  <InfoCard
+    title='24/7'
+    subtitle='Emergency Care'
+    icon={HeartPulse}
+    variant='red'
+  />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>E-commerce</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <InfoCard title='8,240' subtitle='Orders' icon={ShoppingCart} />
+
+  <InfoCard title='520' subtitle='Products' icon={Package} variant='orange' />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>Portfolio</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <InfoCard
+    title='50+'
+    subtitle='Projects Completed'
+    icon={FolderKanban}
+    layout='vertical'
+  />
+
+  <InfoCard
+    title='12'
+    subtitle='Years Experience'
+    icon={Award}
+    layout='vertical'
+  />
+
+  <InfoCard
+    title='30+'
+    subtitle='Happy Clients'
+    icon={Smile}
+    layout='vertical'
+  />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>Startup Landing Page</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <InfoCard
+    title='1M+'
+    subtitle='API Requests'
+    icon={Zap}
+    effect='gradient'
+    variant='blue'
+  />
+
+  <InfoCard
+    title='99.99%'
+    subtitle='Reliability'
+    icon={ShieldCheck}
+    effect='gradient'
+    variant='green'
+  />
+
+  <InfoCard
+    title='200+'
+    subtitle='Integrations'
+    icon={PlugZap}
+    effect='gradient'
+    variant='purple'
+  />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>NGO / Foundation</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <InfoCard title='15K+' subtitle='Lives Impacted' icon={HeartHandshake} />
+
+  <InfoCard
+    title='35'
+    subtitle='Communities'
+    icon={MapPinned}
+    variant='orange'
+  />
+</div>
+
+<h3 class='mb-4 mt-8 text-lg font-semibold'>Analytics Dashboard</h3>
+
+<div class='flex flex-wrap gap-4'>
+  <InfoCard
+    title='2.4M'
+    subtitle='Page Views'
+    icon={BarChart3}
+    effect='shadow'
+  />
+
+  <InfoCard
+    title='68%'
+    subtitle='Conversion Rate'
+    icon={TrendingUp}
+    effect='lift'
+    variant='green'
+  />
+
+  <InfoCard
+    title='4.9★'
+    subtitle='Average Rating'
+    icon={Star}
+    effect='glow'
+    variant='orange'
+  />
+</div>

@@ -336,9 +336,8 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.doc-section p {
-  color: var(--sl-color-text-accent);
-  margin-bottom: 1rem;
+.doc-section > p {
+  color: var(--sl-color-text);
 }
 .tabs {
   display: flex;

@@ -1,0 +1,32 @@
+---
+import { StatCard, DollarSign, Users, ShoppingCart } from '@webf/astro-ui';
+---
+
+<div class='flex flex-wrap gap-4'>
+  <StatCard
+    icon={DollarSign}
+    value='$85K'
+    label='Monthly Revenue'
+    variant='green'
+    trend='up'
+    trendValue='+12.4%'
+  />
+
+  <StatCard
+    icon={Users}
+    value='14,250'
+    label='Active Users'
+    variant='blue'
+    trend='up'
+    trendValue='+3.1%'
+  />
+
+  <StatCard
+    icon={ShoppingCart}
+    value='1,204'
+    label='Cart Abandonment'
+    variant='red'
+    trend='down'
+    trendValue='-5.8%'
+  />
+</div>

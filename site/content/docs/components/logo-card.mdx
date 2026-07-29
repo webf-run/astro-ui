@@ -1,0 +1,96 @@
+---
+title: LogoCard
+description: A reusable logo tile for partner, customer, sponsor, and portfolio sections.
+---
+
+import basicCode from '../../../examples/logo-card/basic.eg.astro?raw';
+import colorVariantsCode from '../../../examples/logo-card/color-variants.eg.astro?raw';
+import customStyleCode from '../../../examples/logo-card/custom-style.eg.astro?raw';
+import hoverEffectsCode from '../../../examples/logo-card/hover-effects.eg.astro?raw';
+import logoWallCode from '../../../examples/logo-card/logo-wall.eg.astro?raw';
+import partnerGridCode from '../../../examples/logo-card/partner-grid.eg.astro?raw';
+import shadowsCode from '../../../examples/logo-card/shadows.eg.astro?raw';
+import sizesCode from '../../../examples/logo-card/sizes.eg.astro?raw';
+import CodePlayground from '../../../playground/CodePlayground.astro';
+
+`BrandLogoCard` displays a brand logo in a polished, accessible tile. Add `href` to make the card a link, or omit it when the logo is decorative.
+
+## Basic Usage
+
+The `LogoCard` component displays a company, client, partner, or sponsor logo along with its name. Provide the logo source using an image URL and optionally pass an `href` to make the card clickable. This example demonstrates using external image URLs for different logo sources.
+
+<CodePlayground code={basicCode} />
+
+## Partner & Client Logo Wall
+
+Arrange multiple partner or customer logos in a responsive grid layout. This component helps present brand associations, integrations, and customer networks in a structured and visually appealing way.
+
+<CodePlayground code={partnerGridCode} />
+
+## Sizes
+
+Use smaller cards in compact footer sections, medium cards in customer grids, and larger cards in sponsor or portfolio sections.
+
+<CodePlayground code={sizesCode} />
+
+## Color Variants
+
+Customize the appearance of `LogoCard` using predefined color variants to align with different brand identities, product themes, or website sections.
+
+The `variant` prop provides consistent background and border styling without requiring additional CSS. Combine it with the `size` prop to create visually consistent logo cards across landing pages, partner sections, dashboards, and event websites.
+
+<CodePlayground code={colorVariantsCode} />
+
+## Box Shadows
+
+Enhance the visual hierarchy of your logo cards by applying custom shadows. Use the `style` prop to control shadow intensity and create different levels of emphasis for partner showcases, featured brands, or promotional sections.
+
+Custom shadows can be combined with `size` and `variant` props to create flexible card styles while maintaining consistent component behavior.
+
+<CodePlayground code={shadowsCode} />
+
+## Hover Effects
+
+Add interactive hover states to `LogoCard` using custom classes and styles. Hover effects help create engaging user experiences by adding visual feedback when users interact with partner, customer, or sponsor logos.
+
+Use the `class` prop for utility-based hover interactions such as scaling and shadows, and the `style` prop for custom transition effects or advanced styling.
+
+<CodePlayground code={hoverEffectsCode} />
+
+## Custom Size and Style
+
+Use the `style` prop to customize the appearance of the card and align it with your campaign, landing page, or brand design system.
+
+The `style` prop allows you to override default styles by applying custom dimensions, borders, backgrounds, shadows, and other CSS properties. This makes the `LogoCard` flexible enough to match different visual requirements while maintaining its core functionality.
+
+<CodePlayground code={customStyleCode} />
+
+## Responsive Logo Wall
+
+Create a flexible logo wall using a responsive CSS grid layout. This pattern is ideal for displaying customer logos, technology partners, sponsors, or brand integrations across different screen sizes.
+
+Combine the `LogoCard` size and variant props with a responsive grid to maintain consistent spacing, alignment, and visual hierarchy across desktop and mobile layouts.
+
+<CodePlayground code={logoWallCode} />
+
+## Props
+
+| Prop          | Type                                                 | Description                                                                                   |
+| ------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `logo`        | `string`                                             | Image URL for the brand logo.                                                                 |
+| `companyName` | `string`                                             | Brand name used for accessible text and image alt attributes.                                 |
+| `href`        | `string`                                             | Optional URL that makes the logo card clickable.                                              |
+| `target`      | `'_blank' \| '_self'`                                | Link target behavior. Defaults to `'_blank'`.                                                 |
+| `size`        | `'sm' \| 'md' \| 'lg'`                               | Controls the card dimensions. Defaults to `'md'`.                                             |
+| `variant`     | `'default' \| 'blue' \| 'green' \| 'gold' \| 'dark'` | Applies predefined background and border color themes. Defaults to `'default'`.               |
+| `class`       | `string`                                             | Additional CSS utility classes for custom styling.                                            |
+| `style`       | `string`                                             | Inline CSS overrides for advanced customization such as shadows, borders, or special effects. |
+
+## Default Behavior
+
+The `LogoCard` component provides built-in sizing and color variants while allowing further customization through the `class` and `style` props.
+
+- Use `size` to control predefined card dimensions.
+- Use `variant` to apply consistent theme styles.
+- Use `style` for one-off customizations such as shadows, gradients, or additional visual effects.
+- Use `class` when extending the component with utility classes.

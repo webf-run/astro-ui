@@ -1,0 +1,50 @@
+---
+title: Badge
+description: A small pill-shaped label used to introduce or highlight a section.
+---
+
+import colorsCode from '../../../examples/badge/colors.eg.astro?raw';
+import effectsCode from '../../../examples/badge/effects.eg.astro?raw';
+import shapesCode from '../../../examples/badge/shapes.eg.astro?raw';
+import sizesCode from '../../../examples/badge/sizes.eg.astro?raw';
+import variantsCode from '../../../examples/badge/variants.eg.astro?raw';
+import withIconCode from '../../../examples/badge/with-icon.eg.astro?raw';
+import CodePlayground from '../../../playground/CodePlayground.astro';
+
+The `Badge` component renders a small, pill-shaped label that draws attention to a section of a page, such as a category tag, a status flag, or a section eyebrow above a heading. It accepts any content through its default slot. Use the `style` prop when you need custom colors or spacing.
+
+## Variants
+
+Use the `variant` prop to apply one of the predefined visual styles to the `Badge`. Each variant provides a different color scheme, making it easy to highlight different types of content while maintaining a consistent appearance across your application.
+
+<CodePlayground code={variantsCode} />
+
+## Sizes
+
+The `size` prop controls the overall size of the `Badge`. Choose from the available sizes to ensure the badge fits naturally within your layout.
+
+<CodePlayground code={sizesCode} />
+
+## Shapes
+
+Customize the badge's corner radius using the `rounded` prop. Each option provides a predefined shape for a consistent look and feel.
+
+<CodePlayground code={shapesCode} />
+
+## Colors
+
+The `Badge` includes predefined color variants for common use cases. Use the `style` prop to customize colors when needed.
+
+<CodePlayground code={colorsCode} />
+
+## Custom Colors and Effects
+
+Use the `style` prop to apply custom CSS, such as colors, borders, shadows, text transformations, and other visual effects, to match your brand or design requirements.
+
+<CodePlayground code={effectsCode} />
+
+## With an Icon
+
+Add an icon alongside the badge text to provide visual context and improve readability.
+
+<CodePlayground code={withIconCode} />

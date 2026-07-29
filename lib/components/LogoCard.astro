@@ -1,0 +1,113 @@
+---
+interface Props {
+  logo: string;
+  companyName: string;
+  href?: string;
+  target?: '_blank' | '_self';
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'default' | 'blue' | 'green' | 'gold' | 'dark';
+  class?: string;
+  style?: string;
+}
+
+const {
+  logo,
+  companyName,
+  href,
+  target = '_blank',
+  size = 'md',
+  variant = 'default',
+  class: className = '',
+  style = '',
+  ...rest
+} = Astro.props;
+
+const baseClasses = `
+  flex
+  items-center
+  justify-center
+  rounded-xl
+  overflow-hidden
+  transition-all
+  duration-300
+`;
+
+const sizes = {
+  sm: 'w-[120px] h-[60px]',
+  md: 'w-[160px] h-[80px]',
+  lg: 'w-[220px] h-[110px]',
+};
+
+const variants = {
+  default: `
+    bg-white
+    border
+    border-gray-200
+  `,
+
+  blue: `
+    bg-blue-50
+    border
+    border-blue-300
+  `,
+
+  green: `
+    bg-green-50
+    border
+    border-green-300
+  `,
+
+  gold: `
+    bg-amber-50
+    border
+    border-amber-300
+  `,
+
+  dark: `
+    bg-gray-900
+    border
+    border-gray-700
+  `,
+};
+
+const cardClasses = `
+  ${baseClasses}
+  ${sizes[size]}
+  ${variants[variant]}
+  ${className}
+`;
+
+const normalizedHref = href
+  ? href.startsWith('http')
+    ? href
+    : `https://${href}`
+  : undefined;
+---
+
+{
+  normalizedHref ? (
+    <a
+      href={normalizedHref}
+      target={target}
+      rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+      class={cardClasses}
+      style={style}
+      aria-label={`Visit ${companyName}`}
+      {...rest}
+    >
+      <img
+        src={logo}
+        alt={`${companyName} logo`}
+        class='h-full w-full object-contain'
+      />
+    </a>
+  ) : (
+    <div class={cardClasses} style={style} {...rest}>
+      <img
+        src={logo}
+        alt={`${companyName} logo`}
+        class='h-full w-full object-contain'
+      />
+    </div>
+  )
+}

@@ -1,0 +1,40 @@
+---
+import {
+  InfoCard,
+  GraduationCap,
+  FolderKanban,
+  DollarSign,
+  ShoppingBag,
+  Bell,
+  Users,
+} from '@webf/astro-ui';
+---
+
+<div class='flex flex-wrap gap-4'>
+  <InfoCard
+    title='Students'
+    subtitle='2,500+'
+    icon={GraduationCap}
+    variant='purple'
+  />
+
+  <InfoCard
+    title='Projects'
+    subtitle='180+'
+    icon={FolderKanban}
+    variant='blue'
+  />
+
+  <InfoCard title='Revenue' subtitle='$48K' icon={DollarSign} variant='green' />
+
+  <InfoCard
+    title='Orders'
+    subtitle='1,240'
+    icon={ShoppingBag}
+    variant='orange'
+  />
+
+  <InfoCard title='Alerts' subtitle='12' icon={Bell} variant='red' />
+
+  <InfoCard title='Visitors' subtitle='8,920' icon={Users} variant='neutral' />
+</div>

@@ -1,0 +1,37 @@
+---
+import {
+  StatCard,
+  Server,
+  Sparkles,
+  Headphones,
+  Download,
+} from '@webf/astro-ui';
+---
+
+<div class='flex flex-wrap gap-4'>
+  <StatCard icon={Server} value='99.98%' label='Uptime' effect='shadow' />
+
+  <StatCard
+    icon={Sparkles}
+    value='Premium'
+    label='Enterprise Plan'
+    effect='lift'
+    variant='blue'
+  />
+
+  <StatCard
+    icon={Headphones}
+    value='24/7'
+    label='Customer Support'
+    effect='glow'
+    variant='green'
+  />
+
+  <StatCard
+    icon={Download}
+    value='120K'
+    label='Downloads'
+    effect='gradient'
+    bordered={false}
+  />
+</div>
