@@ -1,10 +1,5 @@
 import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
-import {
-  defaultHighlightStyle,
-  syntaxHighlighting,
-} from '@codemirror/language';
 import { Compartment, EditorState, type Extension } from '@codemirror/state';
-import { oneDark } from '@codemirror/theme-one-dark';
 import {
   EditorView,
   highlightActiveLine,
@@ -12,17 +7,18 @@ import {
   keymap,
   lineNumbers,
 } from '@codemirror/view';
-import { createSignal, onCleanup, onMount } from 'solid-js';
+import { onCleanup, onMount } from 'solid-js';
 
 import { astro } from './CodeMirrorAstroLang';
 import { runAstroSource } from './Compiler';
-import { Toolbar } from './Toolbar';
+import { baseEditorTheme, currentTheme, editorTheme } from './EditorTheme';
 
-// Layout/typography for the editor internals. CodeMirror renders its own DOM
-// (.cm-*) which Tailwind utilities can't reach, so this stays a CodeMirror
-// theme. Colors come from the light/dark theme swapped in the compartment.
-const baseEditorTheme: Extension = EditorView.theme({
-  '&': { fontSize: '13px', minHeight: '16rem' },
+// Scroller/focus behavior specific to the *interactive* editor (the static
+// read-only view doesn't need a capped scroll height or a focus ring).
+// Base typography/gutter styling lives in EditorTheme.ts, shared with the
+// read-only StaticCodeView so both look identical before/after Edit.
+const interactiveEditorTheme: Extension = EditorView.theme({
+  '&': { minHeight: '16rem' },
   '&.cm-focused': { outline: 'none' },
   '.cm-scroller': {
     overflow: 'auto',
@@ -31,42 +27,7 @@ const baseEditorTheme: Extension = EditorView.theme({
       "var(--sl-font-mono, 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace)",
     lineHeight: '1.6',
   },
-  '.cm-content': { padding: '8px 0', fontWeight: '500' },
-  '.cm-gutters': { border: 'none' },
-  '.cm-lineNumbers .cm-gutterElement': { padding: '0 8px 0 12px' },
 });
-
-// Light syntax theme + chrome that blends into the Starlight page background.
-// (The dark side uses oneDark, which brings its own theme and highlighting.)
-const lightEditorTheme: Extension = [
-  syntaxHighlighting(defaultHighlightStyle),
-  EditorView.theme(
-    {
-      '&': {
-        backgroundColor: 'var(--sl-color-bg)',
-        color: 'var(--sl-color-text)',
-      },
-      '.cm-gutters': {
-        backgroundColor: 'var(--sl-color-bg)',
-        color: 'var(--sl-color-gray-3)',
-      },
-      '.cm-activeLine': { backgroundColor: 'var(--sl-color-gray-7, #f4f4f6)' },
-      '.cm-activeLineGutter': {
-        backgroundColor: 'transparent',
-        color: 'var(--sl-color-text)',
-      },
-    },
-    { dark: false }
-  ),
-];
-
-function currentTheme(): 'light' | 'dark' {
-  return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
-}
-
-function editorTheme(mode: 'light' | 'dark'): Extension {
-  return mode === 'dark' ? oneDark : lightEditorTheme;
-}
 
 function escapeHtml(s: string) {
   return s.replace(
@@ -120,29 +81,40 @@ function paintIframe(iframe: HTMLIFrameElement, bodyHtml: string) {
   `;
 }
 
+/** Actions exposed to the persistent toolbar that lives in ExampleBlock.astro. */
+export interface PlaygroundHandle {
+  run: () => void;
+  reset: () => void;
+  copy: () => Promise<void>;
+}
+
 export interface PlaygroundProps {
   /** The initial code shown in the editor. */
   code: string;
   /** Filename shown in the editor header. */
   filename?: string;
+  /**
+   * Called once the editor is mounted, with the action functions the
+   * persistent toolbar (Copy/Reset/Run) drives. Keeping the toolbar outside
+   * this component means it never gets unmounted/remounted, so there's no
+   * button-set jump when Edit is clicked.
+   */
+  onReady?: (handle: PlaygroundHandle) => void;
 }
 
 /**
- * An editable Astro snippet with a live preview, laid out as a two-pane IDE
- * card (editor over output). CodeMirror and the compile pipeline are
- * browser-only, so this island is mounted with `client:only` from
- * CodePlayground.astro. Chrome is styled with Tailwind utilities keyed on
- * Starlight `--sl-color-*` tokens, so it recolors with the site theme.
+ * An editable Astro snippet with a live preview - just the CodeMirror editor
+ * and the output iframe, no toolbar chrome (that's owned by ExampleBlock.astro
+ * so it can stay mounted across the static → live swap). CodeMirror and the
+ * compile pipeline are browser-only; this is loaded on demand via
+ * mount-on-demand.ts, never eagerly.
  */
 export function Playground(props: PlaygroundProps) {
   let editorMount!: HTMLDivElement;
   let iframe!: HTMLIFrameElement;
 
-  const [copied, setCopied] = createSignal(false);
-
   let view: EditorView | undefined;
   let inFlight = false;
-  let copyTimer: ReturnType<typeof setTimeout> | undefined;
 
   /** Compile the current editor contents and paint the result into the iframe. */
   async function run() {
@@ -169,21 +141,12 @@ export function Playground(props: PlaygroundProps) {
   }
 
   async function copy() {
-    if (!view) {
-      return;
-    }
-
+    if (!view) return;
     await navigator.clipboard.writeText(view.state.doc.toString());
-    setCopied(true);
-
-    clearTimeout(copyTimer);
-    copyTimer = setTimeout(() => setCopied(false), 1500);
   }
 
   function reset() {
-    if (!view) {
-      return;
-    }
+    if (!view) return;
 
     view.dispatch({
       changes: { from: 0, to: view.state.doc.length, insert: props.code },
@@ -206,6 +169,7 @@ export function Playground(props: PlaygroundProps) {
           keymap.of([...defaultKeymap, ...historyKeymap]),
           astro(),
           baseEditorTheme,
+          interactiveEditorTheme,
           themeCompartment.of(editorTheme(currentTheme())),
 
           EditorView.lineWrapping,
@@ -226,27 +190,19 @@ export function Playground(props: PlaygroundProps) {
       attributeFilter: ['data-theme'],
     });
 
+    props.onReady?.({ run, reset, copy });
+
     run(); // one render on mount, not on every keystroke
 
     onCleanup(() => {
       themeObserver.disconnect();
       view?.destroy();
       view = undefined;
-      clearTimeout(copyTimer);
     });
   });
 
   return (
-    <div class='overflow-hidden rounded-xl border border-(--sl-color-hairline) bg-[var(--sl-color-bg)] shadow-sm'>
-      {/* Editor pane header */}
-      <Toolbar
-        filename={props.filename ?? 'example.astro'}
-        copied={copied()}
-        onCopy={copy}
-        onReset={reset}
-        onRun={run}
-      />
-
+    <div>
       {/* Editor */}
       <div ref={editorMount} />
 

@@ -379,3 +379,6 @@ body {
 .main-frame.astro-vvfbwcdi {
   padding-top: 0 !important;
 }
+[data-example-output] > :global(*) {
+  margin: 20px;
+}

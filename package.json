@@ -15,7 +15,7 @@
   "scripts": {
     "check": "astro check && pnpm run check:types",
     "check:types": "tsc --noEmit",
-    "build:css": "tailwindcss -i ./lib/styles/index.css -o ./dist/style.css --minify",
+    "build:css": "tailwindcss -i ./lib/styles/index.css -o ./dist/style.css --minify && node -e \"require('fs').copyFileSync('dist/style.css','public/astro-ui-style.css')\"",
     "build:playground": "node scripts/build-playground.ts",
     "prebuild": "pnpm run build:playground",
     "build": "astro build",

@@ -1,0 +1,315 @@
+---
+import { Check, Copy, Pencil, Play, RotateCcw } from 'lucide-astro';
+
+interface Props {
+  /** Raw source shown in the code panel and used as the editor's starting doc. */
+  code: string;
+  /** Filename shown in the header, matches the playground's convention. */
+  filename?: string;
+}
+
+const { code, filename = 'example.astro' } = Astro.props;
+
+// Kept identical to Toolbar.tsx's `toolbarButton` / Run button classes, so
+// the static view and the live Playground toolbar are pixel-for-pixel the
+// same regardless of which one happens to be mounted.
+const neutralButton =
+  'inline-flex items-center gap-1 rounded-md border border-[var(--sl-color-gray-5)] ' +
+  'bg-[var(--sl-color-bg)] px-2 py-1 text-xs font-medium text-[var(--sl-color-gray-1)] ' +
+  'transition-colors hover:border-[var(--sl-color-gray-4)] hover:bg-[var(--sl-color-gray-6)] ' +
+  'hover:text-[var(--sl-color-text)]';
+
+const accentButton =
+  'inline-flex items-center gap-1 rounded-md bg-(--sl-color-accent) px-2.5 py-1 ' +
+  'text-xs font-semibold text-white shadow-sm transition-colors ' +
+  'hover:bg-(--sl-color-accent-high)';
+---
+
+<div class='not-content' data-example-block data-filename={filename}>
+  <div
+    class='overflow-hidden rounded-xl border border-(--sl-color-hairline) bg-[var(--sl-color-bg)] shadow-sm'
+  >
+    {
+      /* ---------- Toolbar: two mutually-exclusive button groups.
+         data-static-actions (Copy + Edit) is visible first.
+         data-live-actions (Copy + Reset + Run) replaces it once the
+         playground has actually loaded. Visibility is toggled via inline
+         `style.display`, not a Tailwind class, so this can never silently
+         break if a `hidden` utility class happens to get purged/renamed. ---------- */
+    }
+    <div
+      class='flex items-center justify-between gap-3 border-b border-(--sl-color-hairline) bg-(--sl-color-bg-nav) px-3 py-1.5'
+    >
+      <div class='flex items-center gap-2 text-xs text-(--sl-color-gray-3)'>
+        <span class='inline-block h-2 w-2 rounded-full bg-(--sl-color-accent)'
+        ></span>
+        <span class='font-mono'>{filename}</span>
+      </div>
+
+      {/* ----- Group 1: shown initially ----- */}
+      <div data-static-actions class='flex items-center gap-1.5'>
+        <button type='button' data-action='copy-static' class={neutralButton}>
+          <span data-copy-icon class='inline-flex'>
+            <Copy size={13} />
+          </span>
+          <span data-check-icon style='display:none'>
+            <Check size={13} />
+          </span>
+          <span data-copy-label>Copy</span>
+        </button>
+
+        <button type='button' data-action='edit' class={accentButton}>
+          <Pencil size={13} />
+          <span data-edit-label>Edit</span>
+        </button>
+      </div>
+
+      {
+        /* ----- Group 2: shown only after the live playground has mounted ----- */
+      }
+      <div
+        data-live-actions
+        class='flex items-center gap-1.5'
+        style='display:none'
+      >
+        <button type='button' data-action='copy-live' class={neutralButton}>
+          <span data-copy-icon class='inline-flex'>
+            <Copy size={13} />
+          </span>
+          <span data-check-icon style='display:none'>
+            <Check size={13} />
+          </span>
+          <span data-copy-label>Copy</span>
+        </button>
+
+        <button type='button' data-action='reset' class={neutralButton}>
+          <RotateCcw size={13} />
+          <span>Reset</span>
+        </button>
+
+        <button type='button' data-action='run' class={accentButton}>
+          <Play size={13} />
+          <span>Run</span>
+        </button>
+      </div>
+    </div>
+
+    {
+      /* ---------- Static body: read-only code view + build-time-rendered
+         output. This is what everyone downloads on first load. ---------- */
+    }
+    <div data-static-body>
+      <div data-code-mount></div>
+      <script
+        type='application/json'
+        data-source-json
+        set:html={JSON.stringify(code)}
+      />
+
+      <div
+        class='border-t border-(--sl-color-hairline) bg-(--sl-color-bg-nav) px-3 py-2 text-xs font-medium text-[var(--sl-color-gray-2)]'
+      >
+        Output
+      </div>
+
+      {
+        /* The real, pre-rendered component output - built at build time, no iframe/wasm needed */
+      }
+      <div class='min-h-48 w-full bg-(--sl-color-bg) p-4' data-example-output>
+        <slot />
+      </div>
+    </div>
+
+    {
+      /* ---------- Live body: editor + iframe, swapped in on first
+         Edit click. Hidden until then. ---------- */
+    }
+    <div data-live-body style='display:none'></div>
+  </div>
+</div>
+
+<style>
+  /* Mirrors Playground.tsx's iframe rule `body > * { margin: 20px; }`
+     exactly, so the static, build-time-rendered output and the live
+     playground's iframe output look identical - even for examples like
+     button/variants.eg.astro that render several bare elements with no
+     wrapping container of their own. The panel's own `p-4` (16px) already
+     matches the iframe's `body { padding: 1rem }`, so no other change is
+     needed here - just replicate the per-child margin. */
+  [data-example-output] > :global(*) {
+    margin: 20px;
+  }
+</style>
+
+<script>
+  import type { mountStaticCodeView as MountStaticCodeView } from './StaticCodeView';
+  import type { PlaygroundHandle } from './Playground';
+
+  // StaticCodeView.ts only pulls in CodeMirror - no Compiler.ts, no wasm - so
+  // it's fine to import this one eagerly. It paints the read-only code panel
+  // that's visible from first load.
+  const staticViewReady: Promise<{
+    mountStaticCodeView: typeof MountStaticCodeView;
+  }> = import('./StaticCodeView');
+
+  /** Wires up a Copy button (works for either the static or live group). */
+  function wireCopyButton(
+    button: HTMLButtonElement | null,
+    doCopy: () => Promise<void>
+  ) {
+    button?.addEventListener('click', async () => {
+      await doCopy();
+
+      const copyIcon = button.querySelector<HTMLElement>('[data-copy-icon]');
+      const checkIcon = button.querySelector<HTMLElement>('[data-check-icon]');
+      const label = button.querySelector<HTMLElement>('[data-copy-label]');
+
+      if (copyIcon) copyIcon.style.display = 'none';
+      if (checkIcon) checkIcon.style.display = '';
+      if (label) label.textContent = 'Copied';
+
+      setTimeout(() => {
+        if (checkIcon) checkIcon.style.display = 'none';
+        if (copyIcon) copyIcon.style.display = '';
+        if (label) label.textContent = 'Copy';
+      }, 1500);
+    });
+  }
+
+  function initExampleBlocks() {
+    document
+      .querySelectorAll<HTMLElement>('[data-example-block]')
+      .forEach(async (block) => {
+        if (block.dataset.wired === 'true') return;
+        block.dataset.wired = 'true';
+
+        const staticActions = block.querySelector<HTMLElement>(
+          '[data-static-actions]'
+        );
+        const liveActions = block.querySelector<HTMLElement>(
+          '[data-live-actions]'
+        );
+
+        const copyStaticBtn = block.querySelector<HTMLButtonElement>(
+          '[data-action="copy-static"]'
+        );
+        const copyLiveBtn = block.querySelector<HTMLButtonElement>(
+          '[data-action="copy-live"]'
+        );
+        const editBtn = block.querySelector<HTMLButtonElement>(
+          '[data-action="edit"]'
+        );
+        const runBtn = block.querySelector<HTMLButtonElement>(
+          '[data-action="run"]'
+        );
+        const resetBtn = block.querySelector<HTMLButtonElement>(
+          '[data-action="reset"]'
+        );
+
+        const staticBody =
+          block.querySelector<HTMLElement>('[data-static-body]');
+        const codeMount = block.querySelector<HTMLElement>('[data-code-mount]');
+        const sourceJson =
+          block.querySelector<HTMLScriptElement>('[data-source-json]');
+        const liveBody = block.querySelector<HTMLElement>('[data-live-body]');
+
+        const originalCode: string = sourceJson
+          ? JSON.parse(sourceJson.textContent ?? '""')
+          : '';
+
+        // Paint the read-only CodeMirror view immediately (cheap, no wasm).
+        if (codeMount) {
+          const { mountStaticCodeView } = await staticViewReady;
+          mountStaticCodeView(codeMount, originalCode);
+        }
+
+        let handle: PlaygroundHandle | undefined;
+        let loadPromise: Promise<void> | undefined;
+        let modulePromise:
+          Promise<typeof import('./mount-on-demand')> | undefined;
+
+        /** Warms the browser's module cache only - does NOT mount or swap anything. */
+        function preloadModule() {
+          if (!modulePromise) {
+            modulePromise = import('./mount-on-demand');
+          }
+          return modulePromise;
+        }
+
+        /** Actually mounts the interactive playground and swaps the toolbar groups. Runs exactly once, only from a real click. */
+        function ensureLoaded(): Promise<void> {
+          if (loadPromise) return loadPromise;
+
+          loadPromise = (async () => {
+            if (!liveBody || !staticBody) return;
+
+            if (editBtn) editBtn.disabled = true;
+            const editLabel = editBtn?.querySelector<HTMLElement>('span');
+            const originalEditLabel = editLabel?.textContent;
+            if (editLabel) editLabel.textContent = 'Loading…';
+
+            const { mountPlayground } = await preloadModule();
+
+            mountPlayground(
+              liveBody,
+              { code: originalCode, filename: block.dataset.filename },
+              (h) => {
+                handle = h;
+              }
+            );
+
+            // Swap bodies: static (read-only code + prebuilt output) → live
+            // (real CodeMirror editor + iframe).
+            staticBody.style.display = 'none';
+            liveBody.style.display = '';
+
+            // Swap toolbar groups: Copy+Edit → Copy+Reset+Run.
+            if (staticActions) staticActions.style.display = 'none';
+            if (liveActions) liveActions.style.display = '';
+
+            if (editBtn) editBtn.disabled = false;
+            if (editLabel) editLabel.textContent = originalEditLabel ?? 'Edit';
+          })();
+
+          return loadPromise;
+        }
+
+        // Hover/focus on Edit only WARMS the module cache in the background -
+        // it must never mount or swap anything by itself. Only an actual
+        // click (below) is allowed to call ensureLoaded().
+        editBtn?.addEventListener('mouseenter', () => preloadModule(), {
+          once: true,
+        });
+        editBtn?.addEventListener('focus', () => preloadModule(), {
+          once: true,
+        });
+
+        wireCopyButton(copyStaticBtn, async () => {
+          await navigator.clipboard.writeText(originalCode);
+        });
+
+        wireCopyButton(copyLiveBtn, async () => {
+          if (handle) {
+            await handle.copy(); // copies the *current* editor contents
+          } else {
+            await navigator.clipboard.writeText(originalCode);
+          }
+        });
+
+        editBtn?.addEventListener('click', async () => {
+          await ensureLoaded();
+        });
+
+        runBtn?.addEventListener('click', async () => {
+          await handle?.run();
+        });
+
+        resetBtn?.addEventListener('click', () => {
+          handle?.reset();
+        });
+      });
+  }
+
+  initExampleBlocks();
+  document.addEventListener('astro:page-load', initExampleBlocks);
+</script>
