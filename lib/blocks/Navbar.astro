@@ -1,6 +1,7 @@
 ---
 import { ChevronDown } from 'lucide-astro';
-import Button from './Button.astro';
+
+import Link from './Link.astro';
 
 interface NavItem {
   label: string;
@@ -30,17 +31,20 @@ const {
 
 <nav
   class:list={[
-    'left-0 w-full bg-white shadow-sm',
+    'bg-surface left-0 w-full shadow-sm',
     {
       'fixed top-0 z-50': position === 'fixed',
       'sticky top-0 z-50': position === 'sticky',
       relative: position === 'static',
     },
+    className,
   ]}
+  style={style}
+  {...rest}
 >
   <div class='mx-auto max-w-screen-2xl px-8'>
     <div class='flex h-20 items-center justify-between'>
-      <a href='/' class='flex items-center' style={style}>
+      <a href='/' class='flex items-center'>
         {
           logoSrc && (
             <img src={logoSrc} alt='Logo' class='h-12 w-auto object-contain' />
@@ -49,17 +53,17 @@ const {
 
         {
           !logoSrc && logoText && (
-            <span class='text-2xl font-bold text-gray-900'>{logoText}</span>
+            <span class='text-foreground text-2xl font-bold'>{logoText}</span>
           )
         }
       </a>
 
-      <div class='flex items-center gap-8' style={style}>
+      <div class='flex items-center gap-8'>
         {
           navItems.map((item) => (
             <a
               href={item.href}
-              class={`flex items-center gap-1 text-[15px] font-medium transition-colors ${className}`}
+              class='text-foreground flex items-center gap-1 text-base font-medium transition-colors'
             >
               <span>{item.label}</span>
 
@@ -69,8 +73,8 @@ const {
         }
       </div>
 
-      <div class='flex items-center gap-5' style={style}>
-        <Button variant='purple'> Apply Now </Button>
+      <div class='flex items-center gap-5'>
+        <Link variant='purple'>Apply Now</Link>
       </div>
     </div>
   </div>
