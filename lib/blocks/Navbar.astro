@@ -42,28 +42,38 @@ const {
   style={style}
   {...rest}
 >
-  <div class='mx-auto max-w-screen-2xl px-8'>
-    <div class='flex h-20 items-center justify-between'>
-      <a href='/' class='flex items-center'>
-        {
-          logoSrc && (
-            <img src={logoSrc} alt='Logo' class='h-12 w-auto object-contain' />
-          )
-        }
+  <div class='mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8'>
+    <div class='flex h-16 items-center justify-between sm:h-20'>
+      <a href='/' class:list={['flex items-center']}>
+        <slot name='logo'>
+          {
+            logoSrc && (
+              <img
+                src={logoSrc}
+                alt='Logo'
+                class='h-10 w-auto object-contain sm:h-12'
+              />
+            )
+          }
 
-        {
-          !logoSrc && logoText && (
-            <span class='text-foreground text-2xl font-bold'>{logoText}</span>
-          )
-        }
+          {
+            !logoSrc && logoText && (
+              <span class='text-foreground text-xl font-bold sm:text-2xl'>
+                {logoText}
+              </span>
+            )
+          }
+        </slot>
       </a>
 
-      <div class='flex items-center gap-8'>
+      <div class='flex items-center gap-4 md:gap-6 lg:gap-8'>
         {
           navItems.map((item) => (
             <a
               href={item.href}
-              class='text-foreground flex items-center gap-1 text-base font-medium transition-colors'
+              class:list={[
+                'text-foreground hover:text-foreground-muted flex items-center gap-1 text-xs font-medium transition-colors sm:text-sm lg:text-base',
+              ]}
             >
               <span>{item.label}</span>
 
@@ -73,8 +83,10 @@ const {
         }
       </div>
 
-      <div class='flex items-center gap-5'>
-        <Link variant='purple'>Apply Now</Link>
+      <div class='flex items-center gap-3 sm:gap-5'>
+        <slot name='actions'>
+          <Link variant='purple'>Apply Now</Link>
+        </slot>
       </div>
     </div>
   </div>

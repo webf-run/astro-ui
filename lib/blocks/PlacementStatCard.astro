@@ -19,23 +19,18 @@ const {
 ---
 
 <div
-  class='w-full rounded-2xl border border-violet-100 bg-purple-100 px-6 py-5 text-center md:w-45'
+  class:list={[
+    'border-border bg-surface-muted w-full rounded-2xl border px-6 py-5 text-center md:w-44',
+    className,
+  ]}
 >
   <div
-    class='mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-purple-400!'
+    class='bg-surface-accent-strong mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full'
   >
-    <Icon class='h-4 w-4 text-violet-800' />
+    <Icon class='text-icon h-4 w-4' />
   </div>
 
-  <h3 class='text-2xl font-bold text-black'>
-    {value}
-  </h3>
-
-  <p class='mt-2 text-sm font-semibold text-black'>
-    {title}
-  </p>
-
-  <p class='mt-1 text-[11px] text-zinc-700'>
-    {subtitle}
-  </p>
+  <h3 class='text-foreground text-2xl font-bold'>{value}</h3>
+  <p class='text-foreground mt-2 text-sm font-semibold'>{title}</p>
+  <p class='text-foreground-muted mt-1 text-xs'>{subtitle}</p>
 </div>

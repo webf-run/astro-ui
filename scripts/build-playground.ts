@@ -5,17 +5,44 @@ import { transform } from '@astrojs/compiler';
 import * as esbuild from 'esbuild-wasm';
 import type { Plugin } from 'esbuild-wasm';
 
-// Builds the static browser assets the in-browser Astro playground needs:
+// Builds the static browser assets required by the in-browser Astro playground:
 //
-// public/play/astro-runtime.js - Our minimal runtime (site/playground/Runtime.mjs).
-// public/play/astro-ui.lib.js  - @webf/astro-ui, precompiled from .astro source with the REAL @astrojs/compiler and bundled with esbuild.
-// public/play/astro.wasm       - The official Astro compiler's WASM binary, served so the browser can run it directly.
-// public/play/esbuild.wasm     - Esbuild's WASM binary, used client-side to strip the TypeScript left in the compiler's output.
+// public/play/astro-runtime.js
+//   Minimal browser runtime used by compiled Astro components.
+//
+// public/play/astro-ui.lib.js
+//   Browser-ready @webf/astro-ui library. Astro components are precompiled
+//   with the real @astrojs/compiler and bundled with esbuild.
+//
+// public/play/astro.wasm
+//   Official Astro compiler WASM binary.
+//
+// public/play/esbuild.wasm
+//   Esbuild WASM binary used by the browser playground.
 
 const root = process.cwd();
 
 const libEntry = path.resolve(root, './lib/index.ts');
 const outDir = path.resolve(root, 'public/play');
+
+const ASTRO_RUNTIME_SPECIFIER = 'astro/runtime/server/index.js';
+const ASTRO_RUNTIME_BROWSER_PATH = '/play/astro-runtime.js';
+
+/**
+ * Rewrites the Astro server-runtime import emitted by the Astro compiler
+ * to the browser runtime served by the playground.
+ *
+ * The compiled library is eventually loaded from a Blob URL in the browser.
+ * Therefore we cannot rely on normal Vite/Node module resolution here.
+ * Using an absolute browser URL makes the runtime resolution deterministic.
+ */
+function rewriteRuntimeImport(code: string): string {
+  const runtimeUrl = JSON.stringify(ASTRO_RUNTIME_BROWSER_PATH);
+
+  return code
+    .replaceAll(JSON.stringify(ASTRO_RUNTIME_SPECIFIER), runtimeUrl)
+    .replaceAll(`'${ASTRO_RUNTIME_SPECIFIER}'`, runtimeUrl);
+}
 
 async function buildRuntime() {
   const entry = path.resolve(root, 'site/playground/Runtime.mjs');
@@ -25,34 +52,58 @@ async function buildRuntime() {
     bundle: true,
     format: 'esm',
     platform: 'browser',
+    target: 'es2020',
     write: false,
   });
 
+  const output = result.outputFiles?.[0];
+
+  if (!output) {
+    throw new Error('[playground] Runtime build produced no output.');
+  }
+
   await fs.writeFile(
     path.join(outDir, 'astro-runtime.js'),
-    result.outputFiles[0].text
+    output.text,
+    'utf8'
   );
 }
 
 async function buildLibrary() {
-  // This is an esbuild plugin that wraps the official Astro compiler to precompile .astro files in the library,
-  // so we can ship them as JS/TS to the browser playground.
+  /**
+   * Precompile .astro source files with the real Astro compiler.
+   *
+   * This allows the browser playground to consume the component library
+   * without needing a full Astro/Vite build inside the browser.
+   */
   const astroCompilerPlugin: Plugin = {
     name: 'astro-compiler',
+
     setup(build) {
       build.onLoad({ filter: /\.astro$/ }, async (args) => {
         const source = await fs.readFile(args.path, 'utf8');
 
         const { code, diagnostics } = await transform(source, {
           sourcemap: false,
+
+          /*
+           * Keep the original specifier in the generated code.
+           *
+           * The Astro runtime is handled separately below and rewritten
+           * to /play/astro-runtime.js after esbuild finishes.
+           */
           resolvePath: async (specifier) => specifier,
         });
 
-        const fatal = diagnostics?.filter((d) => d.severity === 1) ?? [];
+        const fatal =
+          diagnostics?.filter((diagnostic) => diagnostic.severity === 1) ?? [];
 
         if (fatal.length) {
           return {
-            errors: fatal.map((d) => ({ text: d.text, location: null })),
+            errors: fatal.map((diagnostic) => ({
+              text: diagnostic.text,
+              location: null,
+            })),
           };
         }
 
@@ -65,26 +116,62 @@ async function buildLibrary() {
     },
   };
 
-  // Note: Keep the Astro runtime external import untouched
-  // (marked `external` below) so every compiled component, ours and
-  // the user's, shares the exact same runtime module in the browser.
   const result = await esbuild.build({
     entryPoints: [libEntry],
+
     bundle: true,
+
     format: 'esm',
+
     platform: 'browser',
+
+    target: 'es2020',
+
     write: false,
-    // This specifier is resolved at runtime by the import map that
-    // site/playground/Compiler.ts (ensureImportMap) injects into the page.
-    // It MUST stay in sync with the key used there.
-    external: ['astro/runtime/server/index.js'],
+
+    /**
+     * Do not bundle Astro's server runtime.
+     *
+     * The browser playground has its own minimal runtime implementation
+     * in site/playground/Runtime.mjs.
+     *
+     * We rewrite this import to /play/astro-runtime.js after bundling.
+     */
+    external: [ASTRO_RUNTIME_SPECIFIER],
+
     plugins: [astroCompilerPlugin],
-    loader: { '.ts': 'ts' },
+
+    loader: {
+      '.ts': 'ts',
+    },
   });
+
+  const output = result.outputFiles?.[0];
+
+  if (!output) {
+    throw new Error('[playground] Astro UI library build produced no output.');
+  }
+
+  /**
+   * IMPORTANT:
+   *
+   * esbuild leaves the Astro runtime external because of the `external`
+   * configuration above.
+   *
+   * The generated browser module cannot resolve:
+   *
+   *   astro/runtime/server/index.js
+   *
+   * when it is imported from a Blob URL.
+   *
+   * Rewrite it to the runtime asset generated by buildRuntime().
+   */
+  const browserLibraryCode = rewriteRuntimeImport(output.text);
 
   await fs.writeFile(
     path.join(outDir, 'astro-ui.lib.js'),
-    result.outputFiles[0].text
+    browserLibraryCode,
+    'utf8'
   );
 }
 
@@ -93,29 +180,43 @@ async function copyWasmBinaries() {
     root,
     'node_modules/@astrojs/compiler/dist/astro.wasm'
   );
+
   const esbuildWasm = path.resolve(
     root,
     'node_modules/esbuild-wasm/esbuild.wasm'
   );
 
   await fs.copyFile(compilerWasm, path.join(outDir, 'astro.wasm'));
+
   await fs.copyFile(esbuildWasm, path.join(outDir, 'esbuild.wasm'));
 }
 
 async function main() {
-  await fs.mkdir(outDir, { recursive: true });
+  await fs.mkdir(outDir, {
+    recursive: true,
+  });
+
+  console.log('[playground] building browser runtime...');
 
   await buildRuntime();
+
+  console.log('[playground] building Astro UI library...');
+
   await buildLibrary();
+
+  console.log('[playground] copying WASM binaries...');
+
   await copyWasmBinaries();
 
   await esbuild.stop?.();
+
   console.log(
     '[playground] built public/play/{astro-runtime.js,astro-ui.lib.js,astro.wasm,esbuild.wasm}'
   );
 }
 
-main().catch((err) => {
-  console.error('[playground] build failed:', err);
+main().catch((error) => {
+  console.error('[playground] build failed:', error);
+
   process.exit(1);
 });

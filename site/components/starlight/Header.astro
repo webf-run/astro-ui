@@ -1,54 +1,98 @@
 ---
 import Search from '@astrojs/starlight/components/Search.astro';
-import { Github, Sun, Moon } from 'lucide-astro';
+import { Github, Moon, Sun } from 'lucide-astro';
+
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Docs', href: '/docs' },
+  { label: 'Components', href: '/components' },
+];
+
+const currentPath = Astro.url.pathname;
 ---
 
-<div class='header-wrapper'>
-  <div class='custom-header'>
-    <!-- Logo -->
-    <div class='header-logo'>
-      <a href='/' class='logo'>
-        <span class='logo-astro'>Astro</span>
-        <span class='logo-ui'>UI</span>
-      </a>
-    </div>
+<div
+  class='grid h-full w-full grid-cols-[auto_1fr_auto] items-center gap-4 sm:gap-6'
+>
+  <a
+    href='/'
+    class='inline-flex items-center gap-2 no-underline transition-opacity duration-200 hover:opacity-85'
+  >
+    <span
+      class='text-doc-foreground text-lg font-bold tracking-tight sm:text-xl'
+    >
+      Astro
+    </span>
+    <span
+      class='bg-doc-accent-low text-doc-accent-high rounded-md px-2 py-0.5 text-xs font-semibold sm:text-sm'
+    >
+      UI
+    </span>
+  </a>
 
-    <!-- Navigation -->
-    <nav class='header-nav'>
-      <a href='/' class='active'>Home</a>
-      <a href='/docs'>Docs</a>
-      <a href='/components'>Components</a>
-    </nav>
+  <nav class='hidden items-center gap-1 md:flex'>
+    {
+      navItems.map((item) => {
+        const isActive =
+          item.href === '/'
+            ? currentPath === '/'
+            : currentPath.startsWith(item.href);
 
-    <!-- Right -->
-    <div class='header-actions'>
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              'rounded-lg px-3 py-1.5 text-sm font-medium no-underline transition-colors duration-150',
+              isActive
+                ? 'bg-doc-accent-low text-doc-accent-high'
+                : 'text-doc-foreground-muted hover:bg-doc-surface-nav hover:text-doc-foreground',
+            ]}
+          >
+            {item.label}
+          </a>
+        );
+      })
+    }
+  </nav>
+
+  <div class='flex items-center justify-end gap-2'>
+    <div class='w-28 sm:w-44 lg:w-60'>
       <Search />
-
-      <a
-        href='https://github.com/webf-run/astro-ui'
-        target='_blank'
-        class='icon-btn'
-        aria-label='GitHub'
-      >
-        <Github size={18} />
-      </a>
-
-      <button id='theme-toggle' class='icon-btn' aria-label='Toggle theme'>
-        <Sun class='sun' size={18} />
-        <Moon class='moon' size={18} />
-      </button>
     </div>
+
+    <a
+      href='https://github.com/webf-run/astro-ui'
+      target='_blank'
+      rel='noopener noreferrer'
+      aria-label='GitHub'
+      class='text-doc-foreground-muted hover:bg-doc-surface-nav hover:text-doc-foreground inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150'
+    >
+      <Github size={18} />
+    </a>
+
+    <button
+      id='theme-toggle'
+      type='button'
+      aria-label='Toggle theme'
+      class='text-doc-foreground-muted hover:bg-doc-surface-nav hover:text-doc-foreground inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-150'
+    >
+      <Sun id='theme-icon-sun' size={18} />
+      <Moon id='theme-icon-moon' size={18} class='hidden' />
+    </button>
   </div>
 </div>
 
 <script is:inline>
   const btn = document.getElementById('theme-toggle');
+  const sunIcon = document.getElementById('theme-icon-sun');
+  const moonIcon = document.getElementById('theme-icon-moon');
 
   function updateIcon(theme) {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('starlight-theme', theme);
 
-    btn.classList.toggle('dark', theme === 'dark');
+    sunIcon?.classList.toggle('hidden', theme === 'dark');
+    moonIcon?.classList.toggle('hidden', theme !== 'dark');
   }
 
   const saved =
@@ -59,7 +103,7 @@ import { Github, Sun, Moon } from 'lucide-astro';
 
   updateIcon(saved);
 
-  btn.addEventListener('click', () => {
+  btn?.addEventListener('click', () => {
     const next =
       document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
 

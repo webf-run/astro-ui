@@ -27,6 +27,8 @@
   --border: #ddd6fe;
   --border-subtle: #d1d5db;
 
+  --icon: #5b21b6;
+
   --badge-purple-background: #f3e8ff;
   --badge-purple-foreground: #6d28d9;
 }
@@ -59,6 +61,8 @@
 
   --color-border: var(--border);
   --color-border-subtle: var(--border-subtle);
+
+  --color-icon: var(--icon);
 
   --color-badge-purple-background: var(--badge-purple-background);
   --color-badge-purple-foreground: var(--badge-purple-foreground);

@@ -238,38 +238,101 @@ const accentButton =
 
         /** Actually mounts the interactive playground and swaps the toolbar groups. Runs exactly once, only from a real click. */
         function ensureLoaded(): Promise<void> {
-          if (loadPromise) return loadPromise;
+          if (loadPromise) {
+            return loadPromise;
+          }
+
+          const editLabel =
+            editBtn?.querySelector<HTMLElement>('[data-edit-label]');
+
+          const originalEditLabel = editLabel?.textContent;
 
           loadPromise = (async () => {
-            if (!liveBody || !staticBody) return;
+            if (!liveBody || !staticBody) {
+              return;
+            }
 
-            if (editBtn) editBtn.disabled = true;
-            const editLabel = editBtn?.querySelector<HTMLElement>('span');
-            const originalEditLabel = editLabel?.textContent;
-            if (editLabel) editLabel.textContent = 'Loading…';
+            if (editBtn) {
+              editBtn.disabled = true;
+            }
+
+            if (editLabel) {
+              editLabel.textContent = 'Loading…';
+            }
 
             const { mountPlayground } = await preloadModule();
 
-            mountPlayground(
+            /*
+             * IMPORTANT:
+             * Wait until CodeMirror + compiler + initial output
+             * are ready before showing Run/Reset.
+             */
+            await mountPlayground(
               liveBody,
-              { code: originalCode, filename: block.dataset.filename },
+              {
+                code: originalCode,
+                filename: block.dataset.filename,
+              },
               (h) => {
                 handle = h;
               }
             );
 
-            // Swap bodies: static (read-only code + prebuilt output) → live
-            // (real CodeMirror editor + iframe).
+            // Static -> live
             staticBody.style.display = 'none';
             liveBody.style.display = '';
 
-            // Swap toolbar groups: Copy+Edit → Copy+Reset+Run.
-            if (staticActions) staticActions.style.display = 'none';
-            if (liveActions) liveActions.style.display = '';
+            // Copy + Edit -> Copy + Reset + Run
+            if (staticActions) {
+              staticActions.style.display = 'none';
+            }
 
-            if (editBtn) editBtn.disabled = false;
-            if (editLabel) editLabel.textContent = originalEditLabel ?? 'Edit';
-          })();
+            if (liveActions) {
+              liveActions.style.display = '';
+            }
+
+            if (editBtn) {
+              editBtn.disabled = false;
+            }
+
+            if (editLabel) {
+              editLabel.textContent = originalEditLabel ?? 'Edit';
+            }
+          })().catch((error) => {
+            /*
+             * If lazy loading/compiler initialization fails,
+             * restore the static example and allow Edit to retry.
+             */
+            loadPromise = undefined;
+
+            if (staticBody) {
+              staticBody.style.display = '';
+            }
+
+            if (liveBody) {
+              liveBody.style.display = 'none';
+            }
+
+            if (staticActions) {
+              staticActions.style.display = '';
+            }
+
+            if (liveActions) {
+              liveActions.style.display = 'none';
+            }
+
+            if (editLabel) {
+              editLabel.textContent = 'Edit';
+            }
+
+            if (editBtn) {
+              editBtn.disabled = false;
+            }
+
+            console.error('[playground] failed to load:', error);
+
+            throw error;
+          });
 
           return loadPromise;
         }
@@ -277,35 +340,28 @@ const accentButton =
         // Hover/focus on Edit only WARMS the module cache in the background -
         // it must never mount or swap anything by itself. Only an actual
         // click (below) is allowed to call ensureLoaded().
-        editBtn?.addEventListener('mouseenter', () => preloadModule(), {
-          once: true,
-        });
-        editBtn?.addEventListener('focus', () => preloadModule(), {
-          once: true,
-        });
-
-        wireCopyButton(copyStaticBtn, async () => {
-          await navigator.clipboard.writeText(originalCode);
-        });
-
-        wireCopyButton(copyLiveBtn, async () => {
-          if (handle) {
-            await handle.copy(); // copies the *current* editor contents
-          } else {
-            await navigator.clipboard.writeText(originalCode);
+        editBtn?.addEventListener('click', async () => {
+          try {
+            await ensureLoaded();
+          } catch {
+            // Error already logged and static UI restored.
           }
         });
 
-        editBtn?.addEventListener('click', async () => {
-          await ensureLoaded();
-        });
-
         runBtn?.addEventListener('click', async () => {
-          await handle?.run();
+          if (!handle) {
+            return;
+          }
+
+          await handle.run();
         });
 
-        resetBtn?.addEventListener('click', () => {
-          handle?.reset();
+        resetBtn?.addEventListener('click', async () => {
+          if (!handle) {
+            return;
+          }
+
+          await handle.reset();
         });
       });
   }

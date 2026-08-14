@@ -7,21 +7,37 @@ import {
 } from './Playground';
 
 /**
- * Mounts the interactive playground (editor + output iframe only, no
- * toolbar - that's owned permanently by ExampleBlock.astro) into `container`.
+ * Mounts the interactive playground into `container`.
  *
- * This file is only ever reached via a dynamic `import()` from
- * ExampleBlock.astro's inline script (never a static import from anywhere
- * else). Vite/Rollup code-splits everything reachable from here - Solid,
- * CodeMirror, Compiler.ts, esbuild-wasm, and by extension astro.wasm /
- * esbuild.wasm - into a separate chunk that's fetched only the first time
- * this function is called on a given page.
+ * The returned Promise resolves only after Playground's onReady callback
+ * fires. This prevents ExampleBlock's Run/Reset buttons from becoming
+ * available before the editor/compiler is ready.
  */
 export function mountPlayground(
   container: HTMLElement,
   props: Omit<PlaygroundProps, 'onReady'>,
   onReady: (handle: PlaygroundHandle) => void
-): () => void {
-  const dispose = render(() => Playground({ ...props, onReady }), container);
-  return dispose;
+): Promise<() => void> {
+  return new Promise((resolve, reject) => {
+    let dispose: (() => void) | undefined;
+
+    try {
+      dispose = render(
+        () =>
+          Playground({
+            ...props,
+
+            onReady: (handle) => {
+              onReady(handle);
+
+              resolve(dispose ?? (() => undefined));
+            },
+          }),
+
+        container
+      );
+    } catch (error) {
+      reject(error);
+    }
+  });
 }
