@@ -2,25 +2,24 @@
 interface Props {
   logo: string;
   companyName: string;
-  href?: string;
   class?: string;
 }
 
-const { logo, companyName, href = '#', class: className = '' } = Astro.props;
+const { logo, companyName, class: className = '' } = Astro.props;
 ---
 
 <a
-  href={href}
   target='_blank'
   rel='noopener noreferrer'
   class:list={[
-    'border-border bg-surface flex h-24 w-36 items-center justify-center rounded-xl border p-4 transition-transform duration-200 hover:scale-105',
+    'border-border bg-surface flex h-23 w-35 items-center justify-center rounded-xl border',
+    'p-4 transition-transform duration-200 hover:scale-105',
     className,
   ]}
 >
   <img
     src={logo}
     alt={`${companyName} Logo`}
-    class='h-12 w-auto object-contain'
+    class:list={['h-12 w-auto object-contain']}
   />
 </a>

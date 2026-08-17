@@ -1,11 +1,21 @@
 @import 'tailwindcss';
+
+/*
+ * The playground renders example code inside an iframe.
+ * Include the example source files in Tailwind's scan so utilities
+ * used by interactive examples are present in public/astro-ui-style.css.
+ */
+@source '../../site';
+@source '../blocks';
+
 @import './tokens.css';
 
-/* Typography tokens: IBM Plex Sans for UI/body, JetBrains Mono for code. */
+/* Typography tokens */
 @theme {
   --font-sans:
     'IBM Plex Sans Variable', ui-sans-serif, system-ui, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
   --font-mono:
     'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, 'Liberation Mono', 'Courier New', monospace;

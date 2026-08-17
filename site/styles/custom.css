@@ -1,7 +1,6 @@
 @import '@fontsource-variable/ibm-plex-sans';
 @import '@fontsource-variable/jetbrains-mono';
 @import '../../lib/styles/index.css';
-@import './header.css';
 
 :root {
   --sl-content-width: 100%;
@@ -23,12 +22,6 @@
   --sl-color-accent-low: #1e1b4b;
   --sl-color-accent: #6366f1;
   --sl-color-accent-high: #c7d2fe;
-
-  --max-width-site: 1920px;
-}
-
-@theme inline {
-  --container-site: var(--max-width-site);
 }
 
 :root[data-theme='light'] {
@@ -84,16 +77,16 @@ body {
 
 .preview {
   width: 100%;
-  border: 1px solid var(--sl-color-gray-5);
-  border-radius: 16px;
   overflow: hidden;
   margin: 1.5rem 0;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 16px;
 }
 
 .preview-header {
   padding: 16px 20px;
-  font-weight: 600;
   border-bottom: 1px solid var(--sl-color-gray-5);
+  font-weight: 600;
 }
 
 .preview-body {
@@ -114,8 +107,8 @@ body {
 }
 
 .doc-section p {
-  color: var(--sl-color-text);
   margin-bottom: 1rem;
+  color: var(--sl-color-text);
 }
 
 .tabs {
@@ -127,9 +120,9 @@ body {
 .tabs button {
   padding: 8px 18px;
   border: none;
+  border-radius: 8px;
   background: var(--sl-color-gray-6);
   color: var(--sl-color-text);
-  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -146,6 +139,6 @@ body {
   padding-top: 0 !important;
 }
 
-[data-example-output] > :global(*) {
-  margin: 20px;
+.content-panel:where(.astro-5siq3ogi) + .content-panel:where(.astro-5siq3ogi) {
+  border-top: none;
 }

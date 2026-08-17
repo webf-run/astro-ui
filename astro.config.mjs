@@ -57,6 +57,7 @@ export default defineConfig({
               slug: 'components/link',
             },
             { label: 'Navbar', slug: 'components/navbar' },
+            { label: 'Badge', slug: 'components/badge' },
           ],
         },
       ],
