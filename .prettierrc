@@ -4,7 +4,11 @@
   "semi": true,
   "singleQuote": true,
   "jsxSingleQuote": true,
-  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-astro"],
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-astro",
+    "prettier-plugin-tailwindcss"
+  ],
   "overrides": [
     {
       "files": "*.astro",

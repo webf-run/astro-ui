@@ -1,0 +1,40 @@
+---
+import type { AstroComponent } from '@lucide/astro';
+
+interface Props {
+  icon: AstroComponent;
+  value: string;
+  label: string;
+  iconClass?: string;
+}
+const { icon: Icon, value, label, iconClass = 'h-7 w-7' }: Props = Astro.props;
+---
+
+<div
+  class:list={[
+    'flex h-35 w-full min-w-0 flex-1 flex-col items-center justify-center gap-2 px-4 py-4',
+    'border-surface-accent-strong bg-surface-accent rounded-3xl border',
+    'md:h-40 md:gap-2.5 md:px-7',
+    'xl:h-40 xl:px-7',
+  ]}
+>
+  <div class='flex h-10 w-10 shrink-0 items-center justify-center'>
+    <Icon class:list={['text-primary', iconClass]} />
+  </div>
+  {
+    value && (
+      <h3 class='text-foreground-strong text-lg leading-normal font-semibold tracking-tight md:text-2xl xl:text-3xl'>
+        {' '}
+        {value}{' '}
+      </h3>
+    )
+  }
+  <p
+    class:list={[
+      'text-foreground text-center text-xs leading-tight font-semibold wrap-break-word',
+      'md:text-base xl:text-xl',
+    ]}
+  >
+    {label}
+  </p>
+</div>

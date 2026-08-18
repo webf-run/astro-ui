@@ -1,0 +1,35 @@
+---
+import type { AstroComponent } from '@lucide/astro';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  icon: AstroComponent;
+  class?: string;
+}
+const { title, subtitle, icon: Icon, class: className = '' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'FeatureCard',
+    'flex h-22 w-full max-w-113 items-center gap-2',
+    'border-border-accent bg-surface rounded-3xl border px-5 py-3',
+    className,
+  ]}
+>
+  <div
+    class:list={[
+      'flex h-16 w-16 shrink-0 items-center justify-center',
+      'bg-surface-accent-strong rounded-2xl',
+    ]}
+  >
+    <Icon class='text-primary h-7 w-7' />
+  </div>
+  <div class='flex min-w-0 flex-col justify-center'>
+    <h4 class='text-foreground-strong text-xl leading-normal font-semibold'>
+      {title}
+    </h4>
+    <p class='text-foreground mt-1 text-base leading-normal'>{subtitle}</p>
+  </div>
+</div>

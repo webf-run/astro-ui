@@ -13,10 +13,10 @@ npm install @webf/astro-ui
 ```astro
 ---
 import '@webf/astro-ui/style.css';
-import { Button, SectionBadge } from '@webf/astro-ui';
+import { Link, SectionBadge } from '@webf/astro-ui';
 ---
 
-<Button> Apply Now </Button>
+<Link> Apply Now </Link>
 
 <SectionBadge> Featured </SectionBadge>
 ```
@@ -49,9 +49,9 @@ npm run build
 dist/
 └── style.css
 |
-src/
-├── components/
-│ ├── Button.astro
+lib/
+├── blocks/
+│ ├── Link.astro
 │ ├── CompanyLogoCard.astro
 │ ├── FeatureCard.astro
 │ ├── Navbar.astro
@@ -59,5 +59,6 @@ src/
 │ ├── SectionBadge.astro
 │ └── StatCard.astro
 ├── styles/
-│ └── index.css
+│ ├── index.css
+│ └── tokens.css
 └── index.ts

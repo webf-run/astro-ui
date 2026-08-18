@@ -3,11 +3,15 @@ title: Navbar
 description: Build responsive navigation bars with branding, navigation links, and flexible layouts.
 ---
 
+import BasicNavbarOutput from '../../../examples/navbar/basic.eg.astro';
 import basicNavbarCode from '../../../examples/navbar/basic.eg.astro?raw';
+import CustomClassOutput from '../../../examples/navbar/custom-class.eg.astro';
 import customClassCode from '../../../examples/navbar/custom-class.eg.astro?raw';
+import DropdownNavbarOutput from '../../../examples/navbar/dropdown.eg.astro';
 import dropdownNavbarCode from '../../../examples/navbar/dropdown.eg.astro?raw';
+import LogoOnlyOutput from '../../../examples/navbar/logo-only.eg.astro';
 import logoOnlyCode from '../../../examples/navbar/logo-only.eg.astro?raw';
-import CodePlayground from '../../../playground/CodePlayground.astro';
+import ExampleBlock from '../../../playground/ExampleBlock.astro';
 
 The `Navbar` component provides a responsive navigation bar for Astro applications. It supports branding through a logo, configurable navigation links, optional dropdown indicators, and customizable link styles. A built-in call-to-action button makes it ideal for marketing websites, documentation portals, and educational platforms.
 
@@ -17,22 +21,30 @@ Use the interactive playgrounds below to experiment with different navbar config
 
 Create a responsive navigation bar by providing a logo and a list of navigation items. The component automatically renders the navigation links and includes a call-to-action button.
 
-<CodePlayground code={basicNavbarCode} />
+<ExampleBlock code={basicNavbarCode}>
+  <BasicNavbarOutput />
+</ExampleBlock>
 
 ## Dropdown Navigation
 
 Set `hasDropdown` to `true` on any navigation item to display a dropdown indicator. This is useful for menu items that contain additional navigation options.
 
-<CodePlayground code={dropdownNavbarCode} />
+<ExampleBlock code={dropdownNavbarCode}>
+  <DropdownNavbarOutput />
+</ExampleBlock>
 
 ## Custom Navigation Styles
 
 Use the `class` prop to apply custom Tailwind or CSS utility classes to all navigation links, allowing the navbar to match your brand or application theme.
 
-<CodePlayground code={customClassCode} />
+<ExampleBlock code={customClassCode}>
+  <CustomClassOutput />
+</ExampleBlock>
 
 ## Logo Only
 
 The navbar can also be used with only a logo. Navigation links are optional, making it suitable for landing pages, authentication screens, or simple layouts.
 
-<CodePlayground code={logoOnlyCode} />
+<ExampleBlock code={logoOnlyCode}>
+  <LogoOnlyOutput />
+</ExampleBlock>

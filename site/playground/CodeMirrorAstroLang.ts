@@ -1,7 +1,7 @@
 import { html, htmlLanguage } from '@codemirror/lang-html';
 import { javascript, typescriptLanguage } from '@codemirror/lang-javascript';
 import type { Extension } from '@codemirror/state';
-import { type Input, parseMixed, type SyntaxNodeRef } from '@lezer/common';
+import { type Input, type SyntaxNodeRef, parseMixed } from '@lezer/common';
 
 /**
  * There is no maintained CodeMirror grammar for `.astro`, so we compose one:

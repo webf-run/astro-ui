@@ -1,0 +1,36 @@
+---
+import { Users } from 'lucide-astro';
+
+interface Props {
+  icon: typeof Users;
+  value: string;
+  title: string;
+  subtitle: string;
+  class?: string;
+}
+
+const {
+  icon: Icon,
+  value,
+  title,
+  subtitle,
+  class: className = '',
+}: Props = Astro.props;
+---
+
+<div
+  class:list={[
+    'border-border bg-surface-muted w-full rounded-2xl border px-6 py-5 text-center md:w-44',
+    className,
+  ]}
+>
+  <div
+    class='bg-surface-accent-strong mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full'
+  >
+    <Icon class='text-icon h-4 w-4' />
+  </div>
+
+  <h3 class='text-foreground text-2xl font-bold'>{value}</h3>
+  <p class='text-foreground mt-2 text-sm font-semibold'>{title}</p>
+  <p class='text-foreground-muted mt-1 text-xs'>{subtitle}</p>
+</div>
