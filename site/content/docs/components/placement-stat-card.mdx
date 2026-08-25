@@ -1,0 +1,61 @@
+---
+title: Placement Stat Card
+description: Display outcome metrics such as placement rate, graduates, and employer partners.
+---
+
+import BasicOutput from '../../../examples/placement-stat-card/basic.eg.astro';
+import basicCode from '../../../examples/placement-stat-card/basic.eg.astro?raw';
+import ColorsOutput from '../../../examples/placement-stat-card/colors.eg.astro';
+import colorsCode from '../../../examples/placement-stat-card/colors.eg.astro?raw';
+import EffectsOutput from '../../../examples/placement-stat-card/effects.eg.astro';
+import effectsCode from '../../../examples/placement-stat-card/effects.eg.astro?raw';
+import RowOutput from '../../../examples/placement-stat-card/row.eg.astro';
+import rowCode from '../../../examples/placement-stat-card/row.eg.astro?raw';
+import SizesOutput from '../../../examples/placement-stat-card/sizes.eg.astro';
+import sizesCode from '../../../examples/placement-stat-card/sizes.eg.astro?raw';
+import ExampleBlock from '../../../playground/ExampleBlock.astro';
+
+`PlacementStatCard` combines a high-level outcome number with a short title and contextual note. It is designed for placement, careers, and results sections.
+
+## Basic
+
+<ExampleBlock code={basicCode}>
+  <BasicOutput />
+</ExampleBlock>
+
+## Color variants
+
+<ExampleBlock code={colorsCode}>
+  <ColorsOutput />
+</ExampleBlock>
+
+## Sizes
+
+<ExampleBlock code={sizesCode}>
+  <SizesOutput />
+</ExampleBlock>
+
+## Hover effects
+
+<ExampleBlock code={effectsCode}>
+  <EffectsOutput />
+</ExampleBlock>
+
+## Responsive rows
+
+<ExampleBlock code={rowCode}>
+  <RowOutput />
+</ExampleBlock>
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon` | `AstroComponent` | — | Lucide icon component. |
+| `value` | `string` | — | Outcome value. |
+| `title` | `string` | — | Metric heading. |
+| `subtitle` | `string` | — | Supporting detail. |
+| `variant` | `'default' \| 'accent' \| 'surface' \| 'inverse' \| 'purple' \| 'orange' \| 'green' \| 'blue' \| 'neutral'` | `'default'` | Token-based color treatment. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Card spacing scale. |
+| `effect` | `'none' \| 'lift' \| 'glow'` | `'none'` | Hover effect. |
+| `class` | `string` | — | Additional Tailwind utilities. |

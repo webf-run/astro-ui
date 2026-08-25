@@ -1,0 +1,61 @@
+---
+title: Stat Card
+description: Present a metric with a compact label and icon.
+---
+
+import BasicOutput from '../../../examples/stat-card/basic.eg.astro';
+import basicCode from '../../../examples/stat-card/basic.eg.astro?raw';
+import ColorsOutput from '../../../examples/stat-card/colors.eg.astro';
+import colorsCode from '../../../examples/stat-card/colors.eg.astro?raw';
+import EffectsOutput from '../../../examples/stat-card/effects.eg.astro';
+import effectsCode from '../../../examples/stat-card/effects.eg.astro?raw';
+import RowOutput from '../../../examples/stat-card/row.eg.astro';
+import rowCode from '../../../examples/stat-card/row.eg.astro?raw';
+import SizesOutput from '../../../examples/stat-card/sizes.eg.astro';
+import sizesCode from '../../../examples/stat-card/sizes.eg.astro?raw';
+import ExampleBlock from '../../../playground/ExampleBlock.astro';
+
+`StatCard` surfaces a key number alongside a label and Lucide icon. Its flexible width makes it work as a standalone summary or as part of a responsive metric grid.
+
+## Basic
+
+<ExampleBlock code={basicCode}>
+  <BasicOutput />
+</ExampleBlock>
+
+## Color variants
+
+<ExampleBlock code={colorsCode}>
+  <ColorsOutput />
+</ExampleBlock>
+
+## Sizes
+
+<ExampleBlock code={sizesCode}>
+  <SizesOutput />
+</ExampleBlock>
+
+## Hover effects
+
+<ExampleBlock code={effectsCode}>
+  <EffectsOutput />
+</ExampleBlock>
+
+## Responsive rows
+
+<ExampleBlock code={rowCode}>
+  <RowOutput />
+</ExampleBlock>
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon` | `AstroComponent` | — | Lucide icon component. |
+| `value` | `string` | — | Metric value. |
+| `label` | `string` | — | Metric label. |
+| `iconClass` | `string` | `'size-7'` | Extra icon Tailwind utilities. |
+| `variant` | `'default' \| 'muted' \| 'surface' \| 'accent' \| 'purple' \| 'orange' \| 'green' \| 'blue' \| 'neutral'` | `'default'` | Token-based color treatment. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Card spacing scale. |
+| `effect` | `'none' \| 'lift' \| 'glow'` | `'none'` | Hover effect. |
+| `class` | `string` | — | Additional Tailwind utilities. |

@@ -170,6 +170,9 @@ function mergeSlots(...slotted) {
 /**
  * Renders an Astro component factory.
  */
+/**
+ * Renders an Astro component factory.
+ */
 async function renderComponent(
   result,
   displayName,
@@ -189,6 +192,27 @@ async function renderComponent(
     return markHTMLString(
       await toHtml(await Component(result, props ?? {}, slots ?? {}))
     );
+  }
+
+  /*
+   * Native custom elements (Web Components), e.g. <wf-navbar-menu>.
+   *
+   * The real Astro compiler routes any hyphenated tag through
+   * renderComponent - not just imported framework components - passing the
+   * tag name itself as a plain string when there's no matching import.
+   * Render it as an ordinary HTML element instead of throwing, so
+   * progressive-enhancement custom elements preview correctly here.
+   */
+  if (typeof Component === 'string') {
+    let attrs = '';
+
+    for (const [key, value] of Object.entries(props ?? {})) {
+      attrs += String(addAttribute(value, key));
+    }
+
+    const children = await renderSlot(result, slots?.default);
+
+    return markHTMLString(`<${Component}${attrs}>${children}</${Component}>`);
   }
 
   throw new Error(

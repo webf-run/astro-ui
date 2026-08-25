@@ -1,0 +1,10 @@
+---
+import { FeatureCard } from '@webf/astro-ui';
+import { Globe2, Layers, Zap } from 'lucide-astro';
+---
+
+<div class:list={['grid gap-4 md:grid-cols-3']}>
+  <FeatureCard size='sm' variant='blue' title='Global' subtitle='Serve every market.' icon={Globe2} />
+  <FeatureCard size='md' variant='purple' effect='lift' title='Composable' subtitle='Use with any section.' icon={Layers} />
+  <FeatureCard size='lg' variant='orange' effect='glow' title='Fast' subtitle='Keep visitors moving.' icon={Zap} />
+</div>

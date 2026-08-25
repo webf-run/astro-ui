@@ -363,6 +363,21 @@ const accentButton =
 
           await handle.reset();
         });
+
+        // Static panel: nothing to compile, just copy the original source.
+        wireCopyButton(copyStaticBtn, () =>
+          navigator.clipboard.writeText(originalCode)
+        );
+
+        // Live panel: copy whatever is currently in the editor, including
+        // any edits the person has made, not the original static source.
+        wireCopyButton(copyLiveBtn, async () => {
+          if (!handle) {
+            return;
+          }
+
+          await handle.copy();
+        });
       });
   }
 

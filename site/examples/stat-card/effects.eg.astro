@@ -1,0 +1,9 @@
+---
+import { Activity, Sparkles } from 'lucide-astro';
+import { StatCard } from '@webf/astro-ui';
+---
+
+<div class:list={['grid gap-4 sm:grid-cols-2']}>
+  <StatCard effect='lift' icon={Activity} value='24%' label='Lift on hover' />
+  <StatCard effect='glow' icon={Sparkles} value='4.9' label='Glow on hover' />
+</div>

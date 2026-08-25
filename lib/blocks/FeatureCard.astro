@@ -1,35 +1,109 @@
 ---
 import type { AstroComponent } from '@lucide/astro';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-interface Props {
+const featureCardVariants = cva(
+  'flex w-full items-center rounded-3xl border transition-shadow duration-200',
+  {
+    variants: {
+      variant: {
+        default: 'border-border bg-surface',
+        muted: 'border-border bg-surface-muted',
+        accent: 'border-surface-accent-strong bg-surface-accent',
+        inverse: 'border-accent bg-accent text-accent-foreground',
+        purple:
+          'border-badge-purple-background bg-badge-purple-background',
+        orange:
+          'border-badge-orange-background bg-badge-orange-background',
+        green: 'border-badge-green-background bg-badge-green-background',
+        blue: 'border-badge-blue-background bg-badge-blue-background',
+        neutral: 'border-badge-neutral-background bg-badge-neutral-background',
+      },
+      size: {
+        sm: 'gap-3 px-4 py-3',
+        md: 'gap-3 px-4 py-3 sm:gap-4 sm:px-5',
+        lg: 'gap-4 px-5 py-4 sm:px-6 sm:py-5',
+      },
+      effect: {
+        none: '',
+        lift: 'hover:-translate-y-1 hover:shadow-lg',
+        glow: 'hover:shadow-md hover:shadow-primary/25',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'md',
+      effect: 'none',
+    },
+  }
+);
+
+const featureCardTextVariants = cva('text-foreground', {
+  variants: {
+    variant: {
+      default: 'text-foreground',
+      muted: 'text-foreground',
+      accent: 'text-foreground',
+      inverse: 'text-accent-foreground',
+      purple: 'text-badge-purple-foreground',
+      orange: 'text-badge-orange-foreground',
+      green: 'text-badge-green-foreground',
+      blue: 'text-badge-blue-foreground',
+      neutral: 'text-badge-neutral-foreground',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
+interface Props extends VariantProps<typeof featureCardVariants> {
   title: string;
   subtitle: string;
   icon: AstroComponent;
   class?: string;
 }
-const { title, subtitle, icon: Icon, class: className = '' } = Astro.props;
+const {
+  title,
+  subtitle,
+  icon: Icon,
+  variant,
+  size,
+  effect,
+  class: className = '',
+} = Astro.props;
 ---
 
 <div
   class:list={[
-    'FeatureCard',
-    'flex h-22 w-full max-w-113 items-center gap-2',
-    'border-border-accent bg-surface rounded-3xl border px-5 py-3',
+    featureCardVariants({ variant, size, effect }),
     className,
   ]}
 >
   <div
     class:list={[
-      'flex h-16 w-16 shrink-0 items-center justify-center',
+      'flex size-12 shrink-0 items-center justify-center rounded-2xl sm:size-14',
       'bg-surface-accent-strong rounded-2xl',
     ]}
   >
-    <Icon class='text-primary h-7 w-7' />
+    <Icon class:list={['text-primary size-6 sm:size-7']} />
   </div>
-  <div class='flex min-w-0 flex-col justify-center'>
-    <h4 class='text-foreground-strong text-xl leading-normal font-semibold'>
+  <div class:list={['flex min-w-0 flex-col justify-center']}>
+    <h4
+      class:list={[
+        'text-lg leading-normal font-semibold sm:text-xl',
+        featureCardTextVariants({ variant }),
+      ]}
+    >
       {title}
     </h4>
-    <p class='text-foreground mt-1 text-base leading-normal'>{subtitle}</p>
+    <p
+      class:list={[
+        'mt-1 text-sm leading-normal opacity-80 sm:text-base',
+        featureCardTextVariants({ variant }),
+      ]}
+    >
+      {subtitle}
+    </p>
   </div>
 </div>

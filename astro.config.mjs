@@ -58,6 +58,13 @@ export default defineConfig({
             },
             { label: 'Navbar', slug: 'components/navbar' },
             { label: 'Badge', slug: 'components/badge' },
+            { label: 'Feature Card', slug: 'components/feature-card' },
+            { label: 'Company Logo Card', slug: 'components/company-logo-card' },
+            { label: 'Stat Card', slug: 'components/stat-card' },
+            {
+              label: 'Placement Stat Card',
+              slug: 'components/placement-stat-card',
+            },
           ],
         },
       ],

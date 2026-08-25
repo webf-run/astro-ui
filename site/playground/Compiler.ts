@@ -21,6 +21,7 @@ const esbuildReadyP = esbuild.initialize({
 
 const RUNTIME_SPECIFIER = 'astro/runtime/server/index.js';
 const LIBRARY_SPECIFIER = '@webf/astro-ui';
+const LUCIDE_SPECIFIERS = ['lucide-astro', '@lucide/astro'];
 
 function browserAssetUrl(path: string): string {
   return new URL(path, document.baseURI).href;
@@ -41,7 +42,11 @@ function resolveBrowserImports(code: string): string {
     .replaceAll(`"${RUNTIME_SPECIFIER}"`, JSON.stringify(runtimeUrl))
     .replaceAll(`'${RUNTIME_SPECIFIER}'`, JSON.stringify(runtimeUrl))
     .replaceAll(`"${LIBRARY_SPECIFIER}"`, JSON.stringify(libraryUrl))
-    .replaceAll(`'${LIBRARY_SPECIFIER}'`, JSON.stringify(libraryUrl));
+    .replaceAll(`'${LIBRARY_SPECIFIER}'`, JSON.stringify(libraryUrl))
+    .replaceAll(`"${LUCIDE_SPECIFIERS[0]}"`, JSON.stringify(libraryUrl))
+    .replaceAll(`'${LUCIDE_SPECIFIERS[0]}'`, JSON.stringify(libraryUrl))
+    .replaceAll(`"${LUCIDE_SPECIFIERS[1]}"`, JSON.stringify(libraryUrl))
+    .replaceAll(`'${LUCIDE_SPECIFIERS[1]}'`, JSON.stringify(libraryUrl));
 }
 
 async function getRuntime() {

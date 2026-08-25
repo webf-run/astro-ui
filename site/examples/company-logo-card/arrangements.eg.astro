@@ -1,0 +1,11 @@
+---
+import { CompanyLogoCard } from '@webf/astro-ui';
+---
+
+<div class:list={['grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5']}>
+  <CompanyLogoCard size='sm' variant='neutral' companyName='Atlas' logo='/favicon.svg' />
+  <CompanyLogoCard size='md' variant='purple' companyName='Bloom' logo='/favicon.svg' />
+  <CompanyLogoCard size='lg' variant='orange' effect='lift' companyName='Coda' logo='/favicon.svg' />
+  <CompanyLogoCard size='md' variant='green' companyName='Drift' logo='/favicon.svg' />
+  <CompanyLogoCard size='sm' variant='blue' effect='lift' companyName='Ember' logo='/favicon.svg' />
+</div>
