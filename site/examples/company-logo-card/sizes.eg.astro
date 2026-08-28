@@ -1,9 +1,30 @@
 ---
 import { CompanyLogoCard } from '@webf/astro-ui';
+
+import GoogleLogo from '../../assets/company-logos/google.svg';
+import GitHubLogo from '../../assets/company-logos/github.svg';
+import DropboxLogo from '../../assets/company-logos/dropbox.svg';
 ---
 
-<div class:list={['grid grid-cols-3 items-end gap-4']}>
-  <CompanyLogoCard size='sm' companyName='Small' logo='/favicon.svg' />
-  <CompanyLogoCard size='md' companyName='Medium' logo='/favicon.svg' />
-  <CompanyLogoCard size='lg' companyName='Large' logo='/favicon.svg' />
+<div class='flex items-center gap-4 overflow-x-auto'>
+  <CompanyLogoCard
+    size='sm'
+    variant='blue'
+    companyName='Microsoft'
+    logo={GoogleLogo}
+  />
+
+  <CompanyLogoCard
+    size='md'
+    variant='purple'
+    companyName='Figma'
+    logo={GitHubLogo}
+  />
+
+  <CompanyLogoCard
+    size='lg'
+    variant='neutral'
+    companyName='Google'
+    logo={DropboxLogo}
+  />
 </div>

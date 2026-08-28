@@ -1,11 +1,52 @@
 ---
 import { CompanyLogoCard } from '@webf/astro-ui';
+
+import GoogleLogo from '../../assets/company-logos/google.svg';
+import GitHubLogo from '../../assets/company-logos/github.svg';
+import DropboxLogo from '../../assets/company-logos/dropbox.svg';
+import AmazonLogo from '../../assets/company-logos/amazon.svg';
 ---
 
-<div class:list={['grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5']}>
-  <CompanyLogoCard size='sm' variant='neutral' companyName='Atlas' logo='/favicon.svg' />
-  <CompanyLogoCard size='md' variant='purple' companyName='Bloom' logo='/favicon.svg' />
-  <CompanyLogoCard size='lg' variant='orange' effect='lift' companyName='Coda' logo='/favicon.svg' />
-  <CompanyLogoCard size='md' variant='green' companyName='Drift' logo='/favicon.svg' />
-  <CompanyLogoCard size='sm' variant='blue' effect='lift' companyName='Ember' logo='/favicon.svg' />
+<div class:list={['flex flex-row gap-4 overflow-x-auto']}>
+  <CompanyLogoCard
+    class='w-36 shrink-0'
+    size='sm'
+    variant='neutral'
+    companyName='Google'
+    logo={GoogleLogo}
+  />
+
+  <CompanyLogoCard
+    class='w-40 shrink-0'
+    size='md'
+    variant='purple'
+    companyName='GitHub'
+    logo={GitHubLogo}
+  />
+
+  <CompanyLogoCard
+    class='w-48 shrink-0'
+    size='lg'
+    variant='orange'
+    effect='lift'
+    companyName='Amazon'
+    logo={AmazonLogo}
+  />
+
+  <CompanyLogoCard
+    class='w-40 shrink-0'
+    size='md'
+    variant='green'
+    companyName='Spotify'
+    logo={DropboxLogo}
+  />
+
+  <CompanyLogoCard
+    class='w-36 shrink-0'
+    size='sm'
+    variant='blue'
+    effect='scale'
+    companyName='Figma'
+    logo={GitHubLogo}
+  />
 </div>

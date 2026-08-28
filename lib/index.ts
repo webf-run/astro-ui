@@ -40,4 +40,4 @@ export {
   Users,
   WandSparkles,
   Zap,
-} from 'lucide-astro';
+} from '@lucide/astro';

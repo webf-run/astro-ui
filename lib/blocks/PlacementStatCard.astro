@@ -55,11 +55,31 @@ const placementStatCardTextVariants = cva('text-foreground', {
   },
 });
 
+const placementStatCardIconVariants = cva('', {
+  variants: {
+    variant: {
+      default: 'text-badge-purple-foreground',
+      accent: 'text-badge-purple-foreground',
+      surface: 'text-foreground-muted',
+      inverse: 'text-accent-foreground',
+      purple: 'text-badge-purple-foreground',
+      orange: 'text-badge-orange-foreground',
+      green: 'text-badge-green-foreground',
+      blue: 'text-badge-blue-foreground',
+      neutral: 'text-badge-neutral-foreground',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
 interface Props extends VariantProps<typeof placementStatCardVariants> {
   icon: AstroComponent;
   value: string;
   title: string;
   subtitle: string;
+  iconClass?: string;
   class?: string;
 }
 
@@ -68,6 +88,7 @@ const {
   value,
   title,
   subtitle,
+  iconClass = 'size-10',
   variant,
   size,
   effect,
@@ -80,10 +101,12 @@ const {
 >
   <div
     class:list={[
-      'bg-surface-accent-strong mb-3 flex size-10 shrink-0 items-center justify-center rounded-full',
+      'mb-3 flex size-10! shrink-0 items-center justify-center rounded-full',
     ]}
   >
-    <Icon class:list={['size-4', placementStatCardTextVariants({ variant })]} />
+    <Icon
+      class:list={[placementStatCardIconVariants({ variant }), iconClass]}
+    />
   </div>
 
   <h3

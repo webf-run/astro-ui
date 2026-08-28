@@ -11,25 +11,26 @@ const featureCardVariants = cva(
         muted: 'border-border bg-surface-muted',
         accent: 'border-surface-accent-strong bg-surface-accent',
         inverse: 'border-accent bg-accent text-accent-foreground',
-        purple:
-          'border-badge-purple-background bg-badge-purple-background',
-        orange:
-          'border-badge-orange-background bg-badge-orange-background',
+        purple: 'border-badge-purple-background bg-badge-purple-background',
+        orange: 'border-badge-orange-background bg-badge-orange-background',
         green: 'border-badge-green-background bg-badge-green-background',
         blue: 'border-badge-blue-background bg-badge-blue-background',
         neutral: 'border-badge-neutral-background bg-badge-neutral-background',
       },
+
       size: {
         sm: 'gap-3 px-4 py-3',
-        md: 'gap-3 px-4 py-3 sm:gap-4 sm:px-5',
-        lg: 'gap-4 px-5 py-4 sm:px-6 sm:py-5',
+        md: 'gap-4 px-5 py-4',
+        lg: 'gap-5 px-6 py-5',
       },
+
       effect: {
         none: '',
         lift: 'hover:-translate-y-1 hover:shadow-lg',
         glow: 'hover:shadow-md hover:shadow-primary/25',
       },
     },
+
     defaultVariants: {
       variant: 'default',
       size: 'md',
@@ -52,10 +53,41 @@ const featureCardTextVariants = cva('text-foreground', {
       neutral: 'text-badge-neutral-foreground',
     },
   },
+
   defaultVariants: {
     variant: 'default',
   },
 });
+
+const featureCardIconVariants = cva(
+  'flex shrink-0 items-center justify-center rounded-2xl',
+  {
+    variants: {
+      variant: {
+        default: 'bg-surface-muted text-foreground',
+        muted: 'bg-surface text-foreground',
+        accent: 'bg-surface-accent-strong text-primary',
+        inverse: 'bg-accent-foreground/20 text-accent-foreground',
+        purple: 'bg-badge-purple-foreground/15 text-badge-purple-foreground',
+        orange: 'bg-badge-orange-foreground/15 text-badge-orange-foreground',
+        green: 'bg-badge-green-foreground/15 text-badge-green-foreground',
+        blue: 'bg-badge-blue-foreground/15 text-badge-blue-foreground',
+        neutral: 'bg-badge-neutral-foreground/15 text-badge-neutral-foreground',
+      },
+
+      size: {
+        sm: 'size-10',
+        md: 'size-14',
+        lg: 'size-16',
+      },
+    },
+
+    defaultVariants: {
+      variant: 'default',
+      size: 'md',
+    },
+  }
+);
 
 interface Props extends VariantProps<typeof featureCardVariants> {
   title: string;
@@ -63,6 +95,7 @@ interface Props extends VariantProps<typeof featureCardVariants> {
   icon: AstroComponent;
   class?: string;
 }
+
 const {
   title,
   subtitle,
@@ -74,32 +107,36 @@ const {
 } = Astro.props;
 ---
 
-<div
-  class:list={[
-    featureCardVariants({ variant, size, effect }),
-    className,
-  ]}
->
-  <div
-    class:list={[
-      'flex size-12 shrink-0 items-center justify-center rounded-2xl sm:size-14',
-      'bg-surface-accent-strong rounded-2xl',
-    ]}
-  >
-    <Icon class:list={['text-primary size-6 sm:size-7']} />
+<div class:list={[featureCardVariants({ variant, size, effect }), className]}>
+  <div class={featureCardIconVariants({ variant, size })}>
+    <Icon
+      class:list={[
+        size === 'sm' && 'size-5',
+        size === 'md' && 'size-7',
+        size === 'lg' && 'size-8',
+      ]}
+    />
   </div>
-  <div class:list={['flex min-w-0 flex-col justify-center']}>
+
+  <div class='flex min-w-0 flex-col justify-center'>
     <h4
       class:list={[
-        'text-lg leading-normal font-semibold sm:text-xl',
+        'leading-normal font-semibold',
+        size === 'sm' && 'text-base',
+        size === 'md' && 'text-xl',
+        size === 'lg' && 'text-2xl',
         featureCardTextVariants({ variant }),
       ]}
     >
       {title}
     </h4>
+
     <p
       class:list={[
-        'mt-1 text-sm leading-normal opacity-80 sm:text-base',
+        'mt-1 leading-normal opacity-80',
+        size === 'sm' && 'text-xs',
+        size === 'md' && 'text-base',
+        size === 'lg' && 'text-lg',
         featureCardTextVariants({ variant }),
       ]}
     >

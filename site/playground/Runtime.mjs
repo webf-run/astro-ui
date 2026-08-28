@@ -168,8 +168,41 @@ function mergeSlots(...slotted) {
 }
 
 /**
- * Renders an Astro component factory.
+ * Normalizes component props in the same way Astro expects.
+ *
+ * Astro can pass both:
+ *
+ *   class="foo"
+ *
+ * and:
+ *
+ *   class:list={['bar', { active: true }]}
+ *
+ * to a component.
+ *
+ * When this happens, both values need to be combined into a single
+ * `class` prop before the component receives its props.
  */
+function normalizeProps(props = {}) {
+  if (!props || typeof props !== 'object') {
+    return {};
+  }
+
+  const normalized = { ...props };
+
+  if ('class:list' in normalized) {
+    const classList = serializeListValue(normalized['class:list']);
+    const existingClass =
+      normalized.class == null ? '' : String(normalized.class).trim();
+
+    normalized.class = [existingClass, classList].filter(Boolean).join(' ');
+
+    delete normalized['class:list'];
+  }
+
+  return normalized;
+}
+
 /**
  * Renders an Astro component factory.
  */
@@ -189,8 +222,10 @@ async function renderComponent(
   }
 
   if (typeof Component === 'function' && Component.isAstroComponentFactory) {
+    const normalizedProps = normalizeProps(props);
+
     return markHTMLString(
-      await toHtml(await Component(result, props ?? {}, slots ?? {}))
+      await toHtml(await Component(result, normalizedProps, slots ?? {}))
     );
   }
 
@@ -198,8 +233,8 @@ async function renderComponent(
    * Native custom elements (Web Components), e.g. <wf-navbar-menu>.
    *
    * The real Astro compiler routes any hyphenated tag through
-   * renderComponent - not just imported framework components - passing the
-   * tag name itself as a plain string when there's no matching import.
+   * renderComponent - not just imported framework components - passing
+   * the tag name itself as a plain string when there's no matching import.
    * Render it as an ordinary HTML element instead of throwing, so
    * progressive-enhancement custom elements preview correctly here.
    */
@@ -244,8 +279,8 @@ function escapeAttr(str) {
  *     { active: true, disabled: false },
  *   ]}
  *
- * The behavior intentionally mirrors the useful subset of Astro's class:list
- * semantics and clsx-style flattening.
+ * The behavior intentionally mirrors the useful subset of Astro's
+ * class:list semantics and clsx-style flattening.
  */
 function serializeListValue(value) {
   const classes = new Set();
@@ -464,7 +499,7 @@ async function renderComponentToStaticHTML(
 
   const result = createResult();
 
-  const output = await componentFactory(result, props, slots);
+  const output = await componentFactory(result, normalizeProps(props), slots);
 
   return toHtml(output);
 }
@@ -482,6 +517,7 @@ export {
   markHTMLString,
   maybeRenderHead,
   mergeSlots,
+  normalizeProps,
   render,
   renderComponent,
   renderComponentToStaticHTML,

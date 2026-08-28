@@ -3,18 +3,22 @@ title: Company Logo Card
 description: Display a company logo in a responsive card, with an optional external link.
 ---
 
+---
+
 import BasicOutput from '../../../examples/company-logo-card/basic.eg.astro';
 import basicCode from '../../../examples/company-logo-card/basic.eg.astro?raw';
-import ArrangementsOutput from '../../../examples/company-logo-card/arrangements.eg.astro';
-import arrangementsCode from '../../../examples/company-logo-card/arrangements.eg.astro?raw';
+import VariantsOutput from '../../../examples/company-logo-card/variants.eg.astro';
+import variantsCode from '../../../examples/company-logo-card/variants.eg.astro?raw';
 import ColorsOutput from '../../../examples/company-logo-card/colors.eg.astro';
 import colorsCode from '../../../examples/company-logo-card/colors.eg.astro?raw';
+import SizesOutput from '../../../examples/company-logo-card/sizes.eg.astro';
+import sizesCode from '../../../examples/company-logo-card/sizes.eg.astro?raw';
 import EffectsOutput from '../../../examples/company-logo-card/effects.eg.astro';
 import effectsCode from '../../../examples/company-logo-card/effects.eg.astro?raw';
 import LinkOutput from '../../../examples/company-logo-card/link.eg.astro';
 import linkCode from '../../../examples/company-logo-card/link.eg.astro?raw';
-import SizesOutput from '../../../examples/company-logo-card/sizes.eg.astro';
-import sizesCode from '../../../examples/company-logo-card/sizes.eg.astro?raw';
+import ArrangementsOutput from '../../../examples/company-logo-card/arrangements.eg.astro';
+import arrangementsCode from '../../../examples/company-logo-card/arrangements.eg.astro?raw';
 import ExampleBlock from '../../../playground/ExampleBlock.astro';
 
 `CompanyLogoCard` presents partner, customer, or employer logos in an even responsive grid. It renders as a non-interactive card by default, and becomes a safely labelled external link when `href` is provided.
@@ -25,25 +29,33 @@ import ExampleBlock from '../../../playground/ExampleBlock.astro';
   <BasicOutput />
 </ExampleBlock>
 
+## Color variants
+
+Use the `variant` prop to apply a token-based color treatment to the logo card.
+
+<ExampleBlock code={variantsCode}>
+  <VariantsOutput />
+</ExampleBlock>
+
 ## Linked logo
 
-Provide `href` when a logo should link to the company's website.
+Provide `href` when a logo should link to the company's website. The logo remains a local asset while the card becomes an external link.
 
 <ExampleBlock code={linkCode}>
   <LinkOutput />
 </ExampleBlock>
 
-## Color variants
+## Sizes
 
-<ExampleBlock code={colorsCode}>
-  <ColorsOutput />
-</ExampleBlock>
-
-## Sizes and effects
+Use `sm`, `md`, or `lg` to control the card dimensions.
 
 <ExampleBlock code={sizesCode}>
   <SizesOutput />
 </ExampleBlock>
+
+## Effects
+
+Use the `effect` prop to add a hover interaction.
 
 <ExampleBlock code={effectsCode}>
   <EffectsOutput />
@@ -51,18 +63,20 @@ Provide `href` when a logo should link to the company's website.
 
 ## Responsive logo wall
 
+Combine different card sizes, variants, and effects to create a flexible horizontal logo wall.
+
 <ExampleBlock code={arrangementsCode}>
   <ArrangementsOutput />
 </ExampleBlock>
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `logo` | `string` | — | Image URL or local asset path. |
-| `companyName` | `string` | — | Accessible company name for the image. |
-| `href` | `string` | — | Optional external destination. |
-| `variant` | `'default' \| 'muted' \| 'accent' \| 'purple' \| 'orange' \| 'green' \| 'blue' \| 'neutral'` | `'default'` | Token-based color treatment. |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Card dimensions. |
-| `effect` | `'none' \| 'lift' \| 'scale'` | `'scale'` | Hover effect. |
-| `class` | `string` | — | Additional Tailwind utilities. |
+| Prop          | Type                                                                                         | Default     | Description                                    |
+| ------------- | -------------------------------------------------------------------------------------------- | ----------- | ---------------------------------------------- |
+| `logo`        | `string \| AstroComponent`                                                                   | —           | Image URL, local asset path, or SVG component. |
+| `companyName` | `string`                                                                                     | —           | Accessible company name for the logo.          |
+| `href`        | `string`                                                                                     | —           | Optional external destination.                 |
+| `variant`     | `'default' \| 'muted' \| 'accent' \| 'purple' \| 'orange' \| 'green' \| 'blue' \| 'neutral'` | `'default'` | Token-based color treatment.                   |
+| `size`        | `'sm' \| 'md' \| 'lg'`                                                                       | `'md'`      | Card dimensions.                               |
+| `effect`      | `'none' \| 'lift' \| 'scale'`                                                                | `'scale'`   | Hover effect.                                  |
+| `class`       | `string`                                                                                     | —           | Additional Tailwind utilities.                 |

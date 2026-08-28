@@ -3,7 +3,7 @@ import type { AstroComponent } from '@lucide/astro';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const statCardVariants = cva(
-  'flex min-w-0 flex-1 flex-col items-center justify-center rounded-3xl border text-center transition-shadow duration-200',
+  'flex min-w-0 flex-col items-center justify-center rounded-3xl border text-center transition-all duration-200',
   {
     variants: {
       variant: {
@@ -11,29 +11,60 @@ const statCardVariants = cva(
         muted: 'border-border bg-surface-muted',
         surface: 'border-border bg-surface',
         accent: 'border-accent bg-accent text-accent-foreground',
-        purple:
-          'border-badge-purple-background bg-badge-purple-background',
-        orange:
-          'border-badge-orange-background bg-badge-orange-background',
+        purple: 'border-badge-purple-background bg-badge-purple-background',
+        orange: 'border-badge-orange-background bg-badge-orange-background',
         green: 'border-badge-green-background bg-badge-green-background',
         blue: 'border-badge-blue-background bg-badge-blue-background',
         neutral: 'border-badge-neutral-background bg-badge-neutral-background',
       },
+
       size: {
-        sm: 'gap-2 px-4 py-4',
-        md: 'gap-2 px-4 py-5 sm:px-6 md:gap-3 md:px-7 md:py-6',
-        lg: 'gap-3 px-6 py-6 md:px-8 md:py-8',
+        sm: 'w-full max-w-36 shrink-0 gap-2 px-4 py-4',
+        md: 'w-full max-w-48 shrink-0 gap-2 px-5 py-5',
+        lg: 'w-full max-w-64 shrink-0 gap-3 px-6 py-6',
       },
+
       effect: {
         none: '',
         lift: 'hover:-translate-y-1 hover:shadow-lg',
         glow: 'hover:shadow-md hover:shadow-primary/25',
       },
     },
+
     defaultVariants: {
       variant: 'default',
       size: 'md',
       effect: 'none',
+    },
+  }
+);
+
+const statCardIconVariants = cva(
+  'flex shrink-0 items-center justify-center rounded-full',
+  {
+    variants: {
+      variant: {
+        default: 'bg-surface-muted text-foreground',
+        muted: 'bg-surface text-foreground',
+        surface: 'bg-surface-muted text-foreground',
+        accent: 'bg-accent-foreground/20 text-accent-foreground',
+        purple: 'bg-badge-purple-foreground/15 text-badge-purple-foreground',
+        orange: 'bg-badge-orange-foreground/15 text-badge-orange-foreground',
+        green: 'bg-badge-green-foreground/15 text-badge-green-foreground',
+        blue: 'bg-badge-blue-foreground/15 text-badge-blue-foreground',
+        neutral: 'bg-badge-neutral-foreground/15 text-badge-neutral-foreground',
+      },
+
+      size: {
+        sm: 'size-9',
+        md: 'size-10',
+        lg: 'size-12',
+      },
+    },
+
+    defaultVariants: {
+      variant: 'default',
+      size: 'md',
     },
   }
 );
@@ -52,10 +83,56 @@ const statCardTextVariants = cva('text-foreground', {
       neutral: 'text-badge-neutral-foreground',
     },
   },
+
   defaultVariants: {
     variant: 'default',
   },
 });
+
+const statCardIconStyles = {
+  default: {
+    color: 'var(--foreground)',
+    backgroundColor: 'var(--surface-muted)',
+  },
+  muted: {
+    color: 'var(--foreground)',
+    backgroundColor: 'var(--surface)',
+  },
+  surface: {
+    color: 'var(--foreground)',
+    backgroundColor: 'var(--surface-muted)',
+  },
+  accent: {
+    color: 'var(--accent-foreground)',
+    backgroundColor:
+      'color-mix(in srgb, var(--accent-foreground) 20%, transparent)',
+  },
+  purple: {
+    color: 'var(--badge-purple-foreground)',
+    backgroundColor:
+      'color-mix(in srgb, var(--badge-purple-foreground) 15%, transparent)',
+  },
+  orange: {
+    color: 'var(--badge-orange-foreground)',
+    backgroundColor:
+      'color-mix(in srgb, var(--badge-orange-foreground) 15%, transparent)',
+  },
+  green: {
+    color: 'var(--badge-green-foreground)',
+    backgroundColor:
+      'color-mix(in srgb, var(--badge-green-foreground) 15%, transparent)',
+  },
+  blue: {
+    color: 'var(--badge-blue-foreground)',
+    backgroundColor:
+      'color-mix(in srgb, var(--badge-blue-foreground) 15%, transparent)',
+  },
+  neutral: {
+    color: 'var(--badge-neutral-foreground)',
+    backgroundColor:
+      'color-mix(in srgb, var(--badge-neutral-foreground) 15%, transparent)',
+  },
+} as const;
 
 interface Props extends VariantProps<typeof statCardVariants> {
   icon: AstroComponent;
@@ -64,6 +141,7 @@ interface Props extends VariantProps<typeof statCardVariants> {
   iconClass?: string;
   class?: string;
 }
+
 const {
   icon: Icon,
   value,
@@ -73,28 +151,24 @@ const {
   size,
   effect,
   class: className = '',
-}: Props = Astro.props;
+} = Astro.props;
+
+const iconStyle = statCardIconStyles[variant ?? 'default'];
 ---
 
-<div
-  class:list={[
-    statCardVariants({ variant, size, effect }),
-    className,
-  ]}
->
-  <div class:list={['flex size-10 shrink-0 items-center justify-center']}>
-    <Icon
-      class:list={[
-        statCardTextVariants({ variant }),
-        iconClass,
-      ]}
-    />
+<div class:list={[statCardVariants({ variant, size, effect }), className]}>
+  <div
+    class={statCardIconVariants({ variant, size })}
+    style={`color: ${iconStyle.color}; background-color: ${iconStyle.backgroundColor};`}
+  >
+    <Icon color={iconStyle.color} class:list={['shrink-0', iconClass]} />
   </div>
+
   {
     value && (
       <h3
         class:list={[
-          'text-lg leading-normal font-semibold tracking-tight md:text-2xl xl:text-3xl',
+          'text-xl leading-normal font-semibold tracking-tight',
           statCardTextVariants({ variant }),
         ]}
       >
@@ -102,10 +176,10 @@ const {
       </h3>
     )
   }
+
   <p
     class:list={[
-      'text-xs leading-tight font-semibold wrap-break-word opacity-80',
-      'md:text-base xl:text-xl',
+      'text-sm leading-tight font-semibold wrap-break-word opacity-80',
       statCardTextVariants({ variant }),
     ]}
   >
