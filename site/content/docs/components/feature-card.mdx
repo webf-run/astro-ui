@@ -19,13 +19,15 @@ import ExampleBlock from '../../../playground/ExampleBlock.astro';
 
 ## Basic
 
+The basic example demonstrates the default `FeatureCard` configuration with an icon, title, and supporting description. Use this configuration when you need a simple feature or benefit presentation.
+
 <ExampleBlock code={basicCode}>
   <BasicOutput />
 </ExampleBlock>
 
 ## Color variants
 
-The semantic palette matches `Badge`, making it suitable for creative, commerce, wellness, SaaS, and editorial interfaces.
+The color variants example demonstrates how `FeatureCard` can use different semantic color treatments while keeping the component consistent with the design system. These variants can be used to visually distinguish different types of features or content.
 
 <ExampleBlock code={colorsCode}>
   <ColorsOutput />
@@ -33,11 +35,15 @@ The semantic palette matches `Badge`, making it suitable for creative, commerce,
 
 ## Sizes
 
+The sizes example demonstrates the available `sm`, `md`, and `lg` card sizes. Use the size option to adjust the card's spacing and overall visual scale based on the available layout space.
+
 <ExampleBlock code={sizesCode}>
   <SizesOutput />
 </ExampleBlock>
 
 ## Hover effects
+
+The hover effects example demonstrates the available interaction styles for the card. You can choose `none`, `lift`, or `glow` depending on the level of visual feedback required when users interact with the card.
 
 <ExampleBlock code={effectsCode}>
   <EffectsOutput />
@@ -45,7 +51,7 @@ The semantic palette matches `Badge`, making it suitable for creative, commerce,
 
 ## Row and column arrangements
 
-Cards use token-based colors and adapt their spacing and type scale at Tailwind's default breakpoints.
+The arrangements example demonstrates how Feature Cards can be displayed in different layouts, including horizontal rows and vertical columns. The cards use responsive Tailwind utilities so the layout can adapt across mobile, tablet, and desktop screen sizes.
 
 <ExampleBlock code={arrangementsCode}>
   <ArrangementsOutput />
@@ -53,12 +59,12 @@ Cards use token-based colors and adapt their spacing and type scale at Tailwind'
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `string` | — | Feature heading. |
-| `subtitle` | `string` | — | Supporting feature text. |
-| `icon` | `AstroComponent` | — | Lucide icon component. |
-| `variant` | `'default' \| 'muted' \| 'accent' \| 'inverse' \| 'purple' \| 'orange' \| 'green' \| 'blue' \| 'neutral'` | `'default'` | Token-based color treatment. |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Card spacing scale. |
-| `effect` | `'none' \| 'lift' \| 'glow'` | `'none'` | Hover effect. |
-| `class` | `string` | — | Additional Tailwind utilities. |
+| Prop       | Type                                                                                                      | Default     | Description                    |
+| ---------- | --------------------------------------------------------------------------------------------------------- | ----------- | ------------------------------ |
+| `title`    | `string`                                                                                                  | —           | Feature heading.               |
+| `subtitle` | `string`                                                                                                  | —           | Supporting feature text.       |
+| `icon`     | `AstroComponent`                                                                                          | —           | Lucide icon component.         |
+| `variant`  | `'default' \| 'muted' \| 'accent' \| 'inverse' \| 'purple' \| 'orange' \| 'green' \| 'blue' \| 'neutral'` | `'default'` | Token-based color treatment.   |
+| `size`     | `'sm' \| 'md' \| 'lg'`                                                                                    | `'md'`      | Card spacing scale.            |
+| `effect`   | `'none' \| 'lift' \| 'glow'`                                                                              | `'none'`    | Hover effect.                  |
+| `class`    | `string`                                                                                                  | —           | Additional Tailwind utilities. |

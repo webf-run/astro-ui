@@ -19,11 +19,15 @@ import ExampleBlock from '../../../playground/ExampleBlock.astro';
 
 ## Basic
 
+Use the basic variant to display a single placement or outcome metric with an icon, value, title, and supporting description.
+
 <ExampleBlock code={basicCode}>
   <BasicOutput />
 </ExampleBlock>
 
 ## Color variants
+
+Use color variants to visually distinguish different types of metrics while keeping the styling consistent with the design system.
 
 <ExampleBlock code={colorsCode}>
   <ColorsOutput />
@@ -31,11 +35,15 @@ import ExampleBlock from '../../../playground/ExampleBlock.astro';
 
 ## Sizes
 
+Choose between small, medium, and large sizes to match the available space and visual hierarchy of your section.
+
 <ExampleBlock code={sizesCode}>
   <SizesOutput />
 </ExampleBlock>
 
 ## Hover effects
+
+Apply hover effects to add interaction and visual feedback when users move their pointer over a stat card.
 
 <ExampleBlock code={effectsCode}>
   <EffectsOutput />
@@ -43,19 +51,21 @@ import ExampleBlock from '../../../playground/ExampleBlock.astro';
 
 ## Responsive rows
 
+Use multiple `PlacementStatCard` components together to create responsive metric rows that adapt to different screen sizes.
+
 <ExampleBlock code={rowCode}>
   <RowOutput />
 </ExampleBlock>
 
 ## Props
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `icon` | `AstroComponent` | — | Lucide icon component. |
-| `value` | `string` | — | Outcome value. |
-| `title` | `string` | — | Metric heading. |
-| `subtitle` | `string` | — | Supporting detail. |
-| `variant` | `'default' \| 'accent' \| 'surface' \| 'inverse' \| 'purple' \| 'orange' \| 'green' \| 'blue' \| 'neutral'` | `'default'` | Token-based color treatment. |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Card spacing scale. |
-| `effect` | `'none' \| 'lift' \| 'glow'` | `'none'` | Hover effect. |
-| `class` | `string` | — | Additional Tailwind utilities. |
+| Prop       | Type                                                                                                        | Default     | Description                    |
+| ---------- | ----------------------------------------------------------------------------------------------------------- | ----------- | ------------------------------ |
+| `icon`     | `AstroComponent`                                                                                            | —           | Lucide icon component.         |
+| `value`    | `string`                                                                                                    | —           | Outcome value.                 |
+| `title`    | `string`                                                                                                    | —           | Metric heading.                |
+| `subtitle` | `string`                                                                                                    | —           | Supporting detail.             |
+| `variant`  | `'default' \| 'accent' \| 'surface' \| 'inverse' \| 'purple' \| 'orange' \| 'green' \| 'blue' \| 'neutral'` | `'default'` | Token-based color treatment.   |
+| `size`     | `'sm' \| 'md' \| 'lg'`                                                                                      | `'md'`      | Card spacing scale.            |
+| `effect`   | `'none' \| 'lift' \| 'glow'`                                                                                | `'none'`    | Hover effect.                  |
+| `class`    | `string`                                                                                                    | —           | Additional Tailwind utilities. |

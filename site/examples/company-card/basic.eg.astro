@@ -1,5 +1,5 @@
 ---
-import { CompanyLogoCard } from '@webf/astro-ui';
+import { CompanyCard } from '@webf/astro-ui';
 
 import GoogleLogo from '../../assets/company-logos/google.svg';
 import GitHubLogo from '../../assets/company-logos/github.svg';
@@ -8,11 +8,11 @@ import AmazonLogo from '../../assets/company-logos/amazon.svg';
 ---
 
 <div class:list={['grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4']}>
-  <CompanyLogoCard companyName='Google' logo={GoogleLogo} />
+  <CompanyCard companyName='Google' logo={GoogleLogo} />
 
-  <CompanyLogoCard companyName='GitHub' logo={GitHubLogo} />
+  <CompanyCard companyName='GitHub' logo={GitHubLogo} />
 
-  <CompanyLogoCard companyName='Microsoft' logo={DropboxLogo} />
+  <CompanyCard companyName='Microsoft' logo={DropboxLogo} />
 
-  <CompanyLogoCard companyName='Amazon' logo={AmazonLogo} />
+  <CompanyCard companyName='Amazon' logo={AmazonLogo} />
 </div>

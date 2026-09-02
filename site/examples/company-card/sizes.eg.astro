@@ -1,5 +1,5 @@
 ---
-import { CompanyLogoCard } from '@webf/astro-ui';
+import { CompanyCard } from '@webf/astro-ui';
 
 import GoogleLogo from '../../assets/company-logos/google.svg';
 import GitHubLogo from '../../assets/company-logos/github.svg';
@@ -7,21 +7,21 @@ import DropboxLogo from '../../assets/company-logos/dropbox.svg';
 ---
 
 <div class='flex items-center gap-4 overflow-x-auto'>
-  <CompanyLogoCard
+  <CompanyCard
     size='sm'
     variant='blue'
     companyName='Microsoft'
     logo={GoogleLogo}
   />
 
-  <CompanyLogoCard
+  <CompanyCard
     size='md'
     variant='purple'
     companyName='Figma'
     logo={GitHubLogo}
   />
 
-  <CompanyLogoCard
+  <CompanyCard
     size='lg'
     variant='neutral'
     companyName='Google'

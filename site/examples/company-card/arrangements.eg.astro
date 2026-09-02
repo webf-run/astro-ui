@@ -1,5 +1,5 @@
 ---
-import { CompanyLogoCard } from '@webf/astro-ui';
+import { CompanyCard } from '@webf/astro-ui';
 
 import GoogleLogo from '../../assets/company-logos/google.svg';
 import GitHubLogo from '../../assets/company-logos/github.svg';
@@ -8,7 +8,7 @@ import AmazonLogo from '../../assets/company-logos/amazon.svg';
 ---
 
 <div class:list={['flex flex-row gap-4 overflow-x-auto']}>
-  <CompanyLogoCard
+  <CompanyCard
     class='w-36 shrink-0'
     size='sm'
     variant='neutral'
@@ -16,7 +16,7 @@ import AmazonLogo from '../../assets/company-logos/amazon.svg';
     logo={GoogleLogo}
   />
 
-  <CompanyLogoCard
+  <CompanyCard
     class='w-40 shrink-0'
     size='md'
     variant='purple'
@@ -24,7 +24,7 @@ import AmazonLogo from '../../assets/company-logos/amazon.svg';
     logo={GitHubLogo}
   />
 
-  <CompanyLogoCard
+  <CompanyCard
     class='w-48 shrink-0'
     size='lg'
     variant='orange'
@@ -33,7 +33,7 @@ import AmazonLogo from '../../assets/company-logos/amazon.svg';
     logo={AmazonLogo}
   />
 
-  <CompanyLogoCard
+  <CompanyCard
     class='w-40 shrink-0'
     size='md'
     variant='green'
@@ -41,7 +41,7 @@ import AmazonLogo from '../../assets/company-logos/amazon.svg';
     logo={DropboxLogo}
   />
 
-  <CompanyLogoCard
+  <CompanyCard
     class='w-36 shrink-0'
     size='sm'
     variant='blue'
