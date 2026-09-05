@@ -11,6 +11,7 @@ export { default as Footer } from './blocks/Footer.astro';
 export { default as Facebook } from './icons/Facebook.astro';
 export { default as Instagram } from './icons/Instagram.astro';
 export { default as Linkedin } from './icons/Linkedin.astro';
+
 // These browser-safe icon exports let the interactive documentation editor
 // render its examples without attempting to resolve a Node package at runtime.
 export {

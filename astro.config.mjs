@@ -59,17 +59,19 @@ export default defineConfig({
             { label: 'Navbar', slug: 'components/navbar' },
             { label: 'Footer', slug: 'components/footer' },
             { label: 'Badge', slug: 'components/badge' },
-            { label: 'Feature Card', slug: 'components/feature-card' },
-            { label: 'Benefit Card', slug: 'components/benefit-card' },
-            { label: 'Testimonial Card', slug: 'components/testimonial-card' },
-            {
-              label: 'Company Card',
-              slug: 'components/company-card',
-            },
-            { label: 'Stat Card', slug: 'components/stat-card' },
+          ],
+        },
+        {
+          label: 'Cards',
+          items: [
+            { label: 'Feature Card', slug: 'cards/feature-card' },
+            { label: 'Benefit Card', slug: 'cards/benefit-card' },
+            { label: 'Testimonial Card', slug: 'cards/testimonial-card' },
+            { label: 'Company Card', slug: 'cards/company-card' },
+            { label: 'Stat Card', slug: 'cards/stat-card' },
             {
               label: 'Placement Stat Card',
-              slug: 'components/placement-stat-card',
+              slug: 'cards/placement-stat-card',
             },
           ],
         },
