@@ -43,6 +43,9 @@
 
   --badge-neutral-background: #f4f4f5;
   --badge-neutral-foreground: #52525b;
+
+  --badge-pink-background: #fce7f3;
+  --badge-pink-foreground: #db2777;
 }
 
 @theme inline {
@@ -90,4 +93,7 @@
 
   --color-badge-neutral-background: var(--badge-neutral-background);
   --color-badge-neutral-foreground: var(--badge-neutral-foreground);
+
+  --color-badge-pink-background: var(--badge-pink-background);
+  --color-badge-pink-foreground: var(--badge-pink-foreground);
 }

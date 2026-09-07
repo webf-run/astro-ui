@@ -33,6 +33,7 @@
   "dependencies": {
     "@codemirror/language": "^6.12.4",
     "@lezer/common": "^1.5.2",
+    "@lit/reactive-element": "^2.1.2",
     "@lucide/astro": "^1.23.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^24.13.2",

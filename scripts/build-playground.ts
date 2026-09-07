@@ -25,8 +25,29 @@ const root = process.cwd();
 const libEntry = path.resolve(root, './lib/index.ts');
 const outDir = path.resolve(root, 'public/play');
 
-const ASTRO_RUNTIME_SPECIFIER = 'astro/runtime/server/index.js';
 const ASTRO_RUNTIME_BROWSER_PATH = '/play/astro-runtime.js';
+
+/**
+ * Every bare specifier that compiled .astro output (or a dependency's own
+ * precompiled .astro/.ts, e.g. @lucide/astro's createLucideIcon.ts) may use
+ * to reach Astro's server runtime.
+ *
+ * IMPORTANT: 'astro/runtime/server/index.js' is not the only one. Newer
+ * @lucide/astro versions import their render/createComponent/renderComponent
+ * helpers from 'astro/compiler-runtime' instead. If a specifier here is
+ * missing, esbuild won't treat it as external and will bundle Astro's real,
+ * full server runtime (zod, client-directive validation, etc.) straight into
+ * astro-ui.lib.js. That real runtime's `renderComponent` expects a full
+ * `result` object (e.g. `result.clientDirectives`) that our minimal
+ * playground `createResult()` in Runtime.mjs doesn't provide, which throws
+ * "Cannot read properties of undefined (reading 'keys')" the moment an
+ * affected component (any block that renders an <Icon>, like StatCard,
+ * FeatureCard, PlacementStatCard) is mounted in the live editor.
+ */
+const ASTRO_RUNTIME_SPECIFIERS = [
+  'astro/runtime/server/index.js',
+  'astro/compiler-runtime',
+];
 
 /**
  * Rewrites the Astro server-runtime import emitted by the Astro compiler
@@ -39,9 +60,13 @@ const ASTRO_RUNTIME_BROWSER_PATH = '/play/astro-runtime.js';
 function rewriteRuntimeImport(code: string): string {
   const runtimeUrl = JSON.stringify(ASTRO_RUNTIME_BROWSER_PATH);
 
-  return code
-    .replaceAll(JSON.stringify(ASTRO_RUNTIME_SPECIFIER), runtimeUrl)
-    .replaceAll(`'${ASTRO_RUNTIME_SPECIFIER}'`, runtimeUrl);
+  return ASTRO_RUNTIME_SPECIFIERS.reduce(
+    (acc, specifier) =>
+      acc
+        .replaceAll(JSON.stringify(specifier), runtimeUrl)
+        .replaceAll(`'${specifier}'`, runtimeUrl),
+    code
+  );
 }
 
 async function buildRuntime() {
@@ -135,9 +160,10 @@ async function buildLibrary() {
      * The browser playground has its own minimal runtime implementation
      * in site/playground/Runtime.mjs.
      *
-     * We rewrite this import to /play/astro-runtime.js after bundling.
+     * We rewrite these imports to /play/astro-runtime.js after bundling.
+     * See ASTRO_RUNTIME_SPECIFIERS above for why there's more than one.
      */
-    external: [ASTRO_RUNTIME_SPECIFIER],
+    external: ASTRO_RUNTIME_SPECIFIERS,
 
     plugins: [astroCompilerPlugin],
 

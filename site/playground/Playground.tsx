@@ -239,7 +239,7 @@ export function Playground(props: PlaygroundProps) {
 
       <iframe
         ref={iframe}
-        class='block min-h-48 w-full bg-(--sl-color-bg)'
+        class='block min-h-128 w-full bg-(--sl-color-bg)'
         sandbox='allow-scripts allow-same-origin'
         title='Component preview'
       />
